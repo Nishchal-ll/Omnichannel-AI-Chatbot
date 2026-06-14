@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+
+  # ─────────────────────────────────────────────
+  # WhatsApp Bot + Streamlit
+  # ─────────────────────────────────────────────
+  bot:
+    build: .
+
+    container_name: whatsapp_bot
+
+    env_file:
+      - .env
+
+    ports:
+      - "5001:5001"
+      - "8501:8501"
+
+    restart: unless-stopped
+
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+      - ./scripts:/app/scripts
+      - ./chroma_db:/app/chroma_db
+
+    # Allow container to access host llama.cpp server
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
