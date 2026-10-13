@@ -1,6 +1,6 @@
 # CrewAI Customer Bot
 
-A lightweight WhatsApp + Email customer support bot built with CrewAI and a local llama.cpp-compatible LLM.
+A lightweight WhatsApp + Email customer support bot built with CrewAI and a local Ollama LLM (`gemma4:e2b` / `gemma4:e2b-it-qat`).
 
 ## Project Overview
 
@@ -42,8 +42,8 @@ This project is designed for rapid prototyping, not production-grade scaling.
   - The response task uses the classifier output as context.
 
 - `src/crew/llm.py`
-  - Wraps CrewAI's `LLM` class for a local llama.cpp/OpenAI-compatible endpoint.
-  - Reads `LLM_URL` and `LLM_MODEL` from `.env`.
+  - Wraps CrewAI's `LLM` class for local Ollama's OpenAI-compatible endpoint (`/v1`).
+  - Reads `LLM_URL` (default `http://localhost:11434`) and `LLM_MODEL` (default `gemma4:e2b`) from `.env`.
 
 - `src/channels/whatsapp.py`
   - Sends reply text to WhatsApp using the Meta Cloud API.
