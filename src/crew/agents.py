@@ -5,7 +5,7 @@ Two agents work together on every incoming message:
   1. ClassifierAgent  — reads the message, identifies intent and tone
   2. ResponderAgent   — writes the actual reply based on classifier output
 
-Both use the local llama.cpp LLM via LangChain-compatible wrapper.
+Both use the local Ollama LLM wrapper.
 """
 import os
 from crewai import Agent
