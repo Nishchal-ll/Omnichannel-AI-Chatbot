@@ -69,9 +69,11 @@ class Pipeline:
         use_kb = any(kw in cleaned for kw in ["coconut", "coco", "oil", "oild"])
 
         try:
-            # Get LLM configuration
-            llm_url = os.getenv("LLM_URL", "http://host.docker.internal:8080")
-            model_name = os.getenv("LLM_MODEL", "gemma-4-E2B_q4_0-it.gguf")
+            # Get LLM configuration (default to local Ollama)
+            llm_url = os.getenv("LLM_URL", "http://localhost:11434")
+            model_name = os.getenv("LLM_MODEL", "gemma4:e2b")
+            max_tokens = int(os.getenv("LLM_MAX_TOKENS", "1024"))
+            timeout_sec = int(os.getenv("LLM_TIMEOUT", "120"))
 
             if use_kb:
                 # Retrieve relevant knowledge
@@ -110,13 +112,21 @@ class Pipeline:
                     {"role": "user", "content": user_prompt}
                 ],
                 "temperature": 0.1,
-                "max_tokens": 256
+                "max_tokens": max_tokens
             }
 
-            response = requests.post(url, json=payload, timeout=30)
+            response = requests.post(url, json=payload, timeout=timeout_sec)
             if response.status_code == 200:
-                reply_text = response.json()["choices"][0]["message"]["content"].strip()
+                data = response.json()
+                choice_msg = data.get("choices", [{}])[0].get("message", {})
+                reply_text = (choice_msg.get("content") or "").strip()
+                # If thinking/reasoning model consumed tokens or output is in reasoning
+                if not reply_text and choice_msg.get("reasoning"):
+                    reply_text = choice_msg.get("reasoning").strip()
+                if not reply_text:
+                    reply_text = "I will check and get back to you shortly."
             else:
+                print(f"[Pipeline] ✗ LLM HTTP {response.status_code}: {response.text}")
                 reply_text = "I will check and get back to you shortly."
 
             print(f"[Pipeline] Direct LLM Reply: {reply_text[:80]}...")
