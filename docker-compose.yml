@@ -25,6 +25,6 @@ services:
       - ./scripts:/app/scripts
       - ./chroma_db:/app/chroma_db
 
-    # Allow container to access host llama.cpp server
+    # Allow container to access host Ollama server (http://host.docker.internal:11434)
     extra_hosts:
       - "host.docker.internal:host-gateway"
