@@ -7,7 +7,7 @@ if [ -f .env ]; then
 fi
 
 echo "================================================"
-echo "  CrewAI WhatsApp + Email Bot"
+echo "  Naasa Securities (Broker 58) AI Support Agent"
 echo "  Webhook   → :5001"
 echo "  Dashboard → :8501"
 echo "  LLM       → ${LLM_URL:-http://localhost:11434}"
