@@ -12,7 +12,7 @@ load_dotenv(override=True)
 sys.path.insert(0, os.path.dirname(__file__))
 
 from channels.base import Message
-from crew.pipeline import Pipeline
+from agent.pipeline import Pipeline
 
 WEBHOOK_TOKEN = os.getenv("WHATSAPP_WEBHOOK_TOKEN", "mysecrettoken")
 MESSENGER_WEBHOOK_TOKEN = os.getenv("MESSENGER_WEBHOOK_TOKEN", WEBHOOK_TOKEN)

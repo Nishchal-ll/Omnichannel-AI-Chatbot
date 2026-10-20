@@ -10,7 +10,7 @@ load_dotenv(override=True)
 sys.path.insert(0, os.path.dirname(__file__))
 
 from channels.email import EmailChannel
-from crew.pipeline import Pipeline
+from agent.pipeline import Pipeline
 
 POLL_INTERVAL = int(os.getenv("EMAIL_POLL_INTERVAL", "60"))
 email_channel = EmailChannel()
