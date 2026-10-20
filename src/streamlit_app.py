@@ -13,12 +13,12 @@ sys.path.insert(0, os.path.dirname(__file__))
 import store
 from channels.base import Message
 from channels.registry import get_channel
-from crew.pipeline import Pipeline
+from agent.pipeline import Pipeline
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="AutoBot",
-    page_icon="💬",
+    page_title="Naasa Securities (Broker 58) Support",
+    page_icon="📈",
     layout="wide",
     initial_sidebar_state="expanded",
 )
