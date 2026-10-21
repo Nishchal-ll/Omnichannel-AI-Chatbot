@@ -1,286 +1,172 @@
-# CrewAI Customer Bot
+# Naasa Securities (Broker 58) AI Support Agent
 
-A lightweight WhatsApp + Email customer support bot built with CrewAI and a local Ollama LLM (`gemma4:e2b` / `gemma4:e2b-it-qat`).
+An intelligent, multi-turn AI customer support agent for **Naasa Securities Co. Ltd. (Broker No. 58)** — one of Nepal's premier stock brokerage firms operating under the Nepal Stock Exchange (NEPSE) and Securities Board of Nepal (SEBON).
 
-## Project Overview
+Powered directly by a local **Ollama Gemma 4 (`gemma4:e2b`)** model with an in-memory session buffer, pronoun query contextualizer, and section-aware **ChromaDB RAG** knowledge engine.
 
-This repository provides a simple customer support assistant that:
-- receives WhatsApp messages through a Meta webhook,
-- polls Gmail for unread emails,
-- classifies each incoming message,
-- generates a concise reply using a local LLM,
-- sends the reply back through the original channel,
-- stores message history in `data/messages.json`,
-- exposes a Streamlit dashboard for monitoring and retries.
+---
 
-This project is designed for rapid prototyping, not production-grade scaling.
+## 1. Architectural Highlights
 
-## Architecture
+The system follows the decoupled cognitive architecture outlined in `pipeline_analysis_and_architecture_documentation.md`:
 
-### Core components
-
-- `src/webhook_server.py`
-  - FastAPI server exposing `/webhook` for WhatsApp inbound events.
-  - Creates unified `Message` objects and passes them to the `Pipeline`.
-
-- `src/email_poller.py`
-  - Polls Gmail every `EMAIL_POLL_INTERVAL` seconds.
-  - Fetches unread emails, converts them to `Message` objects, and processes them through the same pipeline.
-
-- `src/crew/pipeline.py`
-  - Main message processing entry point.
-  - Adds messages to `store`, creates classifier/responder agents, runs CrewAI, sends replies, and persists status.
-
-- `src/crew/agents.py`
-  - Defines two CrewAI agents:
-    - `ClassifierAgent` for intent/tone/topic classification.
-    - `ResponderAgent` for generating the reply.
-  - Both agents use the local LLM via `src/crew/llm.py`.
-
-- `src/crew/tasks.py`
-  - Defines the classification and response tasks for CrewAI.
-  - The response task uses the classifier output as context.
-
-- `src/crew/llm.py`
-  - Wraps CrewAI's `LLM` class for local Ollama's OpenAI-compatible endpoint (`/v1`).
-  - Reads `LLM_URL` (default `http://localhost:11434`) and `LLM_MODEL` (default `gemma4:e2b`) from `.env`.
-
-- `src/channels/whatsapp.py`
-  - Sends reply text to WhatsApp using the Meta Cloud API.
-
-- `src/channels/email.py`
-  - Fetches unread Gmail messages and sends email replies.
-
-- `src/store.py`
-  - Persists message state in `data/messages.json`.
-  - Stores payload, reply, status, and timestamp.
-
-- `src/streamlit_app.py`
-  - Dashboard for viewing WhatsApp and email messages.
-  - Allows retrying failed or pending replies manually.
-
-## Installation
-
-### Requirements
-
-- Python 3.11+ recommended
-- Docker + Docker Compose (optional)
-- `requirements.txt` includes:
-  - `crewai`
-  - `crewai-tools`
-  - `langchain-openai`
-  - `fastapi`
-  - `uvicorn`
-  - `streamlit`
-  - `python-dotenv`
-  - `requests`
-
-### Environment
-
-Copy `.env.example` to `.env` and fill in credentials:
-
-```bash
-cp .env.example .env
+```mermaid
+flowchart TD
+    A["Customer Message\n(WhatsApp / Messenger / Email / CLI)"] --> B["Agent Pipeline\n(src/agent/pipeline.py)"]
+    
+    subgraph S1 ["Stage 1: Session & Context Management"]
+        B --> C1["SessionBuffer\n(Multi-Turn Dialogue History)"]
+        B --> C2["Contact / User Store\n(Client Code, Phone, Details)"]
+        C1 --> C3["Intent Router & Query Rewriter"]
+        C3 -->|"Pronoun / Ambiguous Turn"| C4["Standalone Resolved Query"]
+    end
+    
+    subgraph S2 ["Stage 2: Naasa Broker 58 RAG Engine"]
+        C4 --> D1["ChromaDB Vector Store\n(data/knowledge/*.md)"]
+        D1 --> D2["Section-Aware Chunks\n(## Header Preserved)"]
+        D2 --> D3["Cosine Distance Filter\n(Max distance 0.85)"]
+    end
+    
+    subgraph S3 ["Stage 3: Ollama Gemma 4 Cognitive Brain"]
+        C3 -->|"Fast-Path Greeting"| E1["Fast Anchor (0ms)"]
+        D3 --> E2["Prompt Builder\n(Persona + Strict Grounding + Few-Shots)"]
+        E2 --> E3["Direct Ollama Client\n(gemma4:e2b @ :11434)"]
+        E3 --> E4["Reasoning Watchdog & Parser"]
+    end
+    
+    E1 --> F["Audited Message Store\n(data/messages.json)"]
+    E4 --> F
+    F --> G["Channel Sender\n(Meta Cloud API / Gmail SMTP)"]
+    F --> H["Streamlit Support Dashboard\n(:8501)"]
 ```
 
-Required values:
-- `WHATSAPP_ACCESS_TOKEN`
-- `WHATSAPP_PHONE_ID`
-- `WHATSAPP_WEBHOOK_TOKEN`
-- `GMAIL_USER`
-- `GMAIL_APP_PASSWORD`
-- `LLM_URL`
-- `LLM_MODEL`
+### Key Capabilities:
+- **Zero-CrewAI Direct Agent**: No bloated agent frameworks or slow wrappers. Direct, low-latency REST calls to Ollama.
+- **Multi-Turn Session Memory (`SessionBuffer`)**: Preserves recent dialogue turns per customer. When a user asks *"How do I open a TMS account?"* followed by *"What documents are needed for that?"*, the rewriter resolves *"for that"* into the full context before querying vector memory.
+- **Section-Aware Markdown RAG**: Markdown files are chunked by `## Section` headers, keeping each policy, fee slab, and procedure intact with its title and context.
+- **Strict Out-of-Context Rejection Guard**: Queries unrelated to Naasa Securities / stock market (recipes, sports, world trivia, alien stories) are strictly deflected without hallucination.
+- **Reasoning Model Support**: Tuned token watchdog (`max_tokens: 1024`) allowing `gemma4:e2b-it-qat` reasoning traces to complete cleanly without truncating the answer.
+- **Automated Test Suite (`scripts/test_rag_pipeline.py`)**: End-to-end evaluation suite checking in-domain grounding, fee calculations, multi-turn resolution, contact tracking, and out-of-context guards with automated `[PASSED]` / `[FAILED]` verdicts.
 
-Optional:
-- `BOT_SYSTEM_PROMPT`
-- `EMAIL_POLL_INTERVAL`
+---
 
-### Run locally
+## 2. Naasa Securities (Broker 58) Knowledge Base
 
-Option 1: Use Docker Compose
+All domain facts are organized under `data/knowledge/`:
+1. `naasa_broker58_overview_and_contact.md`: Company profile, Lal Durbar Kathmandu head office, contact numbers (+977-1-4541243), branch network, and trading hours.
+2. `naasa_broker58_account_tms_kyc.md`: Online KYC registration, mandatory documents (citizenship, photo, bank cheque, PAN), TMS 58 portal (`https://tms58.nepsetms.com.np/`), Demat & MeroShare (DP ID: 13900).
+3. `naasa_broker58_trading_collateral_settlement.md`: Buy/sell order execution, ConnectIPS collateral management, NEPSE T+2 settlement cycle, MeroShare EDIS share transfer, and 20% close-out penalty prevention.
+4. `naasa_broker58_brokerage_fees_charges.md`: SEBON brokerage commission slabs (0.40% down to 0.24%), 0.015% SEBON regulatory fee, DP transaction charge (Rs. 25), and Capital Gains Tax (CGT - 5% / 7.5% / 10%).
+5. `naasa_broker58_faqs_troubleshooting.md`: TMS password reset procedure, collateral refund steps, NRN trading, and bank detail update workflows.
 
-```bash
-docker compose up --build
+---
+
+## 3. Directory Layout
+
+```
+ChatBot/
+├── data/
+│   ├── knowledge/              # Markdown knowledge base files
+│   └── messages.json           # Live JSON audit trail of messages & replies
+├── scripts/
+│   ├── ingest_kb.py            # Ingests markdown files into ChromaDB
+│   ├── test_rag_pipeline.py    # Automated 5-category evaluation test suite
+│   └── test_bot.py             # Interactive CLI and one-shot test script
+├── src/
+│   ├── agent/                  # Core Agent Architecture (Zero CrewAI)
+│   │   ├── ollama_client.py    # Direct REST client for Ollama Gemma 4
+│   │   ├── pipeline.py         # Main orchestrator
+│   │   ├── prompt.py           # Grounding rules, persona, few-shots
+│   │   ├── router.py           # Fast anchors, out-of-context filter, query rewriter
+│   │   └── session.py          # SessionBuffer and user contact tracking
+│   ├── channels/               # Channel adaptors (WhatsApp, Email, Messenger)
+│   ├── knowledge.py            # Section-aware chunking & ChromaDB RAG
+│   ├── store.py                # Thread-safe message persistence
+│   ├── streamlit_app.py        # Streamlit monitoring and testing dashboard
+│   ├── webhook_server.py       # FastAPI webhook receiver on port 5001
+│   └── email_poller.py         # Background Gmail IMAP polling daemon
+├── .env.example                # Configuration template
+├── docker-compose.yml          # Containerized deployment definition
+├── requirements.txt            # Lean dependency specifications
+└── start.sh                    # Unified startup script
 ```
 
-Option 2: Run with Python directly
+---
 
+## 4. Setup & Installation
+
+### Prerequisites
+- Python 3.11+
+- [Ollama](https://ollama.com/) running locally with `gemma4:e2b` (or `gemma4:e2b-it-qat`):
+  ```bash
+  ollama serve
+  ollama list
+  ```
+
+### Install Dependencies
 ```bash
-python3 -m venv venv
-source venv/bin/activate
 pip install -r requirements.txt
-python src/webhook_server.py
-python src/email_poller.py
-streamlit run src/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
 ```
 
-### Start script
-
-`start.sh` launches the webhook server, email poller, and dashboard together.
-
-```bash
-bash start.sh
-```
-
-## Message Flow
-
-1. Incoming message arrives via WhatsApp webhook or email poller.
-2. `Pipeline.process()` persists the message to `store`.
-3. A classifier agent analyzes the message intent, tone, and topics.
-4. A responder agent writes a concise reply.
-5. The reply is sent back through the same channel.
-6. `store` is updated with reply text and status.
-
-## What is currently supported
-
-- WhatsApp inbound messages via Meta webhook
-- Gmail inbound messages via polling
-- Local LLM inference through a llama.cpp-compatible OpenAI-style endpoint
-- Dashboard monitoring and manual retry
-
-## Where to find the key code
-
-- `src/crew/pipeline.py` — orchestration and routing
-- `src/crew/agents.py` — AI agents definitions
-- `src/crew/tasks.py` — classification and response tasks
-- `src/crew/llm.py` — LLM backend configuration
-- `src/channels/whatsapp.py` — WhatsApp output channel
-- `src/channels/email.py` — Gmail input/output
-- `src/store.py` — persisted message history
-- `src/streamlit_app.py` — monitoring dashboard
-
-## Adding a Coconut Oil Knowledge Base
-
-This project currently generates replies from the LLM without a specialized retrieval layer. To make the bot answer coconut oil questions quickly and accurately, add a knowledge base and inject relevant content into the response prompt.
-
-### Recommended approach
-
-1. Create a knowledge folder:
-
-```bash
-mkdir -p data/knowledge
-```
-
-2. Add coconut oil content files:
-
-- `data/knowledge/coconut_oil_faq.md`
-- `data/knowledge/coconut_oil_uses.txt`
-- `data/knowledge/coconut_oil_safety.md`
-
-3. Build a simple retrieval helper.
-
-Example idea for `src/knowledge.py`:
-
-```python
-import os
-from pathlib import Path
-
-def load_knowledge_text() -> str:
-    base = Path(__file__).resolve().parent.parent / "data" / "knowledge"
-    texts = []
-    for path in sorted(base.glob("*.md")):
-        texts.append(path.read_text(encoding="utf-8"))
-    return "\n\n".join(texts)
-
-
-def get_relevant_knowledge(query: str, top_k: int = 3) -> str:
-    # For a first version, return the whole knowledge corpus.
-    # Later you can replace this with semantic search or vector search.
-    return load_knowledge_text()
-```
-
-4. Inject knowledge into the agent prompt.
-
-Update `src/crew/tasks.py` or `src/crew/agents.py` so the `ResponderAgent` gets domain-specific context.
-
-Example prompt change:
-
-```python
-from src.knowledge import get_relevant_knowledge
-
-knowledge_snippet = get_relevant_knowledge(message.body)
-
-return Task(
-    description=(
-        "Write a reply to this customer message.\n\n"
-        f"Knowledge base: {knowledge_snippet}\n\n"
-        "Original message: {message.body}\n\n"
-        "Use the classification brief from the previous task as context.\n"
-        "Rules: ..."
-    ),
-    ...
-)
-```
-
-5. Keep the knowledge base concise and focused on coconut oil topics:
-- benefits and uses
-- extraction and purity
-- storage and shelf life
-- hair, skin, and cooking applications
-- safety, allergies, and cosmetic use
-
-### Faster retrieval
-
-For better performance and accuracy, add a real retrieval layer instead of passing the entire document every time.
-
-Options:
-- simple keyword search in `data/knowledge`
-- vector search with embeddings and top-k retrieval
-- use `crewai-tools` or an embedding library if available
-
-A typical retrieval flow is:
-
-- embed every KB paragraph or FAQ entry,
-- store vectors in a small local database,
-- at runtime, compute query embedding,
-- retrieve top 3–5 matching passages,
-- pass those passages into the LLM prompt.
-
-### Minimal working setup for coconut oil answers
-
-If you want the fastest path without adding new dependencies:
-- add a set of coconut oil FAQ text files,
-- load them in `src/crew/tasks.py`,
-- prepend the relevant knowledge to the `ResponderAgent` task description,
-- keep the prompt explicit: "Use the following coconut oil knowledge base when answering."
-
-### Example `data/knowledge/coconut_oil_faq.md`
-
-```md
-# Coconut Oil FAQ
-
-- Coconut oil is commonly used for cooking, hair care, skin moisturization, and oil pulling.
-- It can be virgin, refined, or fractionated; virgin coconut oil has a stronger aroma and more antioxidants.
-- Use it for scalp massage, dry skin, and as a natural makeup remover.
-- Store it in a cool, dark place; it solidifies below 24°C and liquefies above that.
-- Always patch-test before topical use if the customer has sensitive skin.
-```
-
-### Updating the bot for coconut oil questions
-
-1. Add coconut oil documents to `data/knowledge/`.
-2. Create `src/knowledge.py` or extend `src/crew/llm.py`.
-3. Add the knowledge snippet into the responder task prompt.
-4. Test by sending coconut oil questions via WhatsApp or email.
-
-## Notes
-
-- `data/messages.json` holds the message audit trail and is reused by Streamlit.
-- No dedicated KB retrieval exists yet; prompt injection is the simplest extension.
-- The local LLM is configured using `LLM_URL` and `LLM_MODEL`.
-
-## Useful commands
-
+### Configure Environment
+Copy `.env.example` to `.env`:
 ```bash
 cp .env.example .env
-docker compose up --build
-bash start.sh
+```
+Key configuration settings:
+- `LLM_URL`: Ollama endpoint (`http://localhost:11434` for local, `http://host.docker.internal:11434` inside Docker).
+- `LLM_MODEL`: Model tag (default `gemma4:e2b`).
+- `LLM_MAX_TOKENS`: `1024` (preserves token headroom for reasoning models).
+- `WHATSAPP_ACCESS_TOKEN` / `WHATSAPP_PHONE_ID`: (Optional) Meta Cloud API credentials.
+- `GMAIL_USER` / `GMAIL_APP_PASSWORD`: (Optional) Gmail credentials for email support.
+
+---
+
+## 5. Ingestion & Automated Verification
+
+### Step 1: Ingest Knowledge Base
+Index the Naasa Securities documents into ChromaDB:
+```bash
+python scripts/ingest_kb.py --force
 ```
 
-## Next steps for production
+### Step 2: Run the Automated Evaluation Test Suite
+Execute the dedicated evaluation script to test the complete pipeline:
+```bash
+python scripts/test_rag_pipeline.py
+```
+This tests and outputs a `[PASSED]` / `[FAILED]` verdict on:
+1. **In-Domain Fact Grounding**: Accurately reports Broker 58 and Lal Durbar, Kathmandu.
+2. **Fee Calculation Precision**: Accurately reports the 0.40% commission rate for transactions under Rs. 50,000.
+3. **Multi-Turn Pronoun Resolution**: Resolves *"for that"* into KYC document requirements without dropping context.
+4. **User Contact Persistence**: Validates that client code and phone numbers are stored in session memory.
+5. **Out-of-Context Rejection Guard**: Strictly deflects non-brokerage queries (e.g. chocolate cake recipes, world trivia) without hallucinating.
 
-- add security validation for incoming webhooks,
-- use a real vector search or embedding store,
-- add validation / retry limits for email and WhatsApp replies,
-- deploy the local llama server separately or replace with a hosted LLM provider.
+---
+
+## 6. Interactive Testing & Operations
+
+### Interactive CLI Testing
+Chat with the Naasa Securities agent directly in the terminal:
+```bash
+python scripts/test_bot.py --interactive
+```
+
+### One-Shot Query Testing
+```bash
+python scripts/test_bot.py "What is the TMS portal URL for Naasa Securities?"
+python scripts/test_bot.py "What happens if I forget to do EDIS?"
+python scripts/test_bot.py "How do I make a chocolate cake?"
+```
+
+### Running the Full System
+To start the Webhook Server (:5001), Email Poller, and Streamlit Dashboard (:8501):
+```bash
+bash start.sh
+```
+Access the dashboard at `http://localhost:8501`.
+
+---
+
+## 7. License & Compliance
+This software is built for automated customer service for Naasa Securities Co. Ltd. (Broker No. 58) in accordance with SEBON and NEPSE trading guidelines.
