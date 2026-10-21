@@ -898,5 +898,75 @@
     "reply": "The price of the coconut oil you're interested in is NPR 480 for the 250ml size.",
     "ts": "2026-06-14T10:45:14.502273",
     "status": "failed"
+  },
+  {
+    "id": "eval_test_1793009045870",
+    "channel": "eval_test",
+    "sender": "eval_user_fact_1",
+    "body": "What is your broker number and where is your head office located in Kathmandu?",
+    "subject": null,
+    "reply": "Naasa Securities Co. Ltd. is Broker No. 58. Our head office is located at Lal Colony Marga, Lal Durbar, Kathmandu, Nepal, opposite Hotel Yak & Yeti / Bhatbhateni area.",
+    "ts": "2026-10-26T15:49:05.870816",
+    "status": "saved_local"
+  },
+  {
+    "id": "eval_test_1793009084844",
+    "channel": "eval_test",
+    "sender": "eval_user_fee_2",
+    "body": "What is the brokerage commission rate for buying Rs. 40,000 worth of shares?",
+    "subject": null,
+    "reply": "For buying shares up to NPR 50,000, the SEBON-prescribed brokerage commission is 0.40%.",
+    "ts": "2026-10-26T15:49:44.844124",
+    "status": "saved_local"
+  },
+  {
+    "id": "eval_test_1793009115640",
+    "channel": "eval_test",
+    "sender": "eval_user_multiturn_3",
+    "body": "How can I open an online TMS account with Naasa Securities?",
+    "subject": null,
+    "reply": "Non-Resident Nepalese (NRN) and Nepalese working abroad can open TMS trading accounts online with Naasa Securities. The required documents typically include a valid Nepali Passport, a valid foreign visa or work permit, an NRN ID card (if applicable), a Nepalese citizenship certificate, and an NRN convertible bank account in Nepal.",
+    "ts": "2026-10-26T15:50:15.640080",
+    "status": "saved_local"
+  },
+  {
+    "id": "eval_test_1793009157625",
+    "channel": "eval_test",
+    "sender": "eval_user_multiturn_3",
+    "body": "What documents are required to upload for that?",
+    "subject": null,
+    "reply": "To open an online TMS account for Non-Resident Nepalese (NRN) trading, you will need the following documents: a valid Nepali Passport, a valid foreign visa or work permit, an NRN ID card (if applicable), a Nepalese citizenship certificate, and an NRN convertible bank account in Nepal.",
+    "ts": "2026-10-26T15:50:57.625035",
+    "status": "saved_local"
+  },
+  {
+    "id": "eval_test_1793009184575",
+    "channel": "eval_test",
+    "sender": "eval_user_contact_4",
+    "body": "Hello, my name is Sita Shrestha, client code is 589922 and phone is 9841234567. Please check my account.",
+    "subject": null,
+    "reply": "Thank you for providing your details. For account-specific inquiries, such as checking your account status or balance, I will check with our Naasa Securities support team and get back to you shortly. You can also reach us via our Customer Support Hotline at +977-9801158580.",
+    "ts": "2026-10-26T15:51:24.575611",
+    "status": "saved_local"
+  },
+  {
+    "id": "eval_test_1793009213417",
+    "channel": "eval_test",
+    "sender": "eval_user_ooc_5",
+    "body": "Can you give me a step-by-step recipe to bake a chocolate cake at home?",
+    "subject": null,
+    "reply": "I am the assistant for Naasa Securities (Broker 58). I can only assist with Naasa Securities brokerage services, TMS 58, online KYC, Demat, and NEPSE trading.",
+    "ts": "2026-10-26T15:51:53.417898",
+    "status": "saved_local"
+  },
+  {
+    "id": "eval_test_1793009213421",
+    "channel": "eval_test",
+    "sender": "eval_user_ooc_6",
+    "body": "What is the capital city of France?",
+    "subject": null,
+    "reply": "I am the assistant for Naasa Securities (Broker 58). I can only assist with Naasa Securities brokerage services, TMS 58, online KYC, Demat, and NEPSE trading.",
+    "ts": "2026-10-26T15:51:53.421113",
+    "status": "saved_local"
   }
 ]
