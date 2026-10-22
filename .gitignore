@@ -15,6 +15,10 @@ __pycache__/
 # ChromaDB local vectors database
 chroma_db/
 
+# SQLite runtime databases
+data/chat.db*
+data/messages.json
+
 # Streamlit
 .streamlit/
 
