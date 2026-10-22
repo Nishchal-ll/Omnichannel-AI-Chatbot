@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lionel Messi — Cognitive Brain Chat & Diagnostics</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22><text y=%2222%22 font-size=%2222%22>⚽</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="nav-logo">⚽</div>
+      <div>
+        <div class="nav-title">Lionel Messi — Cognitive AI Brain & Diagnostics</div>
+        <div class="nav-sub">Gemma 4 E2B · ChromaDB Knowledge RAG · SQLite Brain Memory MESH</div>
+      </div>
+    </div>
+
+    <div class="nav-status-group">
+      <div class="status-badge" id="ollama-status-badge">
+        <span class="status-dot active"></span>
+        <span id="ollama-status-text">Ollama: gemma4:e2b</span>
+      </div>
+      <div class="status-badge" id="rag-status-badge">
+        <span class="status-dot active"></span>
+        <span id="rag-status-text">RAG: 12 Chunks</span>
+      </div>
+      <div class="status-badge" id="wa-status-badge" title="WhatsApp Channel is preserved and ready">
+        <span class="status-dot active"></span>
+        <span>WhatsApp: Preserved</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace (Dual-Pane) -->
+  <main class="workspace">
+
+    <!-- Left Pane: Modern Clean Chat Interface -->
+    <section class="chat-pane">
+      <!-- Chat Profile & User Context Switcher Header -->
+      <div class="chat-top-bar">
+        <div class="chat-user-picker">
+          <label for="user-select">Active User Profile:</label>
+          <select id="user-select" class="user-dropdown">
+            <option value="Nishchal">Nishchal</option>
+            <option value="user_guest">Guest User</option>
+          </select>
+          <button id="add-user-btn" class="secondary-btn" title="Create a new user profile">+ New User</button>
+        </div>
+
+        <div class="chat-actions">
+          <button id="clear-history-btn" class="text-btn" title="Clear current dialogue history">🗑️ Clear Chat</button>
+          <button id="clear-memories-btn" class="text-btn danger-text" title="Clear saved user facts in database">🧠 Clear Memories</button>
+        </div>
+      </div>
+
+      <!-- Quick Suggestion Chips -->
+      <div class="prompt-chips-bar">
+        <button class="chip" data-query="How many Ballon d'Ors has Messi won?">🏆 Ballon d'Or count</button>
+        <button class="chip" data-query="What did Messi achieve with Argentina in 2022?">🇦🇷 2022 World Cup</button>
+        <button class="chip" data-query="Remember that my name is Nishchal and I support Barcelona">🧠 Save Fact: Nishchal / Barca</button>
+        <button class="chip" data-query="What do you remember about me?">❓ Recall my memories</button>
+        <button class="chip" data-query="Which club did he join in 2023?">⚽ Club in 2023</button>
+      </div>
+
+      <!-- Dialogue History Stream -->
+      <div id="chat-messages" class="chat-messages-container">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Chat Input Area -->
+      <div class="chat-input-area">
+        <form id="chat-form" class="chat-form">
+          <input 
+            type="text" 
+            id="chat-input" 
+            class="chat-text-input" 
+            placeholder="Ask Messi AI a question or store facts (e.g., 'Remember that my name is Nishchal')..." 
+            autocomplete="off"
+          />
+          <button type="submit" id="send-btn" class="send-btn">
+            <span>Send</span>
+            <span>🚀</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Right Pane: Real-Time Telemetry & Brain Memory Inspector -->
+    <section class="diagnostics-pane">
+      
+      <!-- Diagnostic Tabs Header -->
+      <div class="diag-tabs-header">
+        <button class="diag-tab active" data-tab="tab-telemetry">⚡ Telemetry & Latency</button>
+        <button class="diag-tab" data-tab="tab-memory">🧠 Brain Memories (<span id="mem-count-badge">0</span>)</button>
+        <button class="diag-tab" data-tab="tab-context">📚 RAG Chunks (<span id="chunks-count-badge">0</span>)</button>
+      </div>
+
+      <!-- Tab Content 1: Telemetry & Latency Waterfall -->
+      <div id="tab-telemetry" class="diag-tab-content active">
+        <div id="diag-summary-card" class="diag-card">
+          <div class="diag-card-title">Turn Execution Overview</div>
+          <div class="metric-grid">
+            <div class="metric-box">
+              <div class="metric-label">Total Latency</div>
+              <div class="metric-value" id="metric-total-time">—</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Path Type</div>
+              <div class="metric-value highlight" id="metric-path-type">—</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">LLM Speed</div>
+              <div class="metric-value" id="metric-speed">—</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Completion Tokens</div>
+              <div class="metric-value" id="metric-tokens">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="diag-card">
+          <div class="diag-card-title">Latency Waterfall (Stages)</div>
+          <div id="waterfall-bars" class="waterfall-container">
+            <div class="placeholder-text">Send a message to view the millisecond latency breakdown per stage.</div>
+          </div>
+        </div>
+
+        <div class="diag-card">
+          <div class="diag-card-title">Stage Timings Table</div>
+          <table class="diag-table" id="diag-stages-table">
+            <thead>
+              <tr>
+                <th>Execution Stage</th>
+                <th>Duration</th>
+                <th>Percent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="3" class="placeholder-text">No turn executed yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab Content 2: Brain Memories Inspector -->
+      <div id="tab-memory" class="diag-tab-content">
+        <div class="diag-card">
+          <div class="card-header-flex">
+            <div>
+              <div class="diag-card-title">Persistent Brain Memories (SQLite)</div>
+              <div class="card-subtitle">Stored in <code>data/chat.db</code> for the active user. Injected into every turn's prompt.</div>
+            </div>
+            <button id="refresh-mem-btn" class="small-btn">🔄 Refresh</button>
+          </div>
+          <div id="memories-list" class="memories-container">
+            <div class="placeholder-text">No long-term memories saved for this user yet. Try saying: <em>"Remember that my favorite club is Barcelona"</em>.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content 3: RAG Retrieved Chunks -->
+      <div id="tab-context" class="diag-tab-content">
+        <div class="diag-card">
+          <div class="diag-card-title">ChromaDB Knowledge Retrieval</div>
+          <div class="card-subtitle" id="rag-query-subtitle">Standalone Query: —</div>
+          <div id="rag-chunks-list" class="chunks-container">
+            <div class="placeholder-text">Retrieval results will appear here after a knowledge question.</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
