@@ -968,5 +968,1288 @@
     "reply": "I am the assistant for Naasa Securities (Broker 58). I can only assist with Naasa Securities brokerage services, TMS 58, online KYC, Demat, and NEPSE trading.",
     "ts": "2026-10-26T15:51:53.421113",
     "status": "saved_local"
+  },
+  {
+    "id": "whatsapp_1793080782042",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Hiii",
+    "subject": null,
+    "reply": "I am the assistant for Naasa Securities (Broker 58). I can only assist with Naasa Securities brokerage services, TMS 58, online KYC, Demat, and NEPSE trading. How may I help you with your stock market needs today?",
+    "ts": "2026-10-27T11:44:42.042031",
+    "status": "replied"
+  },
+  {
+    "id": "whatsapp_1793080848122",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Is office open now?",
+    "subject": null,
+    "reply": "Naasa Securities trading days are Sunday to Thursday from 10:00 AM to 5:00 PM. For Friday, administrative and account queries are available from 10:00 AM to 3:00 PM. Please note that the office is closed on Saturdays and public holidays.",
+    "ts": "2026-10-27T11:45:48.122992",
+    "status": "replied"
+  },
+  {
+    "id": "whatsapp_1793080920366",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Give me the contact number",
+    "subject": null,
+    "reply": "We have several contact options available for Naasa Securities. You can reach our Customer Support Hotline at +977-9801158580 or via WhatsApp at the same number. Our official landline numbers are +977-1-4541243, +977-1-4541244, and +977-1-4541245.",
+    "ts": "2026-10-27T11:47:00.366256",
+    "status": "replied"
+  },
+  {
+    "id": "whatsapp_1793081030946",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Hiiii",
+    "subject": null,
+    "reply": "I am the assistant for Naasa Securities (Broker 58). I can only assist with Naasa Securities brokerage services, TMS 58, online KYC, Demat, and NEPSE trading. How may I help you with your investment needs today?",
+    "ts": "2026-10-27T11:48:50.946600",
+    "status": "replied"
+  },
+  {
+    "id": "whatsapp_1793081347986",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "What is computer",
+    "subject": null,
+    "reply": "I will check with our Naasa Securities support team and get back to you shortly.",
+    "ts": "2026-10-27T11:54:07.986575",
+    "status": "replied"
+  },
+  {
+    "id": "whatsapp_1793531066608",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Hiii",
+    "subject": null,
+    "reply": "Hello! I am the official Customer Support Assistant for Naasa Securities Co. Ltd. (Broker No. 58). How can I assist you today with our brokerage services, TMS 58, online KYC, Demat, or NEPSE trading?",
+    "ts": "2026-11-01T16:49:26.608890",
+    "status": "replied"
+  },
+  {
+    "id": "whatsapp_1793532180030",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Hii",
+    "subject": null,
+    "reply": "Hello! I am the official Customer Support Assistant for Naasa Securities Co. Ltd. (Broker No. 58). How may I assist you with our brokerage services, TMS 58, online KYC, Demat, or NEPSE trading today?",
+    "ts": "2026-11-01T17:08:00.030540",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 42404.9,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 1.2,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 1796.5,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 39106.0,
+        "channel_dispatch_ms": 1497.5
+      },
+      "tokens": {
+        "prompt_tokens": 743,
+        "completion_tokens": 309,
+        "total_tokens": 1052,
+        "tokens_per_sec": 7.9,
+        "had_reasoning": true
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "Overview",
+          "Demat and MeroShare Services",
+          "Head Office Location"
+        ],
+        "top_distance": 0.788
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793532501788",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Hii",
+    "subject": null,
+    "reply": "Hello! I am the official Customer Support Assistant for Naasa Securities Co. Ltd. (Broker No. 58). How can I assist you with your trading queries, account services, or any other matter related to Naasa Securities?",
+    "ts": "2026-11-01T17:13:21.788970",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 32061.5,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.2,
+        "rewrite_ms": 0.2,
+        "rag_retrieval_ms": 48.0,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 30312.2,
+        "channel_dispatch_ms": 1698.3
+      },
+      "tokens": {
+        "prompt_tokens": 657,
+        "completion_tokens": 385,
+        "total_tokens": 1042,
+        "tokens_per_sec": 12.7,
+        "had_reasoning": true
+      },
+      "rag": {
+        "chunks_found": 2,
+        "sources": [
+          "Overview",
+          "Overview"
+        ],
+        "top_distance": 0.7919
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": "Hii -> Hii"
+    }
+  },
+  {
+    "id": "whatsapp_1793532637511",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Namaste, good morning!",
+    "subject": null,
+    "reply": "Good morning! How may I assist you with your Naasa Securities needs today? We are here to help with brokerage services, TMS 58, online KYC, Demat, and NEPSE trading.",
+    "ts": "2026-11-01T17:15:37.511952",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 24776.9,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.7,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 99.3,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 23185.5,
+        "channel_dispatch_ms": 1491.0
+      },
+      "tokens": {
+        "prompt_tokens": 748,
+        "completion_tokens": 282,
+        "total_tokens": 1030,
+        "tokens_per_sec": 12.16,
+        "had_reasoning": true,
+        "reasoning": "Thinking Process:\n1.  **Analyze the user input:** The user said \"Namaste, good morning!\" This is a general greeting.\n2.  **Determine the required response:** As a Customer Support Assistant for Naasa Securities, the response should be polite, professional, and maintain the persona.\n3.  **Check constraints:**\n    *   Base facts on the knowledge base. (Not applicable here, just a greeting).\n    *   Maintain a polite, professional, and concise tone (2 to 4 sentences).\n    *   Reply in the same language (English/Nepali).\n4.  **Formulate the response:** Acknowledge the greeting and offer assistance related to the firm's services.\n\n*Drafting the response:* Good morning! How may I assist you with your Naasa Securities needs today? We are here to help with brokerage services, TMS 58, online KYC, Demat, and NEPSE trading.\n\n5.  **Final Review:** The response is polite, professional, concise, and adheres to the role. (Self-Correction: Keep it brief and focused on the service scope.)"
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "Contact Information",
+          "Overview",
+          "Overview"
+        ],
+        "top_distance": 0.7847,
+        "chunks": [
+          {
+            "title": "Contact Information",
+            "source": "naasa_broker58_overview_and_contact.md",
+            "distance": 0.7847,
+            "snippet": ""
+          },
+          {
+            "title": "Overview",
+            "source": "naasa_broker58_overview_and_contact.md",
+            "distance": 0.7867,
+            "snippet": ""
+          },
+          {
+            "title": "Overview",
+            "source": "naasa_broker58_account_tms_kyc.md",
+            "distance": 0.7962,
+            "snippet": ""
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793532775574",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "hiii",
+    "subject": null,
+    "reply": "Hello! I am the Customer Support Assistant for Naasa Securities Co. Ltd. (Broker No. 58). How may I assist you with your brokerage services, TMS 58, online KYC, Demat, or NEPSE trading today?",
+    "ts": "2026-11-01T17:17:55.574251",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 37456.3,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 1.4,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 1870.5,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 34179.4,
+        "channel_dispatch_ms": 1404.5
+      },
+      "tokens": {
+        "prompt_tokens": 772,
+        "completion_tokens": 418,
+        "total_tokens": 1190,
+        "tokens_per_sec": 12.23,
+        "had_reasoning": true,
+        "reasoning": "Thinking Process:\n\n1.  **Analyze the Request:** The user sent a simple greeting (\"hiii\").\n2.  **Determine the Persona/Role:** I am the official, helpful, and courteous Customer Support Assistant for Naasa Securities Co. Ltd. (Broker No. 58).\n3.  **Review Core Operational Rules:**\n    *   Base facts strictly on the knowledge base.\n    *   If the question cannot be answered, state: \"I will check with our Naasa Securities support team and get back to you shortly.\"\n    *   If the user asks about unrelated topics (recipes, general trivia, sports, politics, weather, visas), strictly state: \"I am the assistant for Naasa Securities (Broker 58). I can only assist with Naasa Securities brokerage services, TMS 58, online KYC, Demat, and NEPSE trading.\"\n    *   Maintain a polite, professional, and concise tone (2 to 4 sentences).\n    *   Reply in the same language.\n4.  **Evaluate the Input against Rules:** A simple greeting is not a query about brokerage services. However, the rules emphasize staying within the scope of the brokerage.\n5.  **Formulate the Response:** Acknowledge the greeting politely and prompt the user to ask a relevant question, reinforcing the scope of service. (Since the rules don't explicitly require a specific response to a greeting, a polite acknowledgment is appropriate, but I must remain ready to pivot back to brokerage services.)\n\n*Self-Correction/Refinement:* Since the goal is to be helpful and professional, I should respond warmly while subtly reminding them of my function.\n\n6.  **Final Output Generation.** (Keep it concise and professional.)"
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "Overview",
+          "Demat and MeroShare Services",
+          "About Naasa Securities"
+        ],
+        "top_distance": 0.7584,
+        "chunks": [
+          {
+            "title": "Overview",
+            "source": "naasa_broker58_overview_and_contact.md",
+            "distance": 0.7584,
+            "snippet": "[Overview]\n# Naasa Securities Co. Ltd. (Broker No. 58) - Corporate Overview & Contacts"
+          },
+          {
+            "title": "Demat and MeroShare Services",
+            "source": "naasa_broker58_account_tms_kyc.md",
+            "distance": 0.8133,
+            "snippet": "[Demat and MeroShare Services]\n- Depository Participant (DP) Name: Naasa Securities Co. Ltd.\n- DP ID: 13900.\n- Clients can open both Demat and MeroShare accounts simultaneously through Naasa Securities.\n- MeroShare portal: https://meroshare.cdsc.com."
+          },
+          {
+            "title": "About Naasa Securities",
+            "source": "naasa_broker58_overview_and_contact.md",
+            "distance": 0.8322,
+            "snippet": "[About Naasa Securities]\nNaasa Securities Co. Ltd. is one of the leading and premier stock brokerage firms in Nepal, operating as registered Member No. 58 of the Nepal Stock Exchange (NEPSE). Naasa Securities is licensed and regulated by the Securiti"
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793533223975",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "hiii",
+    "subject": null,
+    "reply": "Namaste! Welcome to Naasa Securities (Broker No. 58). How can I assist you with your TMS account, KYC, Demat, trading, or settlement today?",
+    "ts": "2026-11-01T17:25:23.975679",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 1718.0,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.8,
+        "channel_dispatch_ms": 1717.1
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793533251721",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "What is the DP ID for Naasa Securities?",
+    "subject": null,
+    "reply": "The Depository Participant (DP) ID for Naasa Securities Co. Ltd. is 13900.",
+    "ts": "2026-11-01T17:25:51.721510",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 2.5,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.7,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793533272041",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Explain the steps to update my KYC online for TMS account.",
+    "subject": null,
+    "reply": "I will check with our Naasa Securities support team and get back to you shortly.",
+    "ts": "2026-11-01T17:26:12.041573",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 30747.8,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.7,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 82.1,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 30662.9,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "prompt_tokens": 904,
+        "completion_tokens": 200,
+        "total_tokens": 1104,
+        "tokens_per_sec": 6.52,
+        "had_reasoning": true,
+        "reasoning": "Thinking Process:\n\n1.  **Analyze the Request:** The user wants to know the steps to update their KYC online for their TMS account.\n2.  **Consult the Knowledge Base (KB):** I need to find the section related to \"Online KYC Registration Process\" and \"Bank Account or Contact Details Update.\"\n3.  **Extract Relevant Information (Online KYC):**\n    *   Visit https://tms58.nepsetms.com.np/ and click on \"New Registration\" / \"Register\".\n    *   Select Client Type (Individual, Institutional, or NRN).\n    *   Fill in General Details (Full name, mobile number, email address, date of birth, permanent/current address).\n    *   Fill in Bank Details (Bank name, account number, branch name).\n    *   Fill in Depository Details (16-digit BOID / Demat Number).\n    *   Upload Mandatory"
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "Account Verification Timeline",
+          "Bank Account or Contact Details Update",
+          "Online KYC Registration Process"
+        ],
+        "top_distance": 0.3406,
+        "chunks": [
+          {
+            "title": "Account Verification Timeline",
+            "source": "naasa_broker58_account_tms_kyc.md",
+            "distance": 0.3406,
+            "snippet": "[Account Verification Timeline]\n- Account review and verification typically takes 24 to 48 working hours after online KYC submission.\n- Once approved, the client receives an automated email from NEPSE TMS 58 containing the username, default password,"
+          },
+          {
+            "title": "Bank Account or Contact Details Update",
+            "source": "naasa_broker58_faqs_troubleshooting.md",
+            "distance": 0.4251,
+            "snippet": "[Bank Account or Contact Details Update]\n- To change or update your bank account or registered mobile number in TMS:\n- Send a formal request email to support@naasasecurities.com.np with an attached scanned copy of your citizenship certificate and a c"
+          },
+          {
+            "title": "Online KYC Registration Process",
+            "source": "naasa_broker58_account_tms_kyc.md",
+            "distance": 0.4319,
+            "snippet": "[Online KYC Registration Process]\n1. Visit https://tms58.nepsetms.com.np/ and click on \"New Registration\" / \"Register\".\n2. Select Client Type: Individual, Institutional, or Non-Resident Nepalese (NRN).\n3. Fill in General Details: Full name, mobile nu"
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793533392621",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "hiii",
+    "subject": null,
+    "reply": "Hello! I am the Customer Support Assistant for Naasa Securities Co. Ltd. (Broker No. 58). How may I assist you with your brokerage services, TMS 58, online KYC, Demat, or NEPSE trading today?",
+    "ts": "2026-11-01T17:28:12.621164",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 36324.9,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.9,
+        "rewrite_ms": 0.1,
+        "rag_retrieval_ms": 82.1,
+        "prompt_build_ms": 0.1,
+        "llm_inference_ms": 34784.5,
+        "channel_dispatch_ms": 1456.8
+      },
+      "tokens": {
+        "prompt_tokens": 682,
+        "completion_tokens": 426,
+        "total_tokens": 1108,
+        "tokens_per_sec": 12.25,
+        "had_reasoning": true,
+        "reasoning": "Thinking Process:\n\n1.  **Analyze the Request:** The user sent \"hiii\". This is a general greeting.\n2.  **Determine the Persona/Role:** I am the official, helpful, and courteous Customer Support Assistant for Naasa Securities Co. Ltd. (Broker No. 58).\n3.  **Review Core Operational Rules:**\n    *   Base facts on the knowledge base.\n    *   If the question cannot be answered, state: \"I will check with our Naasa Securities support team and get back to you shortly.\"\n    *   If the user asks about unrelated topics (recipes, trivia, sports, politics, weather, visas), strictly state: \"I am the assistant for Naasa Securities (Broker 58). I can only assist with Naasa Securities brokerage services, TMS 58, online KYC, Demat, and NEPSE trading.\"\n    *   Maintain a polite, professional, and concise tone (2 to 4 sentences).\n    *   Reply in the same language (English).\n4.  **Formulate the Response:** Since the input is just a greeting, the best approach is to acknowledge the greeting and prompt the user to state their specific need, adhering to the professional tone and scope of service.\n5.  **Draft the Response (Self-Correction/Refinement):** Keep it brief and focused on the services offered. (The previous response was good, but this one should be slightly more proactive.)\n\n*Draft:* Hello! I am the Customer Support Assistant for Naasa Securities Co. Ltd. (Broker No. 58). How can I assist you with your brokerage services, TMS 58, online KYC, Demat, or NEPSE trading today? (This aligns perfectly with the established protocol.)"
+      },
+      "rag": {
+        "chunks_found": 2,
+        "sources": [
+          "Overview",
+          "Head Office Location"
+        ],
+        "top_distance": 0.7691,
+        "chunks": [
+          {
+            "title": "Overview",
+            "source": "naasa_broker58_overview_and_contact.md",
+            "distance": 0.7691,
+            "snippet": "[Overview]\n# Naasa Securities Co. Ltd. (Broker No. 58) - Corporate Overview & Contacts"
+          },
+          {
+            "title": "Head Office Location",
+            "source": "naasa_broker58_overview_and_contact.md",
+            "distance": 0.8305,
+            "snippet": "[Head Office Location]\n- Address: Lal Colony Marga, Lal Durbar, Kathmandu, Nepal (Opposite to Hotel Yak & Yeti / Bhatbhateni area).\n- Postal Code: 44600, Kathmandu."
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": "hiii -> hiii"
+    }
+  },
+  {
+    "id": "whatsapp_1793533462600",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "hiii",
+    "subject": null,
+    "reply": "Namaste! Welcome to Naasa Securities (Broker No. 58). How can I assist you with your TMS account, KYC, Demat, trading, or settlement today?",
+    "ts": "2026-11-01T17:29:22.600845",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 1618.2,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 1.3,
+        "channel_dispatch_ms": 1616.8
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793533475203",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "where is your office",
+    "subject": null,
+    "reply": "Naasa Securities Co. Ltd. (Broker 58) head office is located at Naxal, Kathmandu, Nepal.",
+    "ts": "2026-11-01T17:29:35.203704",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 1477.2,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.2,
+        "channel_dispatch_ms": 1476.9
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793533487072",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "how to open tms account",
+    "subject": null,
+    "reply": "6.  **Final Check:** Ensure the response is concise (",
+    "ts": "2026-11-01T17:29:47.072542",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 25222.2,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.2,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 1772.4,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 21996.7,
+        "channel_dispatch_ms": 1452.5
+      },
+      "tokens": {
+        "prompt_tokens": 1029,
+        "completion_tokens": 200,
+        "total_tokens": 1229,
+        "tokens_per_sec": 9.09,
+        "had_reasoning": true,
+        "reasoning": "Thinking Process:\n1.  **Analyze the Request:** The user is asking \"how to open tms account\".\n2.  **Consult Knowledge Base:** I need to check the provided knowledge base for information on opening a TMS account.\n    *   Knowledge Base sections:\n        *   How to Reset TMS 58 Password\n        *   Bank Account or Contact Details Update\n        *   Collateral Management & Loading\n3.  **Evaluate Findings:** The knowledge base does not contain a procedure for \"How to open a TMS account.\"\n4.  **Determine Action based on Rules:** Rule 2 states: \"If the user's question cannot be answered from the provided knowledge, politely state: 'I will check with our Naasa Securities support team and get back to you shortly.'\"\n5.  **Formulate Response:** Apply the required polite refusal/redirection.\n6.  **Final Check:** Ensure the response is concise ("
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "How to Reset TMS 58 Password",
+          "Bank Account or Contact Details Update",
+          "Collateral Management & Loading"
+        ],
+        "top_distance": 0.3663,
+        "chunks": [
+          {
+            "title": "How to Reset TMS 58 Password",
+            "source": "naasa_broker58_faqs_troubleshooting.md",
+            "distance": 0.3663,
+            "snippet": "[How to Reset TMS 58 Password]\nIf you have forgotten your password or your account is locked:\n1. Visit https://tms58.nepsetms.com.np/.\n2. Click on the \"Forgot Password\" link on the login page.\n3. Enter your Client Code and registered Email Address.\n4"
+          },
+          {
+            "title": "Bank Account or Contact Details Update",
+            "source": "naasa_broker58_faqs_troubleshooting.md",
+            "distance": 0.3816,
+            "snippet": "[Bank Account or Contact Details Update]\n- To change or update your bank account or registered mobile number in TMS:\n- Send a formal request email to support@naasasecurities.com.np with an attached scanned copy of your citizenship certificate and a c"
+          },
+          {
+            "title": "Collateral Management & Loading",
+            "source": "naasa_broker58_trading_collateral_settlement.md",
+            "distance": 0.5093,
+            "snippet": "[Collateral Management & Loading]\n- To place Buy orders, clients must maintain sufficient collateral in TMS 58.\n- Loading Collateral via ConnectIPS:\n  1. Log into TMS 58.\n  2. Navigate to \"Fund Management\" -> \"Collateral Management\" -> \"Load Collater"
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793615856693",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "hiii",
+    "subject": null,
+    "reply": "Hello! Welcome to the Lionel Messi AI Knowledge Assistant. How can I assist you with facts, statistics, trophies, or records from Lionel Messi's career?",
+    "ts": "2026-11-02T16:22:36.693391",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 2.2,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.3,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793615856697",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "How many Ballon d'Or awards has Messi won in total?",
+    "subject": null,
+    "reply": "Lionel Messi has won a world-record 8 Ballon d'Or awards (2009, 2010, 2011, 2012, 2015, 2019, 2021, and 2023). [Individual Awards and Honors]",
+    "ts": "2026-11-02T16:22:36.697593",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 1.9,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.0,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793615856701",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Which club does Messi play for now?",
+    "subject": null,
+    "reply": "Lionel Messi currently plays for Major League Soccer (MLS) club Inter Miami CF in the United States, wearing jersey number 10. [Inter Miami CF and Major League Soccer]",
+    "ts": "2026-11-02T16:22:36.701414",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 2.1,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.0,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793615856706",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "What is the world record for most goals in a calendar year held by Messi?",
+    "subject": null,
+    "reply": "I don't have enough verified information about that in the knowledge base.",
+    "ts": "2026-11-02T16:22:36.706481",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 37426.6,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.1,
+        "rewrite_ms": 0.2,
+        "rag_retrieval_ms": 1611.8,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 35810.9,
+        "channel_dispatch_ms": 0.7
+      },
+      "tokens": {
+        "prompt_tokens": 1258,
+        "completion_tokens": 200,
+        "total_tokens": 1458,
+        "tokens_per_sec": 5.58,
+        "had_reasoning": true,
+        "reasoning": "Thinking Process:\n\n1.  **Analyze the Request:** The user is asking for Lionel Messi's world record for the most goals in a calendar year.\n2.  **Consult the Knowledge Context:** I must check the provided text (FC Barcelona Career, PSG Era) for any mention of Messi's goal-scoring records or specific calendar year records.\n3.  **Scan the Context:**\n    *   [FC Barcelona Career (2004\u20132021)]: Mentions all-time club record (672 goals), total goals (672), assists (303), and trophies.\n    *   [FC Barcelona Career (2004\u20132021)]: Mentions the MSN Treble and Sextuple Era.\n    *   [Paris Saint-Germain Era (2021\u20132023)]: Mentions 32 goals in two seasons.\n4.  **"
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "FC Barcelona Career (2004\u20132021)",
+          "FC Barcelona Career (2004\u20132021)",
+          "Paris Saint-Germain Era (2021\u20132023)"
+        ],
+        "top_distance": 0.2687,
+        "chunks": [
+          {
+            "title": "FC Barcelona Career (2004\u20132021)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.2687,
+            "snippet": "[FC Barcelona Career (2004\u20132021)]\n- **The MSN Treble (2014\u20132015)**: Under manager Luis Enrique, Messi formed the historic attacking trio with Luis Su\u00e1rez and Neymar Jr. (dubbed \"MSN\"), winning the treble (La Liga, Copa del Rey, and UEFA Champions Lea"
+          },
+          {
+            "title": "FC Barcelona Career (2004\u20132021)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.2908,
+            "snippet": "[FC Barcelona Career (2004\u20132021)]\nMessi spent 21 years with FC Barcelona, including 17 seasons with the senior first team, making his official first-team debut on October 16, 2004, at age 17 against Espanyol under manager Frank Rijkaard.\n- **Sextuple"
+          },
+          {
+            "title": "Paris Saint-Germain Era (2021\u20132023)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.298,
+            "snippet": "[Paris Saint-Germain Era (2021\u20132023)]\nOn August 10, 2021, after FC Barcelona was unable to renew his contract due to La Liga financial fair play regulations, Messi signed a two-year contract with French club Paris Saint-Germain (PSG).\n- At PSG, Messi"
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": "Which club does Messi play for now? - specifically What is the world record for most goals in a calendar year held by Messi"
+    }
+  },
+  {
+    "id": "whatsapp_1793615894138",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "What did Messi achieve with Argentina at the 2022 World Cup in Qatar?",
+    "subject": null,
+    "reply": null,
+    "ts": "2026-11-02T16:23:14.138694",
+    "status": "pending"
+  },
+  {
+    "id": "whatsapp_1793615966514",
+    "channel": "whatsapp",
+    "sender": "test_user_goals",
+    "body": "What is the world record for most goals in a calendar year held by Messi?",
+    "subject": null,
+    "reply": "I don't have enough verified information about that in the knowledge base.",
+    "ts": "2026-11-02T16:24:26.514265",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 25742.0,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.3,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 2203.5,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 23535.6,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "prompt_tokens": 1084,
+        "completion_tokens": 200,
+        "total_tokens": 1284,
+        "tokens_per_sec": 8.5,
+        "had_reasoning": true,
+        "reasoning": "Thinking Process:\n\n1.  **Analyze the Request:** The user is asking for Lionel Messi's world record for the most goals in a calendar year.\n2.  **Scan the Knowledge Context:** I need to look for information related to \"World Records\" and \"Most Goals in a Calendar Year.\"\n3.  **Locate Relevant Information:**\n    *   Under [World Records and Career Statistics]: \"Most Goals in a Calendar Year: Guinness World Record for scoring 91 official goals in the year 2012 (79 for Barcelona, 12 for Argentina), surpassing Gerd M\u00fcller's previous record of 85 goals set in 1972.\"\n4.  **Formulate the Answer:** State the record clearly based *only* on the provided text.\n5.  **Review Constraints:**\n    *   Use only verified knowledge context. (Check: Yes, the info is there.)\n    *"
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "Individual Awards and Honors",
+          "Argentina National Team Career and International Titles",
+          "World Records and Career Statistics"
+        ],
+        "top_distance": 0.3577,
+        "chunks": [
+          {
+            "title": "Individual Awards and Honors",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3577,
+            "snippet": "[Individual Awards and Honors]\nLionel Messi holds the most individual accolades in association football history:\n- **Ballon d'Or (8 awards)**: Messi has won the prestigious Ballon d'Or a record 8 times: 2009, 2010, 2011, 2012, 2015, 2019, 2021, and 2"
+          },
+          {
+            "title": "Argentina National Team Career and International Titles",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3848,
+            "snippet": "[Argentina National Team Career and International Titles]\n- **2024 Copa Am\u00e9rica**: In July 2024, Messi captained Argentina to retain the Copa Am\u00e9rica title in the United States, defeating Colombia 1\u20130 in the final.\n- Overall, Messi has scored over 11"
+          },
+          {
+            "title": "World Records and Career Statistics",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3875,
+            "snippet": "[World Records and Career Statistics]\n- **Most Goals in a Calendar Year**: Guinness World Record for scoring 91 official goals in the year 2012 (79 for Barcelona, 12 for Argentina), surpassing Gerd M\u00fcller's previous record of 85 goals set in 1972.\n- "
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793616173404",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "hiii",
+    "subject": null,
+    "reply": "Hello! Welcome to the Lionel Messi AI Knowledge Assistant. How can I assist you with facts, statistics, trophies, or records from Lionel Messi's career?",
+    "ts": "2026-11-02T16:27:53.404139",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 2.8,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.3,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793616173409",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "How many Ballon d'Or awards has Messi won in total?",
+    "subject": null,
+    "reply": "Lionel Messi has won a world-record 8 Ballon d'Or awards (2009, 2010, 2011, 2012, 2015, 2019, 2021, and 2023). [Individual Awards and Honors]",
+    "ts": "2026-11-02T16:27:53.409234",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 2.3,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.0,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793616173413",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Which club does Messi play for now?",
+    "subject": null,
+    "reply": "Lionel Messi currently plays for Major League Soccer (MLS) club Inter Miami CF in the United States, wearing jersey number 10. [Inter Miami CF and Major League Soccer]",
+    "ts": "2026-11-02T16:27:53.413759",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 3.0,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.0,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793616173418",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "What is the world record for most goals in a calendar year held by Messi?",
+    "subject": null,
+    "reply": "The Guinness World Record for most goals in a calendar year is held by Messi, who scored 91 official goals in the year 2012 (79 for Barcelona and 12 for Argentina). [World Records and Career Statistics]",
+    "ts": "2026-11-02T16:27:53.418829",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 6849.3,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.0,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 1607.8,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 5239.0,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "prompt_tokens": 1229,
+        "completion_tokens": 51,
+        "total_tokens": 1280,
+        "tokens_per_sec": 9.73,
+        "had_reasoning": false,
+        "reasoning": ""
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "Individual Awards and Honors",
+          "Argentina National Team Career and International Titles",
+          "World Records and Career Statistics"
+        ],
+        "top_distance": 0.3577,
+        "chunks": [
+          {
+            "title": "Individual Awards and Honors",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3577,
+            "snippet": "[Individual Awards and Honors]\nLionel Messi holds the most individual accolades in association football history:\n- **Ballon d'Or (8 awards)**: Messi has won the prestigious Ballon d'Or a record 8 times: 2009, 2010, 2011, 2012, 2015, 2019, 2021, and 2"
+          },
+          {
+            "title": "Argentina National Team Career and International Titles",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3848,
+            "snippet": "[Argentina National Team Career and International Titles]\n- **2024 Copa Am\u00e9rica**: In July 2024, Messi captained Argentina to retain the Copa Am\u00e9rica title in the United States, defeating Colombia 1\u20130 in the final.\n- Overall, Messi has scored over 11"
+          },
+          {
+            "title": "World Records and Career Statistics",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3875,
+            "snippet": "[World Records and Career Statistics]\n- **Most Goals in a Calendar Year**: Guinness World Record for scoring 91 official goals in the year 2012 (79 for Barcelona, 12 for Argentina), surpassing Gerd M\u00fcller's previous record of 85 goals set in 1972.\n- "
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793616180272",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "What did Messi achieve with Argentina at the 2022 World Cup in Qatar?",
+    "subject": null,
+    "reply": "In December 2022, Messi led Argentina to win the 2022 FIFA World Cup in Qatar. He scored 7 goals and provided 3 assists, and Argentina won the final on penalties after a 3\u20133 draw. Messi was also awarded the World Cup Golden Ball as the tournament's best player. [Argentina National Team Career and International Titles]",
+    "ts": "2026-11-02T16:28:00.272930",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 14629.7,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.1,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 75.5,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 14542.0,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "prompt_tokens": 1081,
+        "completion_tokens": 78,
+        "total_tokens": 1159,
+        "tokens_per_sec": 5.36,
+        "had_reasoning": false,
+        "reasoning": ""
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "Argentina National Team Career and International Titles",
+          "Argentina National Team Career and International Titles",
+          "Argentina National Team Career and International Titles"
+        ],
+        "top_distance": 0.3027,
+        "chunks": [
+          {
+            "title": "Argentina National Team Career and International Titles",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3027,
+            "snippet": "[Argentina National Team Career and International Titles]\n- **2022 Finalissima**: On June 1, 2022, Argentina defeated European champions Italy 3\u20130 at Wembley Stadium to win the CONMEBOL-UEFA Cup of Champions (Finalissima). Messi was named Player of t"
+          },
+          {
+            "title": "Argentina National Team Career and International Titles",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3167,
+            "snippet": "[Argentina National Team Career and International Titles]\n- **2024 Copa Am\u00e9rica**: In July 2024, Messi captained Argentina to retain the Copa Am\u00e9rica title in the United States, defeating Colombia 1\u20130 in the final.\n- Overall, Messi has scored over 11"
+          },
+          {
+            "title": "Argentina National Team Career and International Titles",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3843,
+            "snippet": "[Argentina National Team Career and International Titles]\nMessi represents the Argentina senior national team as captain and is the country's all-time leading goalscorer and most capped player:\n- **Youth & Olympic Success**: Won the 2005 FIFA World Y"
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793616194906",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "How many official trophies did Messi win during his 17 seasons with FC Barcelona?",
+    "subject": null,
+    "reply": "During his 17 seasons with FC Barcelona, Messi won 35 trophies. This total includes 10 La Liga titles, 4 UEFA Champions League titles, 7 Copa del Rey trophies, 8 Supercopa de Espa\u00f1a, 3 UEFA Super Cups, and 3 FIFA Club World Cups. [FC Barcelona Career]",
+    "ts": "2026-11-02T16:28:14.906434",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 16175.9,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.1,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 114.3,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 16049.4,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "prompt_tokens": 1291,
+        "completion_tokens": 69,
+        "total_tokens": 1360,
+        "tokens_per_sec": 4.3,
+        "had_reasoning": false,
+        "reasoning": ""
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "FC Barcelona Career (2004\u20132021)",
+          "FC Barcelona Career (2004\u20132021)",
+          "Paris Saint-Germain Era (2021\u20132023)"
+        ],
+        "top_distance": 0.2131,
+        "chunks": [
+          {
+            "title": "FC Barcelona Career (2004\u20132021)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.2131,
+            "snippet": "[FC Barcelona Career (2004\u20132021)]\n- **The MSN Treble (2014\u20132015)**: Under manager Luis Enrique, Messi formed the historic attacking trio with Luis Su\u00e1rez and Neymar Jr. (dubbed \"MSN\"), winning the treble (La Liga, Copa del Rey, and UEFA Champions Lea"
+          },
+          {
+            "title": "FC Barcelona Career (2004\u20132021)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3225,
+            "snippet": "[FC Barcelona Career (2004\u20132021)]\nMessi spent 21 years with FC Barcelona, including 17 seasons with the senior first team, making his official first-team debut on October 16, 2004, at age 17 against Espanyol under manager Frank Rijkaard.\n- **Sextuple"
+          },
+          {
+            "title": "Paris Saint-Germain Era (2021\u20132023)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3334,
+            "snippet": "[Paris Saint-Germain Era (2021\u20132023)]\nOn August 10, 2021, after FC Barcelona was unable to renew his contract due to La Liga financial fair play regulations, Messi signed a two-year contract with French club Paris Saint-Germain (PSG).\n- At PSG, Messi"
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793616211085",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Who was the manager of Barcelona when they won the sextuple with Messi in 2009?",
+    "subject": null,
+    "reply": "The manager of Barcelona when they completed the sextuple in 2009 was Pep Guardiola. [FC Barcelona Career]",
+    "ts": "2026-11-02T16:28:31.085561",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 12517.8,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.1,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 55.6,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 12450.7,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "prompt_tokens": 1314,
+        "completion_tokens": 26,
+        "total_tokens": 1340,
+        "tokens_per_sec": 2.09,
+        "had_reasoning": false,
+        "reasoning": ""
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "FC Barcelona Career (2004\u20132021)",
+          "FC Barcelona Career (2004\u20132021)",
+          "Paris Saint-Germain Era (2021\u20132023)"
+        ],
+        "top_distance": 0.241,
+        "chunks": [
+          {
+            "title": "FC Barcelona Career (2004\u20132021)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.241,
+            "snippet": "[FC Barcelona Career (2004\u20132021)]\nMessi spent 21 years with FC Barcelona, including 17 seasons with the senior first team, making his official first-team debut on October 16, 2004, at age 17 against Espanyol under manager Frank Rijkaard.\n- **Sextuple"
+          },
+          {
+            "title": "FC Barcelona Career (2004\u20132021)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3039,
+            "snippet": "[FC Barcelona Career (2004\u20132021)]\n- **The MSN Treble (2014\u20132015)**: Under manager Luis Enrique, Messi formed the historic attacking trio with Luis Su\u00e1rez and Neymar Jr. (dubbed \"MSN\"), winning the treble (La Liga, Copa del Rey, and UEFA Champions Lea"
+          },
+          {
+            "title": "Paris Saint-Germain Era (2021\u20132023)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3676,
+            "snippet": "[Paris Saint-Germain Era (2021\u20132023)]\nOn August 10, 2021, after FC Barcelona was unable to renew his contract due to La Liga financial fair play regulations, Messi signed a two-year contract with French club Paris Saint-Germain (PSG).\n- At PSG, Messi"
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793616223606",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "What jersey number did Messi wear while playing for Paris Saint-Germain?",
+    "subject": null,
+    "reply": "At Paris Saint-Germain, Messi chose jersey number 30, which was the number he wore during his senior debut at Barcelona. [Paris Saint-Germain Era (2021\u20132023)]",
+    "ts": "2026-11-02T16:28:43.606810",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 12112.2,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.1,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 29.5,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 12078.7,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "prompt_tokens": 1105,
+        "completion_tokens": 45,
+        "total_tokens": 1150,
+        "tokens_per_sec": 3.73,
+        "had_reasoning": false,
+        "reasoning": ""
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "Paris Saint-Germain Era (2021\u20132023)",
+          "FC Barcelona Career (2004\u20132021)",
+          "Overview"
+        ],
+        "top_distance": 0.2873,
+        "chunks": [
+          {
+            "title": "Paris Saint-Germain Era (2021\u20132023)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.2873,
+            "snippet": "[Paris Saint-Germain Era (2021\u20132023)]\nOn August 10, 2021, after FC Barcelona was unable to renew his contract due to La Liga financial fair play regulations, Messi signed a two-year contract with French club Paris Saint-Germain (PSG).\n- At PSG, Messi"
+          },
+          {
+            "title": "FC Barcelona Career (2004\u20132021)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.3855,
+            "snippet": "[FC Barcelona Career (2004\u20132021)]\n- **The MSN Treble (2014\u20132015)**: Under manager Luis Enrique, Messi formed the historic attacking trio with Luis Su\u00e1rez and Neymar Jr. (dubbed \"MSN\"), winning the treble (La Liga, Copa del Rey, and UEFA Champions Lea"
+          },
+          {
+            "title": "Overview",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.4366,
+            "snippet": "[Overview]\n# Lionel Messi: Career, Achievements, Statistics, and Biography"
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793616235722",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "How many European Golden Shoe awards has Messi won?",
+    "subject": null,
+    "reply": "Lionel Messi has won the European Golden Shoe 6 times, achieving this as the top league goalscorer in Europe for the seasons 2009\u201310, 2011\u201312, 2012\u201313, 2016\u201317, 2017\u201318, and 2018\u201319. [Individual Awards and Honors]",
+    "ts": "2026-11-02T16:28:55.722917",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 17593.2,
+      "path_type": "rag_llm",
+      "stages": {
+        "routing_ms": 0.1,
+        "rewrite_ms": 0.0,
+        "rag_retrieval_ms": 19.8,
+        "prompt_build_ms": 0.0,
+        "llm_inference_ms": 17560.7,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "prompt_tokens": 1331,
+        "completion_tokens": 87,
+        "total_tokens": 1418,
+        "tokens_per_sec": 4.95,
+        "had_reasoning": false,
+        "reasoning": ""
+      },
+      "rag": {
+        "chunks_found": 3,
+        "sources": [
+          "Individual Awards and Honors",
+          "FC Barcelona Career (2004\u20132021)",
+          "Argentina National Team Career and International Titles"
+        ],
+        "top_distance": 0.338,
+        "chunks": [
+          {
+            "title": "Individual Awards and Honors",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.338,
+            "snippet": "[Individual Awards and Honors]\nLionel Messi holds the most individual accolades in association football history:\n- **Ballon d'Or (8 awards)**: Messi has won the prestigious Ballon d'Or a record 8 times: 2009, 2010, 2011, 2012, 2015, 2019, 2021, and 2"
+          },
+          {
+            "title": "FC Barcelona Career (2004\u20132021)",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.4078,
+            "snippet": "[FC Barcelona Career (2004\u20132021)]\n- **The MSN Treble (2014\u20132015)**: Under manager Luis Enrique, Messi formed the historic attacking trio with Luis Su\u00e1rez and Neymar Jr. (dubbed \"MSN\"), winning the treble (La Liga, Copa del Rey, and UEFA Champions Lea"
+          },
+          {
+            "title": "Argentina National Team Career and International Titles",
+            "source": "lionel_messi_kb.md",
+            "distance": 0.4096,
+            "snippet": "[Argentina National Team Career and International Titles]\nMessi represents the Argentina senior national team as captain and is the country's all-time leading goalscorer and most capped player:\n- **Youth & Olympic Success**: Won the 2005 FIFA World Y"
+          }
+        ]
+      },
+      "model": "gemma4:e2b",
+      "rewritten_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793616253320",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Can you give me a recipe for baking chocolate cake and bread?",
+    "subject": null,
+    "reply": "I am the AI assistant specializing in Lionel Messi's career, records, and biography. I can only assist with questions regarding Lionel Messi's football career, clubs, trophies, and statistics.",
+    "ts": "2026-11-02T16:29:13.320262",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 11.9,
+      "path_type": "out_of_domain",
+      "stages": {
+        "routing_ms": 0.1,
+        "channel_dispatch_ms": 0.0
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "out_of_domain_guard"
+    }
+  },
+  {
+    "id": "whatsapp_1793616349575",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "hiii",
+    "subject": null,
+    "reply": "Hello! Welcome to the Lionel Messi AI Knowledge Assistant. How can I assist you with facts, statistics, trophies, or records from Lionel Messi's career?",
+    "ts": "2026-11-02T16:30:49.575298",
+    "status": "saved_local",
+    "metrics": {
+      "total_ms": 873.6,
+      "path_type": "fast_path",
+      "stages": {
+        "routing_ms": 0.5,
+        "channel_dispatch_ms": 872.9
+      },
+      "tokens": {
+        "total_tokens": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "sources": []
+      },
+      "model": "fast_anchor"
+    }
   }
 ]
