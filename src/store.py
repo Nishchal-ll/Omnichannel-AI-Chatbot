@@ -47,12 +47,14 @@ def add_message(channel: str, sender: str, body: str, subject: str = None) -> di
         return msg
 
 
-def set_reply(msg_id: str, reply: str, status: str = "replied"):
+def set_reply(msg_id: str, reply: str, status: str = "replied", metrics: dict = None):
     with _lock:
         for m in _messages:
             if m["id"] == msg_id:
                 m["reply"] = reply
                 m["status"] = status
+                if metrics:
+                    m["metrics"] = metrics
                 break
         _save()
 
