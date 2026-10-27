@@ -11,7 +11,7 @@ Implements:
 import os
 import requests
 import logging
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional, Tuple, Any
 
 log = logging.getLogger(__name__)
 
@@ -23,9 +23,9 @@ class OllamaClient:
         self,
         base_url: Optional[str] = None,
         model: Optional[str] = None,
-        max_tokens: int = 1024,
-        temperature: float = 0.1,
-        timeout: int = 120,
+        max_tokens: int = 200,
+        temperature: float = 0.0,
+        timeout: int = 60,
     ):
         self.base_url = (base_url or os.getenv("LLM_URL", "http://localhost:11434")).rstrip("/")
         self.model = model or os.getenv("LLM_MODEL", "gemma4:e2b")
@@ -45,55 +45,75 @@ class OllamaClient:
         except Exception as e:
             return False, f"Could not connect to Ollama at {self.base_url}: {e}"
 
+    def chat_complete_with_metadata(self, messages: List[Dict[str, str]]) -> Tuple[str, Dict[str, Any]]:
+        """
+        Send chat completion request to Ollama native /api/chat endpoint with think=False.
+        Returns (reply_text, metadata) with timing and token usage.
+        """
+        import time
+        t_start = time.perf_counter()
+        url = f"{self.base_url}/api/chat"
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "stream": False,
+            "think": False,
+            "options": {
+                "num_ctx": 8192,
+                "temperature": self.temperature,
+                "num_predict": self.max_tokens,
+                "top_p": 0.9,
+            },
+        }
+
+        meta: Dict[str, Any] = {
+            "inference_ms": 0.0,
+            "model": self.model,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+            "tokens_per_sec": 0.0,
+            "had_reasoning": False,
+            "reasoning": "",
+        }
+
+        try:
+            resp = requests.post(url, json=payload, timeout=self.timeout)
+            meta["inference_ms"] = round((time.perf_counter() - t_start) * 1000, 1)
+
+            if resp.status_code != 200:
+                log.error("Ollama API Error %s: %s", resp.status_code, resp.text)
+                return "I don't have enough verified information about that in the knowledge base.", meta
+
+            data = resp.json()
+            meta["prompt_tokens"] = data.get("prompt_eval_count", 0)
+            meta["completion_tokens"] = data.get("eval_count", 0)
+            meta["total_tokens"] = meta["prompt_tokens"] + meta["completion_tokens"]
+
+            if meta["inference_ms"] > 0 and meta["completion_tokens"] > 0:
+                meta["tokens_per_sec"] = round(meta["completion_tokens"] / (meta["inference_ms"] / 1000.0), 2)
+
+            msg_data = data.get("message", {})
+            content = (msg_data.get("content") or "").strip()
+
+            # Clean any residual markdown think blocks if any
+            import re
+            cleaned = re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL).strip()
+            return (cleaned if cleaned else content), meta
+
+        except requests.exceptions.Timeout:
+            meta["inference_ms"] = round((time.perf_counter() - t_start) * 1000, 1)
+            log.error("Ollama inference timed out after %ds", self.timeout)
+            return "Inference request timed out. Please try again.", meta
+        except Exception as e:
+            meta["inference_ms"] = round((time.perf_counter() - t_start) * 1000, 1)
+            log.error("Ollama client error: %s", e)
+            return "I don't have enough verified information about that in the knowledge base.", meta
+
     def chat_complete(self, messages: List[Dict[str, str]]) -> str:
         """
         Send chat completion request to Ollama OpenAI-compatible /v1 endpoint.
         Handles thinking/reasoning model outputs and token budgets.
         """
-        url = f"{self.base_url}/v1/chat/completions"
-        payload = {
-            "model": self.model,
-            "messages": messages,
-            "temperature": self.temperature,
-            "max_tokens": self.max_tokens,
-        }
-
-        try:
-            resp = requests.post(url, json=payload, timeout=self.timeout)
-            if resp.status_code != 200:
-                log.error("Ollama API Error %s: %s", resp.status_code, resp.text)
-                return "I will check with our Naasa Securities support team and get back to you shortly."
-
-            data = resp.json()
-            choices = data.get("choices", [])
-            if not choices:
-                return "I will check with our Naasa Securities support team and get back to you shortly."
-
-            choice_msg = choices[0].get("message", {})
-            content = (choice_msg.get("content") or "").strip()
-            reasoning = (choice_msg.get("reasoning") or "").strip()
-
-            # If content is generated, return it
-            if content:
-                # Strip out any residual <think>...</think> blocks if present
-                import re
-                cleaned = re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL).strip()
-                return cleaned if cleaned else content
-
-            # Fallback: if model spent all tokens in reasoning without writing content
-            if reasoning:
-                # Look for a concluding sentence in reasoning
-                lines = [l.strip() for l in reasoning.split('\n') if l.strip()]
-                if lines:
-                    last_line = lines[-1]
-                    if len(last_line) > 10 and not last_line.startswith('*'):
-                        return last_line
-
-            return "I will check with our Naasa Securities support team and get back to you shortly."
-
-        except requests.exceptions.Timeout:
-            log.error("Ollama inference timed out after %ds", self.timeout)
-            return "Our support system is currently experiencing high volume. Please contact our support team at +977-1-4541243."
-        except Exception as e:
-            log.error("Ollama client error: %s", e)
-            return "I will check with our Naasa Securities support team and get back to you shortly."
+        reply, _ = self.chat_complete_with_metadata(messages)
+        return reply

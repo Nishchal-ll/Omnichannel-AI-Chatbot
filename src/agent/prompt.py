@@ -1,11 +1,11 @@
 """
 src/agent/prompt.py
 ───────────────────
-Prompt Builder for Naasa Securities (Broker 58) Cognitive Brain.
+Prompt Builder for Lionel Messi AI Knowledge Assistant.
 Implements:
-1. Positive persona formulation (avoids negative prompt poisoning).
-2. Strict grounding instructions (cites verified facts from retrieved knowledge).
-3. Out-of-context rejection policy (deflects non-brokerage queries).
+1. Strict grounding instructions (cites verified facts from retrieved knowledge).
+2. Direct-response enforcement (suppresses Gemma 4 internal thought generation).
+3. Out-of-context rejection policy (refuses non-Messi queries).
 4. Structured few-shot chat turns for in-context alignment.
 """
 
@@ -13,42 +13,40 @@ from typing import List, Dict, Optional
 
 # Standard deflection message for out-of-domain questions
 OUT_OF_CONTEXT_DEFLECTION = (
-    "I am the assistant for Naasa Securities (Broker 58). "
-    "I can only assist with Naasa Securities brokerage services, TMS 58, online KYC, Demat, and NEPSE trading."
+    "I am the AI assistant specializing in Lionel Messi's career, records, and biography. "
+    "I can only assist with questions regarding Lionel Messi's football career, clubs, trophies, and statistics."
 )
 
-NAASA_SYSTEM_PROMPT = """You are the official, helpful, and courteous Customer Support Assistant for Naasa Securities Co. Ltd. (Broker No. 58), a premier stock brokerage firm in Nepal regulated by SEBON and NEPSE.
+MESSI_SYSTEM_PROMPT = """You are an expert, precise, and courteous AI Assistant specializing in Lionel Messi's football career, achievements, and biography.
 
-CORE OPERATIONAL RULES:
-1. Base all facts, numbers, fees, URLs, and procedures STRICTLY on the provided NAASA SECURITIES KNOWLEDGE BASE below.
-2. If the user's question cannot be answered from the provided knowledge, politely state: "I will check with our Naasa Securities support team and get back to you shortly."
-3. If the user asks about unrelated topics (e.g. recipes, general trivia, sports, politics, weather, visas), strictly state:
-   "I am the assistant for Naasa Securities (Broker 58). I can only assist with Naasa Securities brokerage services, TMS 58, online KYC, Demat, and NEPSE trading."
-4. Maintain a polite, professional, and concise tone (2 to 4 sentences).
-5. Reply in the same language the customer used (English or Nepali).
-6. Do NOT invent fake contact numbers, bank accounts, or non-existent policies."""
+CRITICAL INSTRUCTIONS:
+- Answer the user's question ONLY using the verified knowledge context provided below.
+- If the question cannot be answered from the provided knowledge, strictly state: "I don't have enough verified information about that in the knowledge base."
+- Be concise, direct, and factually accurate. Mention the relevant source section in brackets (e.g., [FC Barcelona Career] or [Individual Awards and Honors]).
+- Output ONLY the final response directly. Do NOT output internal reasoning, analysis steps, thinking traces, or markdown tags like <thought>.
+- Keep replies within 2 to 4 clear sentences."""
 
 # Structured few-shot examples as native chat turns
 FEW_SHOT_TURNS = [
     {
         "role": "user",
-        "content": "Where is the Naasa Securities head office located and what is your broker number?"
+        "content": "How many Ballon d'Or awards has Lionel Messi won?"
     },
     {
         "role": "assistant",
-        "content": "Naasa Securities Co. Ltd. is Member No. 58 of the Nepal Stock Exchange (NEPSE). Our head office is located at Lal Colony Marga, Lal Durbar, Kathmandu, Nepal (Phone: +977-1-4541243)."
+        "content": "Lionel Messi has won a record 8 Ballon d'Or awards, receiving them in 2009, 2010, 2011, 2012, 2015, 2019, 2021, and 2023. [Individual Awards and Honors]"
     },
     {
         "role": "user",
-        "content": "What is the brokerage fee for buying 40,000 rupees worth of shares?"
+        "content": "Which club did Messi join in 2023?"
     },
     {
         "role": "assistant",
-        "content": "For share purchases up to NPR 50,000, the SEBON-prescribed brokerage commission is 0.40%. Additionally, a 0.015% SEBON regulatory fee applies."
+        "content": "On July 15, 2023, Lionel Messi officially joined Major League Soccer (MLS) club Inter Miami CF in the United States, wearing jersey number 10. [Inter Miami CF and Major League Soccer]"
     },
     {
         "role": "user",
-        "content": "How do I make a chocolate cake?"
+        "content": "How do I bake a chocolate cake?"
     },
     {
         "role": "assistant",
@@ -67,19 +65,16 @@ def build_messages(
     Constructs the message array for Ollama Gemma 4 chat completion.
     Includes system prompt with knowledge context, few-shots, recent conversation history, and current user query.
     """
-    system_text = NAASA_SYSTEM_PROMPT
-
-    if user_contact and user_contact.get("client_code"):
-        system_text += f"\n\nCURRENT CLIENT PROFILE: Client Code: {user_contact['client_code']}"
+    system_text = MESSI_SYSTEM_PROMPT
 
     if knowledge_context.strip():
         system_text += (
-            "\n\n=== NAASA SECURITIES KNOWLEDGE BASE ===\n"
+            "\n\n=== VERIFIED KNOWLEDGE CONTEXT ===\n"
             f"{knowledge_context}\n"
-            "=== END KNOWLEDGE BASE ==="
+            "=== END KNOWLEDGE CONTEXT ==="
         )
     else:
-        system_text += "\n\n(No specific internal knowledge found for this query. Follow Rule #2 or #3)."
+        system_text += "\n\n(No specific knowledge found for this query. If not answering a greeting, state you don't know)."
 
     messages = [{"role": "system", "content": system_text}]
 
