@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   # ─────────────────────────────────────────────
-  # WhatsApp Bot + Streamlit
+  # Naasa Securities WhatsApp AI Support & Diagnostics
   # ─────────────────────────────────────────────
   bot:
     build: .
@@ -14,8 +14,7 @@ services:
       - .env
 
     ports:
-      - "5001:5001"
-      - "8501:8501"
+      - "8080:8080"
 
     restart: unless-stopped
 
