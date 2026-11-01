@@ -9,6 +9,9 @@ import os
 import sys
 from pathlib import Path
 
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 import chromadb
@@ -17,7 +20,7 @@ from stage2_memory.document_loader import document_loader
 
 KB_DIR = Path(__file__).resolve().parent.parent / "data" / "knowledge"
 DB_PATH = str(Path(__file__).resolve().parent.parent / "chroma_db")
-COLLECTION_NAME = "messi_kb"
+COLLECTION_NAME = os.getenv("COLLECTION_NAME", "car_inventory_kb")
 
 
 def ingest_all(force: bool = True):
@@ -78,3 +81,4 @@ def ingest_all(force: bool = True):
 if __name__ == "__main__":
     force_reload = "--force" in sys.argv or True
     ingest_all(force=force_reload)
+
