@@ -18,7 +18,7 @@ def normalize_query(query: str) -> str:
 
 # Fast Greeting Patterns
 GREETING_REGEX = re.compile(
-    r"^(hi|hii|hey|heya|hello|howdy|namaste|namaskar|good\s+morning|good\s+afternoon|good\s+evening|gm)\b([!\.\s]*(messi|leo|bot|ai|there|everyone))?[!\.\s]*$",
+    r"^(hi|hii|hey|heya|hello|howdy|namaste|namaskar|good\s+morning|good\s+afternoon|good\s+evening|gm)\b([!\.\s]*(car|dealer|showroom|apex|bot|ai|there|everyone))?[!\.\s]*$",
     re.IGNORECASE
 )
 
@@ -28,61 +28,73 @@ SIGNOFF_REGEX = re.compile(
     re.IGNORECASE
 )
 
-# Standalone pronoun pattern with strict word boundaries
+# Standalone pronoun pattern for cars
 PRONOUN_PATTERN = re.compile(
-    r"\b(he|him|his|it|that|them|those|there|which\s+years|when\s+did\s+he|how\s+many\s+did\s+he)\b",
+    r"\b(it|this|that|its|the\s+car|this\s+car|this\s+vehicle|the\s+suv|how\s+much\s+is\s+it|what\s+is\s+its\s+price|is\s+it\s+available)\b",
     re.IGNORECASE
 )
 
-# Obvious Out-Of-Domain Triggers (Cooking, Politics, Visa, Weather, General Coding)
+# Obvious Out-Of-Domain Triggers (Cooking, Football, Politics, Visa, Weather, Coding)
 OUT_OF_DOMAIN_PATTERNS = [
     r"\b(bake|cake|recipe|cook|cooking|pizza|pasta|bread)\b",
-    r"\b(capital\s+of|weather\s+in|cricket\s+score|nba|basketball)\b",
-    r"\b(write\s+a\s+poem|tell\s+me\s+a\s+joke|sing\s+a\s+song|alien|dinosaur)\b",
+    r"\b(messi|ronaldo|barcelona|real\s+madrid|ballon\s*d'?or|world\s+cup|football|cricket|nba)\b",
+    r"\b(capital\s+of|weather\s+in|earthquake|volcano|alien|dinosaur)\b",
+    r"\b(write\s+a\s+poem|tell\s+me\s+a\s+joke|sing\s+a\s+song|python\s+script|binary\s+tree)\b",
     r"\b(visa\s+for\s+japan|ielts|toefl|study\s+in\s+australia)\b",
 ]
 OUT_OF_DOMAIN_REGEX = re.compile("|".join(OUT_OF_DOMAIN_PATTERNS), re.IGNORECASE)
 
 DOMAIN_KEYWORDS = [
-    "messi", "lionel", "leo", "barca", "barcelona", "psg", "paris", "miami", "inter miami",
-    "argentina", "world cup", "ballon", "dor", "copa", "america", "goals", "assists",
-    "trophy", "trophies", "stats", "statistics", "record", "records", "golden shoe",
-    "newell", "rosario", "la masia", "antonela", "thiago", "mateo", "ciro", "mls",
-    "ligue", "la liga", "champions league", "ucl", "finalissima", "leagues cup",
-    "msn", "trio", "suárez", "suarez", "neymar"
+    "car", "cars", "auto", "vehicle", "vehicles", "recondition", "showroom", "inventory",
+    "hyundai", "suzuki", "maruti", "nissan", "tata", "kia", "toyota", "byd", "mahindra",
+    "santro", "i10", "nios", "magnite", "alto", "wagonr", "swift", "baleno", "brezza",
+    "creta", "venue", "tiago", "nexon", "sonet", "seltos", "kicks", "raize", "rush", "hilux", "atto",
+    "engine", "cc", "motor", "mileage", "odometer", "km", "price", "cost", "lakh", "lakhs", "rupees", "rs",
+    "transmission", "automatic", "manual", "amt", "cvt", "hybrid", "electric", "ev", "petrol", "diesel",
+    "warranty", "exchange", "satasat", "trade-in", "trade", "swap", "finance", "financing", "emi", "loan",
+    "down payment", "inspection", "certified", "test drive", "stock", "bluebook", "namsari", "yatayat",
+    "bagmati", "pradesh", "lot", "ekantakuna", "gurjudhara", "tinkune", "kathmandu", "pokhara"
 ]
 
 # 0ms Instant FAQ Canonical Anchors
 FAQ_ANCHORS = [
     (
-        re.compile(r"\b(how\s+many\s+clubs|which\s+clubs|what\s+clubs|all\s+clubs|clubs\s+(has\s+)?(messi|he|lionel)\s+played)\b", re.IGNORECASE),
-        "Lionel Messi has played for 3 senior professional clubs throughout his career: FC Barcelona (2004–2021), Paris Saint-Germain (PSG, 2021–2023), and Inter Miami CF (2023–present). In his youth in Argentina, he also played for Grandoli and Newell's Old Boys. [Senior Professional Clubs Summary (Clubs Played)]"
+        re.compile(r"\b(where\s+is\s+the\s+showroom|showroom\s+location|where\s+are\s+you\s+located|address|contact\s+number|phone\s+number)\b", re.IGNORECASE),
+        "Apex Auto Recondition House Nepal is located at Tinkune Subidhanagar (near Ring Road Bridge), Kathmandu. Phone: 01-4491234 / +977-9801234567. We also have a Pokhara Branch at Nayabazar (Ph: 061-534567)."
     ),
     (
-        re.compile(r"\b(current\s+club|which\s+club\s+does\s+messi\s+play\s+for|where\s+does\s+messi\s+play\s+now)\b", re.IGNORECASE),
-        "Lionel Messi currently plays for Major League Soccer (MLS) club Inter Miami CF in the United States, wearing jersey number 10. [Inter Miami CF and Major League Soccer]"
+        re.compile(r"\b(opening\s+hours|business\s+hours|working\s+hours|what\s+time\s+do\s+you\s+open)\b", re.IGNORECASE),
+        "Our showroom is open Sunday to Friday from 9:30 AM to 6:30 PM, and Saturday from 10:00 AM to 5:00 PM for test drives and vehicle inspections."
     ),
     (
-        re.compile(r"\b(how\s+many\s+ballon\s*d'?or|total\s+ballon\s*d'?or)\b", re.IGNORECASE),
-        "Lionel Messi has won a world-record 8 Ballon d'Or awards (2009, 2010, 2011, 2012, 2015, 2019, 2021, and 2023). [Individual Awards and Honors]"
+        re.compile(r"\b(warranty|guarantee|warranty\s+policy|after\s+sales)\b", re.IGNORECASE),
+        "Every certified vehicle comes with a 6-Month / 8,000 km warranty covering the engine block and gearbox, plus 1 complimentary full servicing (oil change & tune-up)."
     ),
     (
-        re.compile(r"\b(goals\s+in\s+2012|record\s+in\s+2012|91\s+goals)\b", re.IGNORECASE),
-        "Lionel Messi holds the Guinness World Record for scoring 91 official goals in the calendar year 2012 (79 for Barcelona, 12 for Argentina). [World Records and Career Statistics]"
+        re.compile(r"\b(inspection|inspection\s+checklist|quality\s+inspection|how\s+do\s+you\s+inspect)\b", re.IGNORECASE),
+        "All cars undergo a strict 120-Point Inspection covering chassis frame integrity (accident-free guarantee), engine compression, suspension, electricals, and guaranteed authentic odometer reading."
     ),
     (
-        re.compile(r"\b(did\s+messi\s+win\s+(the\s+)?world\s+cup|world\s+cup\s+2022)\b", re.IGNORECASE),
-        "Yes, Lionel Messi captained Argentina to victory in the 2022 FIFA World Cup in Qatar, scoring 7 goals and winning the tournament's Golden Ball. [Argentina National Team Career]"
+        re.compile(r"\b(exchange|satasat|trade\s*in|can\s+i\s+exchange|car\s+exchange|swap|bike\s+exchange)\b", re.IGNORECASE),
+        "Yes! We offer instant 20-minute spot valuation and exchange (साटासाट) for any old motorcycle, scooter, or car (any brand/lot). The valuation is directly adjusted into your down payment, and we provide same-day vehicle delivery."
     ),
     (
-        re.compile(r"\b(when\s+was\s+messi\s+born|messi\s+birthday|date\s+of\s+birth)\b", re.IGNORECASE),
-        "Lionel Messi was born on June 24, 1987, in Rosario, Santa Fe, Argentina. [Overview and Early Life]"
+        re.compile(r"\b(bluebook|namsari|name\s+transfer|ownership\s+transfer|yatayat|tax\s+paid)\b", re.IGNORECASE),
+        "We handle 100% of the Bluebook ownership transfer (नामसारी) at Yatayat Karyalaya (Ekantakuna, Lalitpur & Gurjudhara) within 24 to 48 hours. All cars have 2081/82 road tax paid and clear legal records."
+    ),
+    (
+        re.compile(r"\b(financing|bank\s+loan|emi|down\s+payment|installment)\b", re.IGNORECASE),
+        "We provide up to 70% bank financing via partner commercial banks (NIC Asia Bank, Nabil Bank, Global IME, Kumari Bank) with quick 3-day approval and tenures from 3 to 7 years. Minimum down payment starts at 30%."
+    ),
+    (
+        re.compile(r"\b(test\s+drive|can\s+i\s+test\s+drive|booking\s+a\s+test\s+drive)\b", re.IGNORECASE),
+        "Walk-in test drives are free and available anytime during showroom hours! Just bring your valid driving license to our Tinkune, Kathmandu or Nayabazar, Pokhara showroom."
     ),
 ]
 
 
 class IntentRouter:
-    """Stage 2 Intent Router & Context contextualizer."""
+    """Stage 2 Intent Router & Context contextualizer for Recondition Car House."""
 
     @staticmethod
     def check_fast_path(query: str) -> Optional[str]:
@@ -91,14 +103,15 @@ class IntentRouter:
 
         if GREETING_REGEX.match(clean):
             return (
-                "Hello! Welcome to the Lionel Messi AI Knowledge Assistant. "
-                "How can I assist you with facts, statistics, trophies, or records from Lionel Messi's career?"
+                "Namaste! Welcome to Apex Auto Recondition House Nepal (Tinkune, Kathmandu). "
+                "How can I assist you today with our certified cars (Santro, i10, Magnite, Swift, Alto, Brezza, Creta), "
+                "instant exchange (साटासाट), Bluebook transfer, or bank EMI?"
             )
 
         if SIGNOFF_REGEX.match(clean):
             return (
-                "You are most welcome! Feel free to ask anytime about Lionel Messi's career and achievements. "
-                "Enjoy following the GOAT!"
+                "Dhanyabad! You are always welcome at Apex Auto Recondition House Nepal. "
+                "Visit our Tinkune, Kathmandu showroom or call us on 01-4491234 / 9801234567 anytime. Have a great day!"
             )
 
         for pattern, response in FAQ_ANCHORS:
@@ -109,24 +122,20 @@ class IntentRouter:
 
     @staticmethod
     def check_memory_recall(query: str) -> bool:
-        """Detects if user is asking the bot what it knows/remembers about them."""
+        """Detects if user is asking about their saved budget, preferred cars, or profile."""
         clean = query.lower().strip()
         patterns = [
-            r"\bwhat('?s|\s+is)\s+my\s+name\b",
+            r"\bwhat('?s|\s+is)\s+my\s+(budget|name|preference|choice|selection)\b",
             r"\bwho\s+am\s+i\b",
             r"\bwhere\s+do\s+i\s+live\b",
-            r"\bwhere\s+am\s+i\s+from\b",
-            r"\bwhat\s+club\s+do\s+i\s+support\b",
-            r"\bwhich\s+club\s+do\s+i\s+support\b",
-            r"\bwhat\s+is\s+my\s+favorite\b",
+            r"\bwhat\s+(car|cars|brand)\s+did\s+i\s+(say|choose|prefer|want)\b",
+            r"\bwhat\s+(car|cars)\s+match\s+my\s+budget\b",
             r"\bwhat\s+do\s+you\s+(know|remember)\s+about\s+me\b",
-            r"\bdo\s+you\s+know\s+me\b",
             r"\bdo\s+you\s+remember\s+me\b",
             r"\bmy\s+details\b",
             r"\bmy\s+profile\b",
+            r"\bshow\s+my\s+preferences\b",
             r"\bshow\s+my\s+memories\b",
-            r"\btell\s+me\s+about\s+myself\b",
-            r"\bwhat\s+do\s+you\s+know\s+about\s+my\b",
         ]
         return any(re.search(p, clean) for p in patterns)
 
@@ -135,14 +144,14 @@ class IntentRouter:
         """Detects if user is asking to forget/clear their memories."""
         clean = query.lower().strip()
         patterns = [
-            r"\b(forget|clear|delete|erase)\s+(my\s+)?(memory|memories|information|profile|details)\b",
+            r"\b(forget|clear|delete|erase)\s+(my\s+)?(memory|memories|information|profile|details|preferences)\b",
             r"\bforget\s+me\b",
         ]
         return any(re.search(p, clean) for p in patterns)
 
     @staticmethod
     def is_out_of_domain(query: str) -> bool:
-        """Detects if query is completely unrelated to Lionel Messi / football."""
+        """Detects if query is completely unrelated to cars, automotive dealership, or inventory."""
         clean_lower = query.lower()
         if any(kw in clean_lower for kw in DOMAIN_KEYWORDS):
             return False
@@ -152,28 +161,40 @@ class IntentRouter:
 
     @staticmethod
     def rewrite_query(current_query: str, chat_history: List[ChatMessage]) -> str:
-        """Resolves pronouns ('he', 'his', 'it') and context against prior turns."""
+        """Resolves pronouns ('it', 'this car', 'its') and context against prior turns."""
         if not chat_history:
             return current_query
 
         clean_lower = current_query.lower()
 
-        # If query already explicitly names Messi, no rewrite is needed
-        if "messi" in clean_lower or "lionel" in clean_lower:
+        # Check if query already mentions a specific car brand or model
+        KNOWN_MODELS = [
+            "santro", "i10", "nios", "magnite", "alto", "wagonr", "swift", "baleno", "brezza",
+            "creta", "venue", "tiago", "nexon", "sonet", "seltos", "kicks", "raize", "rush", "hilux", "atto",
+            "rav4", "corolla"
+        ]
+        if any(m in clean_lower for m in KNOWN_MODELS):
+            return current_query
+
+        # Look back in history to find the most recently mentioned vehicle
+        referenced_car = ""
+        for turn in reversed(chat_history[-3:]):
+            turn_lower = turn.content.lower()
+            for m in KNOWN_MODELS:
+                if m in turn_lower:
+                    referenced_car = m.title()
+                    break
+            if referenced_car:
+                break
+
+        if not referenced_car:
             return current_query
 
         # Contextualize follow-ups:
-        clean_user = current_query.strip("?. ")
-        # Replace 'his' with 'Lionel Messi's'
-        contextualized = re.sub(r"\bhis\b", "Lionel Messi's", clean_user, flags=re.IGNORECASE)
-        # Replace 'he/him/it' with 'Lionel Messi'
-        contextualized = re.sub(r"\b(he|him|it)\b", "Lionel Messi", contextualized, flags=re.IGNORECASE)
-
-        last_turn_text = " ".join(t.content for t in chat_history[-2:])
-        if re.search(r"\b(there|that\s+tournament|that\s+season|that\s+year)\b", contextualized, re.IGNORECASE):
-            contextualized += f" (in context of: {last_turn_text[:100]})"
-        elif "messi" not in contextualized.lower():
-            contextualized = f"{contextualized} (context: Lionel Messi)"
+        contextualized = current_query.strip("?. ")
+        contextualized = re.sub(r"\b(its|it|the\s+car|this\s+car|the\s+suv)\b", referenced_car, contextualized, flags=re.IGNORECASE)
+        if referenced_car.lower() not in contextualized.lower():
+            contextualized = f"{contextualized} (regarding: {referenced_car})"
 
         return contextualized
 

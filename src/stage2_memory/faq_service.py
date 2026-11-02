@@ -17,46 +17,52 @@ DB_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "data", "chat.db")
 
 SEED_FAQS = [
     (
-        r"\b(how\s+many\s+clubs|which\s+clubs|what\s+clubs|all\s+clubs|clubs\s+(has\s+)?(messi|he|lionel)\s+played)\b",
-        "Lionel Messi has played for 3 senior professional clubs throughout his career: FC Barcelona (2004–2021), Paris Saint-Germain (PSG, 2021–2023), and Inter Miami CF (2023–present). In his youth in Argentina, he also played for Grandoli and Newell's Old Boys. [Senior Professional Clubs Summary (Clubs Played)]",
-        "2026-10-01",
+        r"\b(where\s+is\s+the\s+showroom|showroom\s+location|where\s+are\s+you\s+located|address|contact\s+number|phone\s+number)\b",
+        "Apex Auto Recondition House Nepal is located at Tinkune Subidhanagar (near Ring Road Bridge), Kathmandu. Phone: 01-4491234 / +977-9801234567. We also have a Pokhara Branch at Nayabazar (Ph: 061-534567).",
+        "2026-11-03",
         0
     ),
     (
-        r"\b(current\s+club|which\s+club\s+does\s+messi\s+play\s+for|where\s+does\s+messi\s+play\s+now)\b",
-        "Lionel Messi currently plays for Major League Soccer (MLS) club Inter Miami CF in the United States, wearing jersey number 10. [Inter Miami CF and Major League Soccer]",
-        "2026-10-01",
+        r"\b(opening\s+hours|business\s+hours|working\s+hours|what\s+time\s+do\s+you\s+open)\b",
+        "Our showroom is open Sunday to Friday from 9:30 AM to 6:30 PM, and Saturday from 10:00 AM to 5:00 PM for test drives and vehicle inspections.",
+        "2026-11-03",
         0
     ),
     (
-        r"\b(how\s+many\s+ballon\s*d'?or|total\s+ballon\s*d'?or)\b",
-        "Lionel Messi has won a world-record 8 Ballon d'Or awards (2009, 2010, 2011, 2012, 2015, 2019, 2021, and 2023). [Individual Awards and Honors]",
-        "2026-10-01",
+        r"\b(warranty|guarantee|warranty\s+policy|after\s+sales)\b",
+        "Every certified vehicle comes with a 6-Month / 8,000 km warranty covering the engine block and gearbox, plus 1 complimentary full servicing (oil change & tune-up).",
+        "2026-11-03",
         0
     ),
     (
-        r"\b(goals\s+in\s+2012|record\s+in\s+2012|world\s+record.*2012|91\s+goals)\b",
-        "Lionel Messi holds the Guinness World Record for scoring 91 official goals in the calendar year 2012 (79 for Barcelona, 12 for Argentina). [World Records and Career Statistics]",
-        "2026-10-01",
+        r"\b(inspection|inspection\s+checklist|quality\s+inspection|how\s+do\s+you\s+inspect)\b",
+        "All cars undergo a strict 120-Point Inspection covering chassis frame integrity (accident-free guarantee), engine compression, suspension, electricals, and guaranteed authentic odometer reading.",
+        "2026-11-03",
         0
     ),
     (
-        r"\b(did\s+messi\s+win\s+(the\s+)?world\s+cup|world\s+cup\s+2022)\b",
-        "Yes, Lionel Messi captained Argentina to victory in the 2022 FIFA World Cup in Qatar, scoring 7 goals and winning the tournament's Golden Ball. [Argentina National Team Career]",
-        "2026-10-01",
+        r"\b(exchange|satasat|trade\s*in|can\s+i\s+exchange|car\s+exchange|swap|bike\s+exchange)\b",
+        "Yes! We offer instant 20-minute spot valuation and exchange (साटासाट) for any old motorcycle, scooter, or car (any brand/lot). The valuation is directly adjusted into your down payment, and we provide same-day vehicle delivery.",
+        "2026-11-03",
         0
     ),
     (
-        r"\b(when\s+was\s+messi\s+born|messi\s+birthday|date\s+of\s+birth)\b",
-        "Lionel Messi was born on June 24, 1987, in Rosario, Santa Fe, Argentina. [Overview and Early Life]",
-        "2026-10-01",
+        r"\b(bluebook|namsari|name\s+transfer|ownership\s+transfer|yatayat|tax\s+paid)\b",
+        "We handle 100% of the Bluebook ownership transfer (नामसारी) at Yatayat Karyalaya (Ekantakuna, Lalitpur & Gurjudhara) within 24 to 48 hours. All cars have 2081/82 road tax paid and clear legal records.",
+        "2026-11-03",
         0
     ),
     (
-        r"\b(how\s+many\s+total\s+trophies|total\s+career\s+trophies|all\s+trophies\s+won|career\s+trophies)\b",
-        "Lionel Messi has won over 45 official team trophies across his senior career with FC Barcelona, PSG, Inter Miami, and Argentina. [World Records and Career Statistics]",
-        "2026-10-01",
-        1
+        r"\b(financing|bank\s+loan|emi|down\s+payment|installment)\b",
+        "We provide up to 70% bank financing via partner commercial banks (NIC Asia Bank, Nabil Bank, Global IME, Kumari Bank) with quick 3-day approval and tenures from 3 to 7 years. Minimum down payment starts at 30%.",
+        "2026-11-03",
+        0
+    ),
+    (
+        r"\b(test\s+drive|can\s+i\s+test\s+drive|booking\s+a\s+test\s+drive)\b",
+        "Walk-in test drives are free and available anytime during showroom hours! Just bring your valid driving license to our Tinkune, Kathmandu or Nayabazar, Pokhara showroom.",
+        "2026-11-03",
+        0
     ),
 ]
 
@@ -86,16 +92,15 @@ class FAQService:
         """)
         conn.commit()
 
-        # Seed if empty
+        # Sync/Seed seed FAQs
         cursor = conn.cursor()
-        cursor.execute("SELECT count(*) FROM faq")
-        if cursor.fetchone()[0] == 0:
-            for pat, ans, dt, ts in SEED_FAQS:
-                cursor.execute(
-                    "INSERT INTO faq (pattern, answer, as_of, is_time_sensitive) VALUES (?, ?, ?, ?)",
-                    (pat, ans, dt, ts)
-                )
-            conn.commit()
+        cursor.execute("DELETE FROM faq")
+        for pat, ans, dt, ts in SEED_FAQS:
+            cursor.execute(
+                "INSERT INTO faq (pattern, answer, as_of, is_time_sensitive) VALUES (?, ?, ?, ?)",
+                (pat, ans, dt, ts)
+            )
+        conn.commit()
 
         return conn
 

@@ -6,15 +6,20 @@ Encodes queries, retrieves top-k chunks, and returns grounded context.
 """
 
 import os
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
 from typing import List, Dict, Tuple
 from pathlib import Path
 
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 
+from dotenv import load_dotenv
+load_dotenv()
+
 DB_PATH = str(Path(__file__).resolve().parent.parent.parent / "chroma_db")
-COLLECTION_NAME = "messi_kb"
-OOD_DISTANCE = float(os.getenv("OOD_DISTANCE", "0.55"))
+COLLECTION_NAME = os.getenv("COLLECTION_NAME", "car_inventory_kb")
+OOD_DISTANCE = float(os.getenv("OOD_DISTANCE", "0.75"))
 
 _ef = SentenceTransformerEmbeddingFunction(
     model_name="all-MiniLM-L6-v2",
@@ -35,6 +40,14 @@ TRIVIAL_WORDS = {"ok", "okay", "yes", "no", "sure", "fine", "alright", "thanks",
 
 class RAGRetriever:
     """Domain knowledge retriever for Stage 2."""
+
+    @property
+    def collection_name(self) -> str:
+        return COLLECTION_NAME
+
+    @property
+    def collection(self):
+        return _col
 
     @staticmethod
     def retrieve_with_metadata(query: str, top_k: int = 4, max_distance: float = 0.82) -> Tuple[str, List[Dict]]:
