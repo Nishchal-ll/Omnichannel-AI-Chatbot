@@ -8,17 +8,13 @@ To add Messenger, Threads, Telegram etc:
 """
 from .base import BaseChannel
 from .whatsapp import WhatsAppChannel
-from .email import EmailChannel
 from .messenger import MessengerChannel
 
 # ── Register all active channels here ────────────────────────────────────────
 # Order doesn't matter — lookup is by channel_name string.
 _CHANNEL_LIST: list[BaseChannel] = [
     WhatsAppChannel(),
-    EmailChannel(),
     MessengerChannel(),
-    # ThreadsChannel(),
-    # TelegramChannel(),
 ]
 
 # Build lookup dict: { "whatsapp": <WhatsAppChannel>, "email": <EmailChannel>, ... }

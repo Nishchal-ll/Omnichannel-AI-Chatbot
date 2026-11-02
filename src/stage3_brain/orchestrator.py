@@ -42,7 +42,7 @@ class PipelineOrchestrator:
         3. Out-of-domain deflection guard
         4. Multi-turn dialogue history & pronoun query rewriting
         5. ChromaDB domain knowledge RAG retrieval
-        6. Grounded Gemma 4 E2B generation with persistent user memories
+        6. Grounded Llama 3.2 generation with persistent user memories
         7. History & memory persistence in SQLite
         8. Optional channel dispatch (WhatsApp)
         """
@@ -63,8 +63,8 @@ class PipelineOrchestrator:
             stage_timings["memory_ms"] = round((time.perf_counter() - t0) * 1000, 2)
             total_ms = round((time.perf_counter() - t_start) * 1000, 1)
 
-            if channel == "whatsapp" and message_obj:
-                self._dispatch_whatsapp(message_obj, reply)
+            if channel in ("whatsapp", "messenger") and message_obj:
+                self._dispatch_channel(channel, message_obj, reply)
 
             return {
                 "reply": reply,
@@ -86,7 +86,14 @@ class PipelineOrchestrator:
             clean_lower = clean_query.lower()
 
             if not memories:
-                reply = "I don't have any saved profile information for you yet. You can tell me facts like 'My name is...' or 'I live in...'!"
+                reply = "I don't have any saved preferences or profile information for you yet. You can tell me your budget, preferred car brands, or your name!"
+            elif "budget" in clean_lower:
+                b_mems = [m for m in memories if m.category == "budget" or "budget is" in m.memory_text.lower()]
+                if b_mems:
+                    reply = f"According to your saved profile: {b_mems[-1].memory_text}."
+                else:
+                    items_str = "\n".join(f"• {m.memory_text}" for m in memories)
+                    reply = f"I don't have a specific budget recorded yet, but here are your saved preferences:\n{items_str}"
             elif "name" in clean_lower:
                 name_mems = [m for m in memories if m.category == "identity" or "name is" in m.memory_text.lower()]
                 if name_mems:
@@ -99,27 +106,27 @@ class PipelineOrchestrator:
                 loc_mems = [m for m in memories if m.category == "location" or "lives in" in m.memory_text.lower() or "from" in m.memory_text.lower()]
                 if loc_mems:
                     loc_val = re.sub(r"User lives in\s*", "", loc_mems[-1].memory_text, flags=re.IGNORECASE).strip()
-                    reply = f"You live in {loc_val}."
+                    reply = f"You are located in {loc_val}."
                 else:
                     items_str = "\n".join(f"• {m.memory_text}" for m in memories)
                     reply = f"I don't have your location recorded yet, but here is what I know about you:\n{items_str}"
-            elif "support" in clean_lower or "favorite" in clean_lower:
-                pref_mems = [m for m in memories if m.category == "preference" or "supports" in m.memory_text.lower()]
+            elif "car" in clean_lower or "brand" in clean_lower or "prefer" in clean_lower or "choice" in clean_lower:
+                pref_mems = [m for m in memories if m.category == "preference"]
                 if pref_mems:
-                    reply = f"According to your saved profile: {pref_mems[-1].memory_text}."
+                    reply = f"According to your saved preferences: {pref_mems[-1].memory_text}."
                 else:
                     items_str = "\n".join(f"• {m.memory_text}" for m in memories)
-                    reply = f"Here is what I remember about you:\n{items_str}"
+                    reply = f"Here is what I remember about your profile:\n{items_str}"
             else:
                 items_str = "\n".join(f"• {m.memory_text}" for m in memories)
-                reply = f"Here is what I remember about you:\n{items_str}"
+                reply = f"Here is what I remember about your profile:\n{items_str}"
 
             session_buffer.add_turn(user_id, query, reply)
             stage_timings["memory_ms"] = round((time.perf_counter() - t0) * 1000, 2)
             total_ms = round((time.perf_counter() - t_start) * 1000, 1)
 
-            if channel == "whatsapp" and message_obj:
-                self._dispatch_whatsapp(message_obj, reply)
+            if channel in ("whatsapp", "messenger") and message_obj:
+                self._dispatch_channel(channel, message_obj, reply)
 
             return {
                 "reply": reply,
@@ -141,8 +148,8 @@ class PipelineOrchestrator:
             stage_timings["memory_ms"] = round((time.perf_counter() - t0) * 1000, 2)
             total_ms = round((time.perf_counter() - t_start) * 1000, 1)
 
-            if channel == "whatsapp" and message_obj:
-                self._dispatch_whatsapp(message_obj, reply)
+            if channel in ("whatsapp", "messenger") and message_obj:
+                self._dispatch_channel(channel, message_obj, reply)
 
             return {
                 "reply": reply,
@@ -169,8 +176,8 @@ class PipelineOrchestrator:
             session_buffer.add_turn(user_id, query, fast_reply)
             total_ms = round((time.perf_counter() - t_start) * 1000, 1)
 
-            if channel == "whatsapp" and message_obj:
-                self._dispatch_whatsapp(message_obj, fast_reply)
+            if channel in ("whatsapp", "messenger") and message_obj:
+                self._dispatch_channel(channel, message_obj, fast_reply)
 
             return {
                 "reply": fast_reply,
@@ -191,8 +198,8 @@ class PipelineOrchestrator:
             session_buffer.add_turn(user_id, query, reply)
             total_ms = round((time.perf_counter() - t_start) * 1000, 1)
 
-            if channel == "whatsapp" and message_obj:
-                self._dispatch_whatsapp(message_obj, reply)
+            if channel in ("whatsapp", "messenger") and message_obj:
+                self._dispatch_channel(channel, message_obj, reply)
 
             return {
                 "reply": reply,
@@ -215,21 +222,26 @@ class PipelineOrchestrator:
 
         # ── 5. ChromaDB Domain Knowledge RAG ─────────────────────────────────
         t0 = time.perf_counter()
-        kb_context, chunks = retriever.retrieve_with_metadata(standalone_query, top_k=4)
+        kb_context, chunks = retriever.retrieve_with_metadata(standalone_query, top_k=3)
         stage_timings["rag_retrieval_ms"] = round((time.perf_counter() - t0) * 1000, 2)
 
         # ── Semantic Out-of-Domain Retrieval Gate (Item 1) ───────────────────
         from stage2_memory.retriever import OOD_DISTANCE
         best_distance = chunks[0]["distance"] if chunks else 1.0
-        has_domain_kw = any(kw in standalone_query.lower() for kw in ["messi", "lionel", "leo", "barca", "barcelona", "psg", "inter miami", "argentina"])
+        has_domain_kw = any(kw in standalone_query.lower() for kw in [
+            "car", "cars", "santro", "i10", "magnite", "alto", "swift", "brezza",
+            "creta", "venue", "nexon", "tiago", "sonet", "seltos", "kicks", "hyundai",
+            "suzuki", "nissan", "tata", "kia", "toyota", "exchange", "satasat", "bluebook",
+            "namsari", "lakh", "lakhs", "recondition", "showroom", "finance", "emi"
+        ])
 
         if not chunks or (best_distance > OOD_DISTANCE and not has_domain_kw) or best_distance > 0.78:
             reply = OUT_OF_CONTEXT_DEFLECTION
             session_buffer.add_turn(user_id, query, reply)
             total_ms = round((time.perf_counter() - t_start) * 1000, 1)
 
-            if channel == "whatsapp" and message_obj:
-                self._dispatch_whatsapp(message_obj, reply)
+            if channel in ("whatsapp", "messenger") and message_obj:
+                self._dispatch_channel(channel, message_obj, reply)
 
             return {
                 "reply": reply,
@@ -258,7 +270,7 @@ class PipelineOrchestrator:
         )
         stage_timings["prompt_build_ms"] = round((time.perf_counter() - t0) * 1000, 2)
 
-        # ── 8. Gemma 4 E2B Inference (Item 6: Serialized with 25s timeout) ──
+        # ── 8. Llama 3.2 Inference (Item 6: Serialized with 25s timeout) ──
         acquired = self._llm_lock.acquire(timeout=25.0)
         if not acquired:
             reply_text = "I am currently handling another complex query. Please try your question again in a moment."
@@ -273,10 +285,10 @@ class PipelineOrchestrator:
         # ── 9. Commit Turn to Session Buffer (SQLite) ────────────────────────
         session_buffer.add_turn(user_id, query, reply_text)
 
-        # ── 10. Channel Dispatch (if WhatsApp) ───────────────────────────────
-        if channel == "whatsapp" and message_obj:
+        # ── 10. Channel Dispatch (WhatsApp / Messenger) ─────────────────────
+        if channel in ("whatsapp", "messenger") and message_obj:
             t0 = time.perf_counter()
-            self._dispatch_whatsapp(message_obj, reply_text)
+            self._dispatch_channel(channel, message_obj, reply_text)
             stage_timings["dispatch_ms"] = round((time.perf_counter() - t0) * 1000, 2)
 
         total_ms = round((time.perf_counter() - t_start) * 1000, 1)
@@ -303,14 +315,20 @@ class PipelineOrchestrator:
             "user_memories": [m.to_dict() for m in user_memories],
         }
 
-    def _dispatch_whatsapp(self, message_obj: Any, reply_text: str):
-        """Sends reply back via WhatsApp channel if configured."""
+    def _dispatch_channel(self, channel: str, message_obj: Any, reply_text: str):
+        """Sends reply back via configured channel (WhatsApp, Messenger)."""
+        if not message_obj or not channel:
+            return
         try:
             from channels.registry import get_channel
-            ch = get_channel("whatsapp")
+            ch = get_channel(channel)
             ch.send(message_obj, reply_text)
         except Exception as e:
-            print(f"[Orchestrator] WhatsApp dispatch warning: {e}")
+            print(f"[Orchestrator] {channel.title()} dispatch warning: {e}")
+
+    def _dispatch_whatsapp(self, message_obj: Any, reply_text: str):
+        """Backwards compatibility alias for _dispatch_channel."""
+        self._dispatch_channel("whatsapp", message_obj, reply_text)
 
 
 orchestrator = PipelineOrchestrator()
