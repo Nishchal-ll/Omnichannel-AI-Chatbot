@@ -1,8 +1,8 @@
 """
 src/stage3_brain/brain_engine.py
 ────────────────────────────────
-BrainEngine: Ollama native client for Gemma 4 E2B (gemma4:e2b).
-Executes streaming/direct generation with think=False and num_ctx=8192.
+BrainEngine: Ollama native client for Llama 3.2.
+Executes high-speed generation with num_ctx=4096 and num_thread=8.
 """
 
 import os
@@ -14,14 +14,14 @@ log = logging.getLogger(__name__)
 
 
 class BrainEngine:
-    """Direct HTTP client for Ollama Gemma 4 E2B."""
+    """Direct HTTP client for Ollama Llama 3.2."""
 
     def __init__(
         self,
         base_url: Optional[str] = None,
         model: Optional[str] = None,
         max_tokens: int = 250,
-        temperature: float = 0.15,
+        temperature: float = 0.1,
         timeout: int = 60,
     ):
         self.base_url = (base_url or os.getenv("LLM_URL", "http://localhost:11434")).rstrip("/")
@@ -31,7 +31,7 @@ class BrainEngine:
         self.timeout = int(os.getenv("LLM_TIMEOUT", str(timeout)))
 
     def is_available(self) -> Tuple[bool, str]:
-        """Checks if Ollama server is up and model is present, with automatic fallback."""
+        """Checks if Ollama server is up and Llama 3.2 is present."""
         try:
             r = requests.get(f"{self.base_url}/api/tags", timeout=5)
             if r.status_code == 200:
@@ -39,11 +39,11 @@ class BrainEngine:
                 has_model = any(self.model in m or m.startswith(self.model.split(":")[0]) for m in models)
                 if has_model:
                     return True, f"Connected to Ollama (Model: {self.model})"
-                # Fallback check
-                for fallback in ["llama3.2", "gemma4:e2b", "gemma4:e2b-it-qat"]:
+                # Fallback to any llama3.2 variant
+                for fallback in ["llama3.2", "llama3.2:latest", "llama3.2:3b"]:
                     if any(fallback in m for m in models):
                         self.model = fallback
-                        return True, f"Connected to Ollama (Fell back to: {self.model})"
+                        return True, f"Connected to Ollama (Model: {self.model})"
                 return False, f"Model {self.model} not found in Ollama: {models}"
             return False, f"Ollama returned HTTP {r.status_code}"
         except Exception as e:
@@ -51,7 +51,7 @@ class BrainEngine:
 
     def generate(self, messages: List[Dict[str, str]]) -> Tuple[str, Dict[str, Any]]:
         """
-        Sends chat completion request to Ollama native /api/chat with think=False.
+        Sends chat completion request to Ollama native /api/chat.
         Returns (reply_text, metadata).
         """
         import time
@@ -66,7 +66,7 @@ class BrainEngine:
                 "num_ctx": 4096,
                 "num_thread": 8,
                 "temperature": self.temperature,
-                "num_predict": min(self.max_tokens, 120),
+                "num_predict": min(self.max_tokens, 150),
                 "top_p": 0.9,
             },
         }

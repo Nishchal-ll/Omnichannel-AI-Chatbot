@@ -160,18 +160,24 @@ class MemoryService:
             loc = loc_match.group(1).strip().title()
             return f"User lives in {loc}", "location"
 
-        # 4. 'I support ...' / 'I am a fan of ...' / 'I cheer for ...'
-        supp_match = re.search(r"\b(?:i\s+support|i\s+am\s+a\s+fan\s+of|i\s+cheer\s+for)\s+([A-Za-z0-9_\- ]{2,40})\b", clean, re.IGNORECASE)
-        if supp_match:
-            club = supp_match.group(1).strip().title()
-            return f"User supports {club}", "preference"
+        # 4. 'My budget is ...' / 'Looking for cars under ...'
+        budget_match = re.search(r"\b(?:my\s+budget\s+is|budget\s+of|looking\s+for\s+(?:a\s+)?car\s+under|budget\s+around)\s+([$0-9kK,.\s\-]+(?:dollars|lakhs|k)?)\b", clean, re.IGNORECASE)
+        if budget_match:
+            b_val = budget_match.group(1).strip()
+            return f"Customer budget is {b_val}", "budget"
 
-        # 5. 'My favorite ... is ...'
+        # 5. 'I prefer ...' / 'I want to buy ...' / 'Looking for a ...'
+        pref_match = re.search(r"\b(?:i\s+prefer|i\s+want\s+to\s+buy|i\s+am\s+looking\s+for\s+(?:a\s+)?)\s+([A-Za-z0-9_\- ]{2,40})\b", clean, re.IGNORECASE)
+        if pref_match and not any(w in clean.lower() for w in ["what", "how", "where", "can i"]):
+            pref_val = pref_match.group(1).strip().title()
+            return f"Customer preferred vehicle/brand: {pref_val}", "preference"
+
+        # 6. 'My favorite ... is ...'
         fav_match = re.search(r"\bmy\s+favorite\s+([A-Za-z0-9 ]+)\s+is\s+([A-Za-z0-9 ]+)\b", clean, re.IGNORECASE)
         if fav_match:
             item = fav_match.group(1).strip()
             val = fav_match.group(2).strip()
-            return f"User's favorite {item} is {val}", "preference"
+            return f"Customer's favorite {item} is {val}", "preference"
 
         return None
 
