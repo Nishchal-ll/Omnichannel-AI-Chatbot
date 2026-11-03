@@ -1,489 +1,423 @@
 /**
  * src/static/app.js
  * ─────────────────
- * Frontend logic for Lionel Messi Cognitive Brain Chat & Diagnostics Console:
- * 1. Multi-user profile switching & SQLite history sync
- * 2. Instant chat interface with typing indicator & millisecond badges
- * 3. Real-time telemetry inspector (latency waterfall, stage table, speed t/s)
- * 4. Brain Memory Manager (view SQLite memories, delete individual facts)
- * 5. ChromaDB RAG chunk visualizer with cosine distances
+ * Frontend logic for Apex Auto Recondition Nepal Dealership Reports & Analytics Console:
+ * 1. Live KPI Analytics (Total Inquiries, Unique Leads, WhatsApp vs Messenger, Top Car Models)
+ * 2. Customer Leads Directory with search & channel filtering
+ * 3. Complete Chronological Conversation Transcript Viewer (Inbound queries & Bot responses)
+ * 4. Customer Brain Memory Intelligence Inspector (SQLite preferences, budget, exchange facts)
+ * 5. Inbound Message Simulator (Test WhatsApp & Messenger without external phones)
  */
 
-let activeUser = localStorage.getItem("active_chat_user") || "Nishchal";
-let currentDiagnostics = null;
-let currentMemories = [];
+let currentOverview = null;
+let customersList = [];
+let selectedSenderId = null;
+let currentChannelFilter = "all";
 
-// DOM Elements
-const userSelect = document.getElementById("user-select");
-const addUserBtn = document.getElementById("add-user-btn");
-const clearHistoryBtn = document.getElementById("clear-history-btn");
-const clearMemoriesBtn = document.getElementById("clear-memories-btn");
-const chatMessages = document.getElementById("chat-messages");
-const chatForm = document.getElementById("chat-form");
-const chatInput = document.getElementById("chat-input");
-const sendBtn = document.getElementById("send-btn");
-const promptChips = document.querySelectorAll(".chip");
+// DOM Elements - KPIs
+const kpiTotalQueries = document.getElementById("kpi-total-queries");
+const kpiUniqueLeads = document.getElementById("kpi-unique-leads");
+const kpiWaCount = document.getElementById("kpi-wa-count");
+const kpiFbCount = document.getElementById("kpi-fb-count");
+const kpiAvgLatency = document.getElementById("kpi-avg-latency");
+const kpiTopicsCloud = document.getElementById("kpi-topics-cloud");
+const waStatusText = document.getElementById("wa-status-text");
+const fbStatusText = document.getElementById("fb-status-text");
+const refreshBtn = document.getElementById("refresh-btn");
 
-// Diagnostic DOM Elements
-const diagTabs = document.querySelectorAll(".diag-tab");
-const tabContents = document.querySelectorAll(".diag-tab-content");
-const memCountBadge = document.getElementById("mem-count-badge");
-const chunksCountBadge = document.getElementById("chunks-count-badge");
-const memoriesList = document.getElementById("memories-list");
-const refreshMemBtn = document.getElementById("refresh-mem-btn");
-const ragChunksList = document.getElementById("rag-chunks-list");
-const ragQuerySubtitle = document.getElementById("rag-query-subtitle");
+// DOM Elements - Leads Sidebar
+const leadsList = document.getElementById("leads-list");
+const leadsCountBadge = document.getElementById("leads-count-badge");
+const leadSearchInput = document.getElementById("lead-search-input");
+const filterTabs = document.querySelectorAll(".filter-tab");
 
-// Metrics
-const metricTotalTime = document.getElementById("metric-total-time");
-const metricPathType = document.getElementById("metric-path-type");
-const metricSpeed = document.getElementById("metric-speed");
-const metricTokens = document.getElementById("metric-tokens");
-const waterfallBars = document.getElementById("waterfall-bars");
-const diagStagesTable = document.getElementById("diag-stages-table");
+// DOM Elements - Transcript Pane
+const leadDetailHeader = document.getElementById("lead-detail-header");
+const leadNameDisplay = document.getElementById("lead-name-display");
+const leadChannelBadge = document.getElementById("lead-channel-badge");
+const leadMetaDisplay = document.getElementById("lead-meta-display");
+const leadActionsBar = document.getElementById("lead-actions-bar");
+const clearLeadBtn = document.getElementById("clear-lead-btn");
+const customerPreferencesBox = document.getElementById("customer-preferences-box");
+const customerPrefItems = document.getElementById("customer-pref-items");
+const prefCountBadge = document.getElementById("pref-count-badge");
+const transcriptScrollArea = document.getElementById("transcript-scroll-area");
+const transcriptSimulatorDock = document.getElementById("transcript-simulator-dock");
+const simInlineForm = document.getElementById("sim-inline-form");
+const simInlineInput = document.getElementById("sim-inline-input");
+
+// DOM Elements - Modal Simulator
+const openSimModalBtn = document.getElementById("open-sim-modal-btn");
+const closeSimModalBtn = document.getElementById("close-sim-modal-btn");
+const cancelSimBtn = document.getElementById("cancel-sim-btn");
+const simModalBackdrop = document.getElementById("sim-modal-backdrop");
+const simModal = document.getElementById("sim-modal");
+const simModalForm = document.getElementById("sim-modal-form");
+const simChannelSelect = document.getElementById("sim-channel-select");
+const simSenderInput = document.getElementById("sim-sender-input");
+const simMessageInput = document.getElementById("sim-message-input");
 
 // ── 1. Initialization ────────────────────────────────────────────────────────
 async function initApp() {
-  await loadUsersList();
-  await loadUserHistory();
-  await loadUserMemories();
   setupEventListeners();
-  checkHealth();
+  await refreshReports();
 }
 
-// ── 2. User Profiles & Context ──────────────────────────────────────────────
-async function loadUsersList() {
+// ── 2. Load Analytics Overview ──────────────────────────────────────────────
+async function loadOverview() {
   try {
-    const res = await fetch("/api/users");
+    const res = await fetch("/api/reports/overview");
     const data = await res.json();
-    const users = data.users || [];
-    
-    if (!users.includes("Nishchal")) users.unshift("Nishchal");
-    if (!users.includes(activeUser)) users.push(activeUser);
+    currentOverview = data;
 
-    userSelect.innerHTML = "";
-    users.forEach(u => {
-      const opt = document.createElement("option");
-      opt.value = u;
-      opt.textContent = u;
-      if (u === activeUser) opt.selected = true;
-      userSelect.appendChild(opt);
-    });
-  } catch (e) {
-    console.error("Failed to load users:", e);
-  }
-}
+    kpiTotalQueries.textContent = data.total_queries || 0;
+    kpiUniqueLeads.textContent = data.unique_leads || 0;
+    kpiWaCount.textContent = data.channels?.whatsapp || 0;
+    kpiFbCount.textContent = data.channels?.messenger || 0;
 
-async function switchUser(newUser) {
-  activeUser = newUser;
-  localStorage.setItem("active_chat_user", activeUser);
-  chatMessages.innerHTML = "";
-  await loadUserHistory();
-  await loadUserMemories();
-}
+    const latSec = data.avg_latency_ms ? (data.avg_latency_ms / 1000).toFixed(2) : "1.20";
+    kpiAvgLatency.textContent = `${latSec}s`;
 
-// ── 3. Load Dialogue History ────────────────────────────────────────────────
-async function loadUserHistory() {
-  try {
-    const res = await fetch(`/api/history/${encodeURIComponent(activeUser)}`);
-    const data = await res.json();
-    const turns = data.turns || [];
-
-    chatMessages.innerHTML = "";
-    if (turns.length === 0) {
-      appendSystemGreeting();
-      return;
+    // Status pills
+    if (data.channel_status?.whatsapp_configured) {
+      waStatusText.textContent = "WhatsApp (Cloud API)";
+    } else {
+      waStatusText.textContent = "WhatsApp (Ready)";
     }
 
-    turns.forEach(t => {
-      appendMessageBubble(t.role, t.content, null);
-    });
-    scrollToBottom();
+    if (data.channel_status?.messenger_configured) {
+      fbStatusText.textContent = "Messenger (Send API)";
+    } else {
+      fbStatusText.textContent = "Messenger (Ready)";
+    }
+
+    // Top Topics Cloud
+    kpiTopicsCloud.innerHTML = "";
+    const topics = data.top_topics || [];
+    if (topics.length === 0) {
+      kpiTopicsCloud.innerHTML = `<span class="topic-pill">No inquiries yet</span>`;
+    } else {
+      topics.forEach(t => {
+        const pill = document.createElement("span");
+        pill.className = "topic-pill";
+        pill.innerHTML = `${escapeHtml(t.name)} <strong>(${t.count})</strong>`;
+        kpiTopicsCloud.appendChild(pill);
+      });
+    }
   } catch (e) {
-    console.error("Failed to load history:", e);
+    console.error("Failed to load overview reports:", e);
   }
 }
 
-function appendSystemGreeting() {
-  const greeting = `Hello! I am Lionel Messi's Cognitive AI Knowledge Assistant.
-I am grounded in Messi's career records, honors, World Cup 2022 stats, and club history.
-I also have long-term Brain Memory: tell me facts like *"Remember that my name is Nishchal"* and I will remember you!`;
-  appendMessageBubble("assistant", greeting, { path_type: "greeting", total_ms: 0 });
+// ── 3. Load Customers Leads Directory ───────────────────────────────────────
+async function loadCustomers() {
+  try {
+    const res = await fetch("/api/reports/customers");
+    const data = await res.json();
+    customersList = data.customers || [];
+    renderLeadsList();
+
+    // Auto-select first lead if none selected
+    if (!selectedSenderId && customersList.length > 0) {
+      selectCustomer(customersList[0].sender_id, customersList[0].channel);
+    } else if (selectedSenderId) {
+      const exists = customersList.find(c => c.sender_id === selectedSenderId);
+      if (exists) selectCustomer(exists.sender_id, exists.channel, false);
+    }
+  } catch (e) {
+    console.error("Failed to load customer directory:", e);
+  }
 }
 
-// ── 4. Chat Sending & Response Handling ─────────────────────────────────────
-async function handleSendMessage(text) {
-  const msg = (text || chatInput.value).trim();
-  if (!msg) return;
+function renderLeadsList() {
+  const query = leadSearchInput.value.toLowerCase().trim();
+  const filtered = customersList.filter(c => {
+    const matchChan = (currentChannelFilter === "all") || (c.channel === currentChannelFilter);
+    const matchQuery = !query || 
+      c.sender_id.toLowerCase().includes(query) || 
+      (c.last_message && c.last_message.toLowerCase().includes(query));
+    return matchChan && matchQuery;
+  });
 
-  chatInput.value = "";
-  appendMessageBubble("user", msg, null);
-  scrollToBottom();
+  leadsCountBadge.textContent = filtered.length;
+  leadsList.innerHTML = "";
 
-  // Show typing bubble
-  const typingId = appendTypingIndicator();
-  sendBtn.disabled = true;
+  if (filtered.length === 0) {
+    leadsList.innerHTML = `<div class="loading-state">No matching customer leads found.</div>`;
+    return;
+  }
+
+  filtered.forEach(c => {
+    const item = document.createElement("div");
+    item.className = `lead-item ${c.sender_id === selectedSenderId ? "active" : ""}`;
+    item.setAttribute("data-sender", c.sender_id);
+
+    const channelClass = c.channel === "messenger" ? "messenger" : (c.channel === "whatsapp" ? "whatsapp" : "chat");
+    const timeDisplay = c.last_active && c.last_active !== "Recent" ? formatTime(c.last_active) : "Recent";
+
+    item.innerHTML = `
+      <div class="lead-item-top">
+        <span class="lead-sender-name">${escapeHtml(c.sender_id)}</span>
+        <span class="lead-badge ${channelClass}">${c.channel}</span>
+      </div>
+      <div class="lead-snippet">${escapeHtml(c.last_message || "No message body")}</div>
+      <div class="lead-item-footer">
+        <span>${timeDisplay}</span>
+        <span>${c.total_inquiries} turns</span>
+      </div>
+    `;
+
+    item.addEventListener("click", () => {
+      selectCustomer(c.sender_id, c.channel);
+    });
+
+    leadsList.appendChild(item);
+  });
+}
+
+// ── 4. Select Customer & Load Transcript ────────────────────────────────────
+async function selectCustomer(senderId, channel, scrollToBottom = true) {
+  selectedSenderId = senderId;
+  document.querySelectorAll(".lead-item").forEach(el => {
+    if (el.getAttribute("data-sender") === senderId) {
+      el.classList.add("active");
+    } else {
+      el.classList.remove("active");
+    }
+  });
+
+  // Update detail header
+  leadNameDisplay.textContent = senderId;
+  leadChannelBadge.className = `channel-badge ${channel || "whatsapp"}`;
+  leadChannelBadge.textContent = (channel || "whatsapp").toUpperCase();
+  leadMetaDisplay.textContent = `Omnichannel Lead ID: ${senderId} · Multi-turn session active`;
+  leadActionsBar.style.display = "block";
+  transcriptSimulatorDock.style.display = "block";
+
+  // Load details
+  try {
+    const res = await fetch(`/api/reports/customer/${encodeURIComponent(senderId)}`);
+    const data = await res.json();
+    renderCustomerPreferences(data.memories || []);
+    renderTranscript(data.turns || [], data.raw_messages || [], scrollToBottom);
+  } catch (e) {
+    console.error("Failed to load customer details:", e);
+  }
+}
+
+function renderCustomerPreferences(memories) {
+  customerPrefItems.innerHTML = "";
+  prefCountBadge.textContent = `${memories.length} facts`;
+
+  if (memories.length === 0) {
+    customerPreferencesBox.style.display = "none";
+    return;
+  }
+
+  customerPreferencesBox.style.display = "flex";
+  memories.forEach(m => {
+    const tag = document.createElement("span");
+    tag.className = "pref-fact-tag";
+    tag.textContent = m.fact || m.memory_text;
+    customerPrefItems.appendChild(tag);
+  });
+}
+
+function renderTranscript(turns, rawMessages, shouldScroll = true) {
+  transcriptScrollArea.innerHTML = "";
+
+  if (turns.length === 0 && rawMessages.length === 0) {
+    transcriptScrollArea.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">💬</div>
+        <h3>No conversation turns recorded</h3>
+        <p>This customer does not have any recorded dialogue turns yet. Use the simulator below to simulate an inbound query.</p>
+      </div>
+    `;
+    return;
+  }
+
+  // If we have rawMessages from store, use them for rich latency data
+  if (rawMessages.length > 0) {
+    rawMessages.forEach(m => {
+      // Inbound Customer Query
+      const custTurn = document.createElement("div");
+      custTurn.className = "transcript-turn customer";
+      custTurn.innerHTML = `
+        <div class="transcript-bubble">${escapeHtml(m.body || "")}</div>
+        <div class="transcript-meta">
+          <span>${formatTime(m.ts)}</span>
+          <span>Customer (${m.channel})</span>
+        </div>
+      `;
+      transcriptScrollArea.appendChild(custTurn);
+
+      // Outbound Bot Reply
+      if (m.reply) {
+        const botTurn = document.createElement("div");
+        botTurn.className = "transcript-turn bot";
+        const metric = m.metrics || {};
+        const latSec = metric.total_ms ? `${(metric.total_ms / 1000).toFixed(2)}s` : "0.5s";
+        const pathType = metric.path_type || "rag";
+
+        botTurn.innerHTML = `
+          <div class="transcript-bubble">${escapeHtml(m.reply)}</div>
+          <div class="transcript-meta">
+            <span class="latency-pill">⚡ ${latSec} · ${pathType}</span>
+            <span>Apex Support Bot</span>
+          </div>
+        `;
+        transcriptScrollArea.appendChild(botTurn);
+      }
+    });
+  } else {
+    // Fallback to SQLite turns
+    turns.forEach(t => {
+      const row = document.createElement("div");
+      const isUser = t.role === "user";
+      row.className = `transcript-turn ${isUser ? "customer" : "bot"}`;
+      row.innerHTML = `
+        <div class="transcript-bubble">${escapeHtml(t.content)}</div>
+        <div class="transcript-meta">
+          <span>${isUser ? "Customer" : "Apex Support Bot"}</span>
+        </div>
+      `;
+      transcriptScrollArea.appendChild(row);
+    });
+  }
+
+  if (shouldScroll) {
+    transcriptScrollArea.scrollTop = transcriptScrollArea.scrollHeight;
+  }
+}
+
+// ── 5. Inbound Simulator Execution ──────────────────────────────────────────
+async function handleSimulate(channel, sender, message) {
+  if (!message || !message.trim()) return;
 
   try {
-    const res = await fetch("/api/chat", {
+    const res = await fetch("/api/channels/simulate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user_id: activeUser,
-        message: msg
+        channel: channel,
+        sender: sender,
+        message: message.trim()
       })
     });
 
     const data = await res.json();
-    removeTypingIndicator(typingId);
-
-    if (data.reply) {
-      appendMessageBubble("assistant", data.reply, data.metrics, data);
-      renderDiagnostics(data.metrics, data.user_memories, data.retrieved_chunks);
-      await loadUserMemories();
-    } else {
-      appendMessageBubble("assistant", "⚠️ Error processing response.", null);
+    if (data.error) {
+      alert(`Simulation error: ${data.error}`);
+      return;
     }
+
+    // Refresh directory and select this customer
+    await loadOverview();
+    await loadCustomers();
+    selectCustomer(sender, channel, true);
   } catch (err) {
-    removeTypingIndicator(typingId);
-    appendMessageBubble("assistant", `⚠️ Connection error: ${err.message}`, null);
-  } finally {
-    sendBtn.disabled = false;
-    scrollToBottom();
+    alert(`Simulation network error: ${err.message}`);
   }
 }
 
-function appendMessageBubble(role, content, metrics, fullData = null) {
-  const row = document.createElement("div");
-  row.className = `chat-bubble-row ${role}`;
-
-  const bubble = document.createElement("div");
-  bubble.className = `chat-bubble ${role}`;
-  bubble.textContent = content;
-  row.appendChild(bubble);
-
-  if (role === "assistant") {
-    const meta = document.createElement("div");
-    meta.className = "bubble-meta";
-
-    if (metrics) {
-      const badge = document.createElement("span");
-      badge.className = "bubble-badge";
-      const sec = (metrics.total_ms / 1000).toFixed(2);
-      const tokens = metrics.tokens?.completion_tokens || 0;
-      badge.textContent = `⚡ ${sec}s · ${tokens} tok · ${metrics.path_type || "rag"}`;
-      meta.appendChild(badge);
-
-      if (fullData) {
-        const inspectLink = document.createElement("span");
-        inspectLink.className = "inspect-trigger";
-        inspectLink.textContent = "Inspect Telemetry";
-        inspectLink.addEventListener("click", () => {
-          renderDiagnostics(fullData.metrics, fullData.user_memories, fullData.retrieved_chunks);
-          switchTab("tab-telemetry");
-        });
-        meta.appendChild(inspectLink);
-      }
-    }
-
-    row.appendChild(meta);
-  }
-
-  chatMessages.appendChild(row);
-  scrollToBottom();
+// ── 6. Refresh All Reports ──────────────────────────────────────────────────
+async function refreshReports() {
+  refreshBtn.disabled = true;
+  refreshBtn.textContent = "Refreshing...";
+  await loadOverview();
+  await loadCustomers();
+  refreshBtn.disabled = false;
+  refreshBtn.textContent = "🔄 Refresh Reports";
 }
 
-function appendTypingIndicator() {
-  const id = `typing_${Date.now()}`;
-  const row = document.createElement("div");
-  row.id = id;
-  row.className = "chat-bubble-row assistant";
-  row.innerHTML = `
-    <div class="chat-bubble assistant">
-      <div class="typing-indicator">
-        <span class="typing-dot"></span>
-        <span class="typing-dot"></span>
-        <span class="typing-dot"></span>
-      </div>
-    </div>
-  `;
-  chatMessages.appendChild(row);
-  scrollToBottom();
-  return id;
-}
-
-function removeTypingIndicator(id) {
-  const el = document.getElementById(id);
-  if (el) el.remove();
-}
-
-function scrollToBottom() {
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-// ── 5. Diagnostics & Telemetry Rendering ────────────────────────────────────
-const STAGE_NAMES = {
-  memory_ms: "Memory MESH Interceptor",
-  routing_ms: "Intent Routing & Anchors",
-  rewrite_ms: "Context History Rewrite",
-  rag_retrieval_ms: "ChromaDB RAG Retrieval",
-  prompt_build_ms: "Cognitive Prompt Assembly",
-  llm_inference_ms: "Gemma 4 E2B Generation",
-  dispatch_ms: "Channel Dispatch",
-};
-
-const STAGE_COLORS = {
-  memory_ms: "var(--color-mem)",
-  routing_ms: "var(--color-route)",
-  rewrite_ms: "var(--color-rewrite)",
-  rag_retrieval_ms: "var(--color-rag)",
-  prompt_build_ms: "var(--color-dispatch)",
-  llm_inference_ms: "var(--color-llm)",
-  dispatch_ms: "#60A5FA",
-};
-
-function renderDiagnostics(metrics, memories, chunks) {
-  if (!metrics) return;
-  currentDiagnostics = { metrics, memories, chunks };
-
-  // Overview Cards
-  metricTotalTime.textContent = `${(metrics.total_ms / 1000).toFixed(2)}s (${metrics.total_ms}ms)`;
-  metricPathType.textContent = metrics.path_type || "rag_llm";
-  metricSpeed.textContent = metrics.tokens?.tokens_per_sec ? `${metrics.tokens.tokens_per_sec.toFixed(1)} t/s` : "0 ms/tok";
-  metricTokens.textContent = `${metrics.tokens?.completion_tokens || 0} tokens`;
-
-  // Latency Waterfall
-  const stages = metrics.stages || {};
-  const total = metrics.total_ms || 1;
-  waterfallBars.innerHTML = "";
-  
-  const tbody = diagStagesTable.querySelector("tbody");
-  tbody.innerHTML = "";
-
-  for (const [key, duration] of Object.entries(stages)) {
-    const name = STAGE_NAMES[key] || key;
-    const color = STAGE_COLORS[key] || "var(--accent-blue)";
-    const pct = Math.min(100, Math.max(1, Math.round((duration / total) * 100)));
-
-    // Waterfall bar
-    const item = document.createElement("div");
-    item.className = "waterfall-item";
-    item.innerHTML = `
-      <div class="wf-header">
-        <span>${name}</span>
-        <span><strong>${duration} ms</strong> (${pct}%)</span>
-      </div>
-      <div class="wf-bar-track">
-        <div class="wf-bar-fill" style="width: ${pct}%; background: ${color};"></div>
-      </div>
-    `;
-    waterfallBars.appendChild(item);
-
-    // Table row
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td style="color: ${color}; font-weight: 600;">${name}</td>
-      <td>${duration} ms</td>
-      <td>${pct}%</td>
-    `;
-    tbody.appendChild(tr);
-  }
-
-  // Update RAG Chunks Tab
-  renderChunks(chunks || metrics.rag?.chunks || [], metrics.standalone_query);
-}
-
-function renderChunks(chunks, standaloneQuery) {
-  chunksCountBadge.textContent = chunks.length;
-  if (standaloneQuery) {
-    ragQuerySubtitle.textContent = `Rewritten Query: "${standaloneQuery}"`;
-  } else {
-    ragQuerySubtitle.textContent = `Retrieved for direct question`;
-  }
-
-  ragChunksList.innerHTML = "";
-  if (!chunks || chunks.length === 0) {
-    let explanation = `No RAG retrieval needed for path: <strong>${metricPathType.textContent}</strong>.`;
-    if (metricPathType.textContent === "memory_recall" || metricPathType.textContent === "memory_store") {
-      explanation = `⚡ <strong>Memory MESH Path:</strong> Resolved directly from SQLite User Profile (${activeUser}). Vector search was bypassed to achieve sub-millisecond response time.`;
-    } else if (metricPathType.textContent === "fast_anchor") {
-      explanation = `⚡ <strong>0ms Fast Anchor Path:</strong> Resolved instantly by canonical FAQ router. Vector search was bypassed to achieve near-zero latency.`;
-    } else if (metricPathType.textContent === "out_of_domain") {
-      explanation = `🛡️ <strong>Domain Guard Path:</strong> Query was outside Lionel Messi's football career, so RAG was bypassed.`;
-    } else if (metricPathType.textContent === "rag_llm") {
-      explanation = `ℹ️ <strong>ChromaDB Query:</strong> Returned 0 chunks because semantic distance exceeded the relevance threshold.`;
-    }
-    ragChunksList.innerHTML = `<div class="placeholder-text" style="line-height:1.6; text-align:left; padding:15px;">${explanation}</div>`;
-    return;
-  }
-
-  chunks.forEach((c, idx) => {
-    const card = document.createElement("div");
-    card.className = "chunk-card";
-    const dist = c.distance !== undefined ? c.distance.toFixed(4) : "—";
-    card.innerHTML = `
-      <div class="chunk-header">
-        <span>#${idx + 1} ${c.metadata?.title || c.title || "Knowledge Chunk"}</span>
-        <span class="chunk-distance">Cosine Dist: ${dist}</span>
-      </div>
-      <div class="chunk-text">${c.text || c.content || ""}</div>
-    `;
-    ragChunksList.appendChild(card);
-  });
-}
-
-// ── 6. Long-Term Brain Memories (SQLite) ─────────────────────────────────────
-async function loadUserMemories() {
-  try {
-    const res = await fetch(`/api/memories/${encodeURIComponent(activeUser)}`);
-    const data = await res.json();
-    currentMemories = data.memories || [];
-    renderMemories(currentMemories);
-  } catch (e) {
-    console.error("Failed to load memories:", e);
-  }
-}
-
-function renderMemories(memories) {
-  memCountBadge.textContent = memories.length;
-  memoriesList.innerHTML = "";
-
-  if (memories.length === 0) {
-    memoriesList.innerHTML = `
-      <div class="placeholder-text">
-        No long-term brain memories saved for <strong>${activeUser}</strong>.<br><br>
-        Try saying:<br>
-        • <em>"Remember that my name is ${activeUser}"</em><br>
-        • <em>"Remember that my favorite club is Barcelona"</em>
-      </div>`;
-    return;
-  }
-
-  memories.forEach(m => {
-    const item = document.createElement("div");
-    item.className = "memory-item-card";
-    const dt = new Date(m.created_at * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    item.innerHTML = `
-      <div>
-        <div class="memory-text">${m.memory_text}</div>
-        <div class="memory-meta">Category: ${m.category} • Saved at ${dt}</div>
-      </div>
-      <button class="mem-del-btn" title="Forget this fact" data-id="${m.id}">✕</button>
-    `;
-
-    item.querySelector(".mem-del-btn").addEventListener("click", async () => {
-      await deleteMemory(m.id);
-    });
-
-    memoriesList.appendChild(item);
-  });
-}
-
-async function deleteMemory(memoryId) {
-  try {
-    await fetch(`/api/memories/${encodeURIComponent(activeUser)}/${encodeURIComponent(memoryId)}`, {
-      method: "DELETE"
-    });
-    await loadUserMemories();
-  } catch (e) {
-    console.error("Failed to delete memory:", e);
-  }
-}
-
-// ── 7. Tab Switching & Event Listeners ───────────────────────────────────────
-function switchTab(targetId) {
-  diagTabs.forEach(t => {
-    if (t.dataset.tab === targetId) t.classList.add("active");
-    else t.classList.remove("active");
-  });
-
-  tabContents.forEach(c => {
-    if (c.id === targetId) c.classList.add("active");
-    else c.classList.remove("active");
-  });
-}
-
+// ── 7. Event Listeners ──────────────────────────────────────────────────────
 function setupEventListeners() {
-  // Tabs
-  diagTabs.forEach(tab => {
-    tab.addEventListener("click", () => switchTab(tab.dataset.tab));
+  refreshBtn.addEventListener("click", refreshReports);
+
+  // Search input
+  leadSearchInput.addEventListener("input", () => {
+    renderLeadsList();
   });
 
-  // User Selector
-  userSelect.addEventListener("change", (e) => {
-    switchUser(e.target.value);
-  });
-
-  // Add User
-  addUserBtn.addEventListener("click", () => {
-    const name = prompt("Enter new user name / phone number:");
-    if (name && name.trim()) {
-      switchUser(name.trim());
-      loadUsersList();
-    }
-  });
-
-  // Chat Form Submit
-  chatForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    handleSendMessage();
-  });
-
-  // Prompt Chips
-  promptChips.forEach(chip => {
-    chip.addEventListener("click", () => {
-      const q = chip.dataset.query;
-      if (q) handleSendMessage(q);
+  // Channel filter tabs
+  filterTabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      filterTabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      currentChannelFilter = tab.getAttribute("data-channel");
+      renderLeadsList();
     });
   });
 
-  // Clear Chat History
-  clearHistoryBtn.addEventListener("click", async () => {
-    if (confirm(`Clear conversation history for ${activeUser}?`)) {
-      await fetch(`/api/history/${encodeURIComponent(activeUser)}`, { method: "DELETE" });
-      chatMessages.innerHTML = "";
-      appendSystemGreeting();
+  // Clear customer history
+  clearLeadBtn.addEventListener("click", async () => {
+    if (!selectedSenderId) return;
+    if (confirm(`Clear all conversation context for lead ${selectedSenderId}?`)) {
+      await fetch(`/api/history/${encodeURIComponent(selectedSenderId)}`, { method: "DELETE" });
+      await refreshReports();
+      selectCustomer(selectedSenderId, "whatsapp");
     }
   });
 
-  // Clear Brain Memories
-  clearMemoriesBtn.addEventListener("click", async () => {
-    if (confirm(`Clear all long-term brain memories for ${activeUser}?`)) {
-      await fetch(`/api/memories/${encodeURIComponent(activeUser)}`, { method: "DELETE" });
-      await loadUserMemories();
-    }
+  // Inline simulator form
+  simInlineForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const text = simInlineInput.value;
+    if (!text || !selectedSenderId) return;
+    simInlineInput.value = "";
+    
+    // Detect channel from selected lead
+    const currentLead = customersList.find(c => c.sender_id === selectedSenderId);
+    const channel = currentLead ? currentLead.channel : "whatsapp";
+    await handleSimulate(channel, selectedSenderId, text);
   });
 
-  // Refresh Memories Button
-  refreshMemBtn.addEventListener("click", () => {
-    loadUserMemories();
+  // Modal simulator controls
+  openSimModalBtn.addEventListener("click", () => {
+    simModal.classList.add("open");
+    simModalBackdrop.classList.add("open");
+  });
+
+  const closeModal = () => {
+    simModal.classList.remove("open");
+    simModalBackdrop.classList.remove("open");
+  };
+
+  closeSimModalBtn.addEventListener("click", closeModal);
+  cancelSimBtn.addEventListener("click", closeModal);
+  simModalBackdrop.addEventListener("click", closeModal);
+
+  simModalForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const chan = simChannelSelect.value;
+    const sender = simSenderInput.value.trim() || "+977-9801234567";
+    const msg = simMessageInput.value.trim();
+    if (!msg) return;
+
+    closeModal();
+    simMessageInput.value = "";
+    await handleSimulate(chan, sender, msg);
   });
 }
 
-// ── 8. Health Check ─────────────────────────────────────────────────────────
-async function checkHealth() {
+function formatTime(isoStr) {
+  if (!isoStr || isoStr === "Recent") return "Recent";
   try {
-    const res = await fetch("/api/health");
-    const data = await res.json();
-    
-    const ollamaDot = document.querySelector("#ollama-status-badge .status-dot");
-    const ollamaText = document.getElementById("ollama-status-text");
-    if (data.ollama?.online) {
-      ollamaDot.classList.add("active");
-      ollamaText.textContent = `Ollama: ${data.ollama.model}`;
-    } else {
-      ollamaDot.classList.remove("active");
-      ollamaText.textContent = "Ollama: Offline";
-    }
-
-    const ragText = document.getElementById("rag-status-text");
-    if (data.rag?.total_chunks) {
-      ragText.textContent = `RAG: ${data.rag.total_chunks} Chunks`;
-    }
+    const d = new Date(isoStr);
+    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" });
   } catch (e) {
-    console.warn("Health check error:", e);
+    return isoStr;
   }
 }
 
-// Start app
-window.addEventListener("DOMContentLoaded", initApp);
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+document.addEventListener("DOMContentLoaded", initApp);

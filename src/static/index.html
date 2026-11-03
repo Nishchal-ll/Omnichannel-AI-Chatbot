@@ -3,181 +3,212 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lionel Messi — Cognitive Brain Chat & Diagnostics</title>
-  <link rel="stylesheet" href="/static/app.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22><text y=%2222%22 font-size=%2222%22>⚽</text></svg>">
+  <title>Apex Auto Recondition Nepal — Dealership Reports &amp; Customer Analytics</title>
+  <link rel="stylesheet" href="/static/app.css?v=4.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
 </head>
 <body>
 
   <!-- Top Navigation Bar -->
-  <header class="navbar">
-    <div class="nav-brand">
-      <div class="nav-logo">⚽</div>
-      <div>
-        <div class="nav-title">Lionel Messi — Cognitive AI Brain & Diagnostics</div>
-        <div class="nav-sub">Gemma 4 E2B · ChromaDB Knowledge RAG · SQLite Brain Memory MESH</div>
+  <header class="app-header">
+    <div class="header-brand">
+      <div class="brand-avatar">🚗</div>
+      <div class="brand-info">
+        <div class="brand-name">Apex Auto Recondition Nepal</div>
+        <div class="brand-sub">Dealership Reports &amp; Customer Analytics Console (WhatsApp &amp; Messenger)</div>
       </div>
     </div>
 
-    <div class="nav-status-group">
-      <div class="status-badge" id="ollama-status-badge">
+    <div class="header-status-group">
+      <div class="status-pill" id="wa-status-pill">
         <span class="status-dot active"></span>
-        <span id="ollama-status-text">Ollama: gemma4:e2b</span>
+        <span id="wa-status-text">WhatsApp API</span>
       </div>
-      <div class="status-badge" id="rag-status-badge">
+      <div class="status-pill" id="fb-status-pill">
         <span class="status-dot active"></span>
-        <span id="rag-status-text">RAG: 12 Chunks</span>
+        <span id="fb-status-text">Messenger API</span>
       </div>
-      <div class="status-badge" id="wa-status-badge" title="WhatsApp Channel is preserved and ready">
+      <div class="status-pill">
         <span class="status-dot active"></span>
-        <span>WhatsApp: Preserved</span>
+        <span>Llama 3.2 (Local)</span>
       </div>
+      <button id="refresh-btn" class="header-btn primary-btn" title="Refresh Live Analytics">🔄 Refresh Reports</button>
+      <button id="open-sim-modal-btn" class="header-btn" title="Simulate an inbound customer inquiry">🧪 Simulate Inquiry</button>
     </div>
   </header>
 
-  <!-- Main Workspace (Dual-Pane) -->
-  <main class="workspace">
+  <!-- Main Dashboard Workspace -->
+  <main class="dashboard-container">
 
-    <!-- Left Pane: Modern Clean Chat Interface -->
-    <section class="chat-pane">
-      <!-- Chat Profile & User Context Switcher Header -->
-      <div class="chat-top-bar">
-        <div class="chat-user-picker">
-          <label for="user-select">Active User Profile:</label>
-          <select id="user-select" class="user-dropdown">
-            <option value="Nishchal">Nishchal</option>
-            <option value="user_guest">Guest User</option>
-          </select>
-          <button id="add-user-btn" class="secondary-btn" title="Create a new user profile">+ New User</button>
+    <!-- KPI Overview Cards -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Inquiries Handled</div>
+        <div class="kpi-value" id="kpi-total-queries">0</div>
+        <div class="kpi-sub">Across WhatsApp &amp; Messenger</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Unique Customer Leads</div>
+        <div class="kpi-value" id="kpi-unique-leads">0</div>
+        <div class="kpi-sub">Distinct phones &amp; PSIDs</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Channel Distribution</div>
+        <div class="kpi-channels">
+          <div class="channel-metric">
+            <span class="channel-tag wa">WhatsApp</span>
+            <strong id="kpi-wa-count">0</strong>
+          </div>
+          <div class="channel-metric">
+            <span class="channel-tag fb">Messenger</span>
+            <strong id="kpi-fb-count">0</strong>
+          </div>
         </div>
+      </div>
 
-        <div class="chat-actions">
-          <button id="clear-history-btn" class="text-btn" title="Clear current dialogue history">🗑️ Clear Chat</button>
-          <button id="clear-memories-btn" class="text-btn danger-text" title="Clear saved user facts in database">🧠 Clear Memories</button>
+      <div class="kpi-card">
+        <div class="kpi-label">Average AI Latency</div>
+        <div class="kpi-value" id="kpi-avg-latency">—</div>
+        <div class="kpi-sub" id="kpi-latency-sub">Fast FAQ &amp; Llama 3.2</div>
+      </div>
+
+      <div class="kpi-card top-topics-card">
+        <div class="kpi-label">Top Inquired Cars &amp; Policies</div>
+        <div class="topics-pill-cloud" id="kpi-topics-cloud">
+          <span class="topic-pill">Loading topics...</span>
         </div>
-      </div>
-
-      <!-- Quick Suggestion Chips -->
-      <div class="prompt-chips-bar">
-        <button class="chip" data-query="How many Ballon d'Ors has Messi won?">🏆 Ballon d'Or count</button>
-        <button class="chip" data-query="What did Messi achieve with Argentina in 2022?">🇦🇷 2022 World Cup</button>
-        <button class="chip" data-query="Remember that my name is Nishchal and I support Barcelona">🧠 Save Fact: Nishchal / Barca</button>
-        <button class="chip" data-query="What do you remember about me?">❓ Recall my memories</button>
-        <button class="chip" data-query="Which club did he join in 2023?">⚽ Club in 2023</button>
-      </div>
-
-      <!-- Dialogue History Stream -->
-      <div id="chat-messages" class="chat-messages-container">
-        <!-- Rendered dynamically -->
-      </div>
-
-      <!-- Chat Input Area -->
-      <div class="chat-input-area">
-        <form id="chat-form" class="chat-form">
-          <input 
-            type="text" 
-            id="chat-input" 
-            class="chat-text-input" 
-            placeholder="Ask Messi AI a question or store facts (e.g., 'Remember that my name is Nishchal')..." 
-            autocomplete="off"
-          />
-          <button type="submit" id="send-btn" class="send-btn">
-            <span>Send</span>
-            <span>🚀</span>
-          </button>
-        </form>
       </div>
     </section>
 
-    <!-- Right Pane: Real-Time Telemetry & Brain Memory Inspector -->
-    <section class="diagnostics-pane">
-      
-      <!-- Diagnostic Tabs Header -->
-      <div class="diag-tabs-header">
-        <button class="diag-tab active" data-tab="tab-telemetry">⚡ Telemetry & Latency</button>
-        <button class="diag-tab" data-tab="tab-memory">🧠 Brain Memories (<span id="mem-count-badge">0</span>)</button>
-        <button class="diag-tab" data-tab="tab-context">📚 RAG Chunks (<span id="chunks-count-badge">0</span>)</button>
-      </div>
+    <!-- Two-Column Leads & Conversation History Area -->
+    <section class="reports-main-layout">
 
-      <!-- Tab Content 1: Telemetry & Latency Waterfall -->
-      <div id="tab-telemetry" class="diag-tab-content active">
-        <div id="diag-summary-card" class="diag-card">
-          <div class="diag-card-title">Turn Execution Overview</div>
-          <div class="metric-grid">
-            <div class="metric-box">
-              <div class="metric-label">Total Latency</div>
-              <div class="metric-value" id="metric-total-time">—</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-label">Path Type</div>
-              <div class="metric-value highlight" id="metric-path-type">—</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-label">LLM Speed</div>
-              <div class="metric-value" id="metric-speed">—</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-label">Completion Tokens</div>
-              <div class="metric-value" id="metric-tokens">—</div>
-            </div>
+      <!-- Left Column: Customer Leads Directory -->
+      <aside class="leads-sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-title-row">
+            <h3>Customer Leads Directory</h3>
+            <span class="count-badge" id="leads-count-badge">0</span>
+          </div>
+
+          <div class="search-box-wrap">
+            <input 
+              type="text" 
+              id="lead-search-input" 
+              class="lead-search-input" 
+              placeholder="Search phone, PSID, or model..."
+            />
+          </div>
+
+          <div class="channel-filter-tabs">
+            <button class="filter-tab active" data-channel="all">All</button>
+            <button class="filter-tab" data-channel="whatsapp">📱 WhatsApp</button>
+            <button class="filter-tab" data-channel="messenger">💬 Messenger</button>
           </div>
         </div>
 
-        <div class="diag-card">
-          <div class="diag-card-title">Latency Waterfall (Stages)</div>
-          <div id="waterfall-bars" class="waterfall-container">
-            <div class="placeholder-text">Send a message to view the millisecond latency breakdown per stage.</div>
-          </div>
+        <!-- Leads List Scrollable -->
+        <div id="leads-list" class="leads-list-scroll">
+          <div class="loading-state">Loading customer leads...</div>
         </div>
+      </aside>
 
-        <div class="diag-card">
-          <div class="diag-card-title">Stage Timings Table</div>
-          <table class="diag-table" id="diag-stages-table">
-            <thead>
-              <tr>
-                <th>Execution Stage</th>
-                <th>Duration</th>
-                <th>Percent</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td colspan="3" class="placeholder-text">No turn executed yet.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <!-- Right Column: Full Conversation Transcript & Profile Intelligence -->
+      <section class="transcript-pane">
 
-      <!-- Tab Content 2: Brain Memories Inspector -->
-      <div id="tab-memory" class="diag-tab-content">
-        <div class="diag-card">
-          <div class="card-header-flex">
+        <!-- Selected Lead Header -->
+        <div class="lead-detail-header" id="lead-detail-header">
+          <div class="lead-profile-info">
+            <div class="lead-avatar" id="lead-avatar">👤</div>
             <div>
-              <div class="diag-card-title">Persistent Brain Memories (SQLite)</div>
-              <div class="card-subtitle">Stored in <code>data/chat.db</code> for the active user. Injected into every turn's prompt.</div>
+              <div class="lead-name-row">
+                <h2 id="lead-name-display">Select a customer lead</h2>
+                <span class="channel-badge" id="lead-channel-badge">Channel</span>
+              </div>
+              <div class="lead-meta" id="lead-meta-display">Click any customer on the left to inspect conversation transcript.</div>
             </div>
-            <button id="refresh-mem-btn" class="small-btn">🔄 Refresh</button>
           </div>
-          <div id="memories-list" class="memories-container">
-            <div class="placeholder-text">No long-term memories saved for this user yet. Try saying: <em>"Remember that my favorite club is Barcelona"</em>.</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Tab Content 3: RAG Retrieved Chunks -->
-      <div id="tab-context" class="diag-tab-content">
-        <div class="diag-card">
-          <div class="diag-card-title">ChromaDB Knowledge Retrieval</div>
-          <div class="card-subtitle" id="rag-query-subtitle">Standalone Query: —</div>
-          <div id="rag-chunks-list" class="chunks-container">
-            <div class="placeholder-text">Retrieval results will appear here after a knowledge question.</div>
+          <div class="lead-actions" id="lead-actions-bar" style="display: none;">
+            <button id="clear-lead-btn" class="secondary-btn" title="Clear customer history from SQLite">🗑️ Clear History</button>
           </div>
         </div>
-      </div>
+
+        <!-- Customer Preferences (SQLite Brain Memory) -->
+        <div class="customer-preferences-box" id="customer-preferences-box" style="display: none;">
+          <div class="pref-title-row">
+            <span class="pref-label">🧠 Saved Customer Profile &amp; Preferences (SQLite Brain Memory):</span>
+            <span class="pref-count" id="pref-count-badge">0 facts</span>
+          </div>
+          <div class="pref-items-wrap" id="customer-pref-items">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Conversation Transcript Body -->
+        <div class="transcript-scroll-area" id="transcript-scroll-area">
+          <div class="empty-state">
+            <div class="empty-icon">📊</div>
+            <h3>No customer selected</h3>
+            <p>Select a customer from the directory on the left to inspect their complete WhatsApp or Messenger conversation history, response latency, and saved preferences.</p>
+          </div>
+        </div>
+
+        <!-- Inbound Message Simulator Dock (For Showroom Staff to Test/Follow up) -->
+        <div class="transcript-simulator-dock" id="transcript-simulator-dock" style="display: none;">
+          <form id="sim-inline-form" class="sim-inline-form">
+            <input 
+              type="text" 
+              id="sim-inline-input" 
+              class="sim-inline-input" 
+              placeholder="Simulate an inbound message from this customer..." 
+              autocomplete="off"
+            />
+            <button type="submit" id="sim-inline-send-btn" class="sim-send-btn">
+              <span>Send Query</span>
+              <span>➤</span>
+            </button>
+          </form>
+        </div>
+
+      </section>
 
     </section>
 
   </main>
 
-  <script src="/static/app.js"></script>
+  <!-- Inbound Simulator Modal -->
+  <div id="sim-modal-backdrop" class="modal-backdrop"></div>
+  <div id="sim-modal" class="sim-modal">
+    <div class="modal-header">
+      <h3>🧪 Simulate Inbound WhatsApp / Messenger Query</h3>
+      <button id="close-sim-modal-btn" class="modal-close-btn">✕</button>
+    </div>
+    <form id="sim-modal-form" class="modal-form">
+      <div class="form-group">
+        <label for="sim-channel-select">Channel:</label>
+        <select id="sim-channel-select" class="form-input">
+          <option value="whatsapp">📱 WhatsApp (+977 Nepal Phone)</option>
+          <option value="messenger">💬 Facebook Messenger (PSID)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sim-sender-input">Sender Identifier:</label>
+        <input type="text" id="sim-sender-input" class="form-input" value="+977-9801234567" placeholder="+977-98XXXXXXXX or FB_PSID" />
+      </div>
+      <div class="form-group">
+        <label for="sim-message-input">Customer Message:</label>
+        <textarea id="sim-message-input" class="form-input form-textarea" rows="3" placeholder="e.g. Do you have Hyundai Santro or Nissan Magnite in stock? What are their prices in Lakhs?"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="cancel-sim-btn" class="header-btn">Cancel</button>
+        <button type="submit" id="submit-sim-btn" class="header-btn primary-btn">Simulate Inbound &amp; Process</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="/static/app.js?v=4.0"></script>
 </body>
 </html>
