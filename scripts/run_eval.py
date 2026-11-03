@@ -89,10 +89,11 @@ def run_benchmark():
                 ood_false_positives += 1
                 fail_reasons.append("False Positive OOD: Real query was wrongly deflected.")
 
-            # Check must_include keywords (case-insensitive)
-            reply_lower = reply.lower()
+            # Check must_include keywords (case-insensitive and comma-flexible)
+            reply_lower = reply.lower().replace(",", "")
             for kw in must_include:
-                if kw.lower() not in reply_lower:
+                kw_clean = kw.lower().replace(",", "")
+                if kw_clean not in reply_lower:
                     is_passed = False
                     fail_reasons.append(f"Missing required keyword: '{kw}'")
 

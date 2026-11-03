@@ -9,13 +9,13 @@ fi
 PORT="${PORT:-8080}"
 
 echo "================================================"
-echo "  Naasa Securities (Broker 58) WhatsApp Support"
-echo "  Dashboard & Webhook → http://0.0.0.0:${PORT}"
-echo "  LLM                 → ${LLM_URL:-http://localhost:11434}"
-echo "  Model               → ${LLM_MODEL:-gemma4:e2b}"
+echo "  Apex Auto Recondition House AI Assistant"
+echo "  Web Console & Webhook → http://0.0.0.0:${PORT}"
+echo "  LLM                   → ${LLM_URL:-http://localhost:11434}"
+echo "  Model                 → ${LLM_MODEL:-llama3.2}"
 echo "================================================"
 
-echo "=== Ingesting knowledge base ==="
-python scripts/ingest_kb.py
+echo "=== Ingesting car inventory knowledge base ==="
+python scripts/ingest_data.py
 
 exec python src/webhook_server.py

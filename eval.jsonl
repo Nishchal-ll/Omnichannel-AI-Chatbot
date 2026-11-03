@@ -1,43 +1,30 @@
-{"id": 1, "category": "facts", "q": "How many Ballon d'Or awards has Lionel Messi won?", "must_include": ["8", "Ballon d'Or"]}
-{"id": 2, "category": "facts", "q": "Which club did Messi join in July 2023?", "must_include": ["Inter Miami"]}
-{"id": 3, "category": "facts", "q": "What world record did Messi set in the calendar year 2012?", "must_include": ["91"]}
-{"id": 4, "category": "facts", "q": "When and where was Lionel Messi born?", "must_include": ["June 24, 1987", "Rosario"]}
-{"id": 5, "category": "facts", "q": "Did Messi win the FIFA World Cup with Argentina?", "must_include": ["2022", "Qatar"]}
-{"id": 6, "category": "facts", "q": "What jersey number did Messi wear during his senior debut for Barcelona and at PSG?", "must_include": ["30"]}
-{"id": 7, "category": "facts", "q": "Which club's youth academy did Messi join in 2001?", "must_include": ["La Masia", "Barcelona"]}
-{"id": 8, "category": "facts", "q": "How many goals did Messi score in official appearances for FC Barcelona?", "must_include": ["672"]}
-{"id": 9, "category": "facts", "q": "Who were the members of the historic MSN attacking trio?", "must_include": ["Suárez", "Neymar"]}
-{"id": 10, "category": "facts", "q": "What first club trophy did Messi win with Inter Miami in 2023?", "must_include": ["Leagues Cup"]}
-{"id": 11, "category": "facts", "q": "How many European Golden Shoes has Messi won?", "must_include": ["6"]}
-{"id": 12, "category": "facts", "q": "Which trophy did Argentina win against Brazil at the Maracanã in 2021?", "must_include": ["Copa América"]}
-{"id": 13, "category": "facts", "q": "Who is Lionel Messi married to?", "must_include": ["Antonela"]}
-{"id": 14, "category": "facts", "q": "What are the names of Messi's three sons?", "must_include": ["Thiago", "Mateo", "Ciro"]}
-{"id": 15, "category": "facts", "q": "What medical condition was Messi diagnosed with as a child in Argentina?", "must_include": ["growth hormone"]}
-{"id": 16, "category": "facts", "q": "Which international tournament did Messi win at the 2008 Beijing Games?", "must_include": ["Olympic", "Gold"]}
-{"id": 17, "category": "facts", "q": "What award did Messi win as the best player of the 2014 and 2022 World Cups?", "must_include": ["Golden Ball"]}
-{"id": 18, "category": "facts", "q": "What charity foundation did Messi establish in 2007?", "must_include": ["Leo Messi Foundation"]}
-{"id": 19, "category": "facts", "q": "How many official team trophies has Messi won in his career?", "must_include": ["45"]}
-{"id": 20, "category": "facts", "q": "What shield did Inter Miami win with a record points total in October 2024?", "must_include": ["Supporters' Shield"]}
-{"id": 21, "category": "list", "q": "Which senior clubs has Lionel Messi played for throughout his career?", "must_include": ["Barcelona", "Paris Saint-Germain", "Inter Miami"]}
-{"id": 22, "category": "list", "q": "List all clubs Lionel Messi has played for.", "must_include": ["Barcelona", "PSG", "Inter Miami"]}
-{"id": 23, "category": "followup", "history": ["How many Ballon d'Ors has Messi won?"], "q": "When did he win his first one?", "must_include": ["2009"]}
-{"id": 24, "category": "followup", "history": ["Tell me about Lionel Messi's personal life."], "q": "What about his wife?", "must_include": ["Antonela"]}
-{"id": 25, "category": "followup", "history": ["Did Messi play in France?"], "q": "How many trophies did he win there?", "must_include": ["3", "Ligue 1"]}
-{"id": 26, "category": "followup", "history": ["Lionel Messi joined Inter Miami in 2023."], "q": "What shirt number does he wear there?", "must_include": ["10"]}
-{"id": 27, "category": "followup", "history": ["Messi captained Argentina in the 2022 World Cup."], "q": "How many goals did he score in that tournament?", "must_include": ["7"]}
-{"id": 28, "category": "memory", "q": "Remember that my name is Nishchal and I support Barcelona", "must_include": ["remembered", "Nishchal"]}
-{"id": 29, "category": "memory", "history": ["Remember that my name is Nishchal and I support Barcelona"], "q": "What is my name?", "must_include": ["Nishchal"]}
-{"id": 30, "category": "memory", "history": ["Remember that my name is Nishchal and I support Barcelona"], "q": "Which club do I support?", "must_include": ["Barcelona"]}
-{"id": 31, "category": "memory", "history": ["I live in Nepal"], "q": "Where do I live?", "must_include": ["Nepal"]}
-{"id": 32, "category": "ood", "q": "How do I bake a chocolate cake?", "expect": "deflect"}
-{"id": 33, "category": "ood", "q": "What is the capital city of Australia?", "expect": "deflect"}
-{"id": 34, "category": "ood", "q": "Can you give me a recipe for Italian pizza dough?", "expect": "deflect"}
-{"id": 35, "category": "ood", "q": "Who won the NBA basketball championship in 2020?", "expect": "deflect"}
-{"id": 36, "category": "ood", "q": "How do I apply for a student visa for Canada?", "expect": "deflect"}
-{"id": 37, "category": "ood", "q": "What is the current weather forecast in London?", "expect": "deflect"}
-{"id": 38, "category": "ood", "q": "Write a python script to reverse a binary tree.", "expect": "deflect"}
-{"id": 39, "category": "ood", "q": "Who is running in the presidential election?", "expect": "deflect"}
-{"id": 40, "category": "ood", "q": "Tell me a joke about dinosaurs.", "expect": "deflect"}
-{"id": 41, "category": "ood", "q": "What is the best way to prepare for the IELTS exam?", "expect": "deflect"}
-{"id": 42, "category": "ood", "q": "How do you make spicy chicken pasta?", "expect": "deflect"}
-
+{"id": 1, "category": "vehicle_specs", "q": "What is the price, engine CC, and rating of the 2022 Toyota RAV4?", "must_include": ["2500", "28500", "4.8"]}
+{"id": 2, "category": "vehicle_specs", "q": "Do you have the Honda Vezel in stock and what is its fuel type and mileage?", "must_include": ["Hybrid", "19800", "Vezel"]}
+{"id": 3, "category": "vehicle_specs", "q": "What engine and price does the 2020 Toyota Land Cruiser Prado have?", "must_include": ["2800", "54000", "Diesel"]}
+{"id": 4, "category": "vehicle_specs", "q": "What is the battery capacity and range of the BYD Atto 3?", "must_include": ["Blade", "420", "Atto"]}
+{"id": 5, "category": "vehicle_specs", "q": "Tell me the make year, engine, and rating for the Suzuki Jimny.", "must_include": ["2022", "1500", "Jimny"]}
+{"id": 6, "category": "vehicle_specs", "q": "What is the price and rating of the Hyundai Tucson?", "must_include": ["32000", "4.8", "Tucson"]}
+{"id": 7, "category": "vehicle_specs", "q": "Do you have any BMW models in stock and what are their prices?", "must_include": ["BMW", "320i"]}
+{"id": 8, "category": "vehicle_specs", "q": "What is the condition grade and price of the Mercedes-Benz C200?", "must_include": ["C200", "41500"]}
+{"id": 9, "category": "vehicle_specs", "q": "What is the fuel economy and price of the Toyota Aqua?", "must_include": ["Aqua", "15800"]}
+{"id": 10, "category": "vehicle_specs", "q": "What are the specs of the Kia EV6 in your showroom?", "must_include": ["EV6", "Electric", "46000"]}
+{"id": 11, "category": "policy", "q": "Where is the showroom located?", "must_include": ["Ring Road", "Kathmandu"]}
+{"id": 12, "category": "policy", "q": "What is your warranty policy on reconditioned cars?", "must_include": ["1-Year", "Warranty"]}
+{"id": 13, "category": "policy", "q": "How does your 150-point inspection work?", "must_include": ["150-Point", "Inspection"]}
+{"id": 14, "category": "policy", "q": "Can I exchange my old car at your showroom?", "must_include": ["exchange", "appraisal"]}
+{"id": 15, "category": "policy", "q": "What are the financing and down payment options?", "must_include": ["financing", "down payment"]}
+{"id": 16, "category": "policy", "q": "What time does the showroom open and close?", "must_include": ["9:30", "6:30"]}
+{"id": 17, "category": "policy", "q": "Can I book a test drive?", "must_include": ["test drive", "license"]}
+{"id": 18, "category": "followup", "history": ["Do you have the 2022 Toyota RAV4 in stock?"], "q": "What is its transmission?", "must_include": ["CVT", "Automatic"]}
+{"id": 19, "category": "followup", "history": ["Tell me about the BYD Atto 3."], "q": "How much does it cost?", "must_include": ["29500"]}
+{"id": 20, "category": "followup", "history": ["I am interested in the Honda Vezel."], "q": "What condition grade is it?", "must_include": ["Grade 4.5", "Certified"]}
+{"id": 21, "category": "followup", "history": ["Show me the Suzuki Jimny."], "q": "What color is it?", "must_include": ["Yellow"]}
+{"id": 22, "category": "memory", "q": "Remember that my name is Dhiru and my budget is $25,000", "must_include": ["remembered", "Dhiru"]}
+{"id": 23, "category": "memory", "history": ["Remember that my name is Dhiru and my budget is $25,000"], "q": "What is my name?", "must_include": ["Dhiru"]}
+{"id": 24, "category": "memory", "history": ["Remember that my name is Dhiru and my budget is $25,000"], "q": "What is my budget?", "must_include": ["25,000"]}
+{"id": 25, "category": "ood", "q": "How do I bake a chocolate cake?", "expect": "deflect"}
+{"id": 26, "category": "ood", "q": "Who won the 2022 FIFA World Cup?", "expect": "deflect"}
+{"id": 27, "category": "ood", "q": "Write a python script to reverse a binary tree", "expect": "deflect"}
+{"id": 28, "category": "ood", "q": "What is the weather in Sydney today?", "expect": "deflect"}
+{"id": 29, "category": "ood", "q": "Tell me a bedtime story about aliens and dinosaurs", "expect": "deflect"}
+{"id": 30, "category": "ood", "q": "How do I apply for a student visa to Australia?", "expect": "deflect"}
