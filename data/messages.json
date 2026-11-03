@@ -2251,5 +2251,293 @@
       },
       "model": "fast_anchor"
     }
+  },
+  {
+    "id": "whatsapp_1793695891978",
+    "channel": "whatsapp",
+    "sender": "+977-9801234567",
+    "body": "Do you have Hyundai Santro or Nissan Magnite? What are the prices in Lakhs?",
+    "subject": null,
+    "reply": "Yes, we have both in stock!\n\n* 2020 Hyundai Santro Magna (1100cc, Lot 28, 38,000 km, 2081/82 tax paid) for NPR 15.5 Lakhs.\n* 2022 Nissan Magnite XV Premium Turbo (1000cc Turbo, Lot 33, 19,000 km, 2081/82 tax paid) for NPR 31.0 Lakhs.\n\nBoth are available for test drive at our Tinkune showroom.",
+    "ts": "2026-11-03T14:36:31.978322",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 30926.1,
+      "path_type": "rag_llm",
+      "stages": {
+        "memory_ms": 2.41,
+        "routing_ms": 0.07,
+        "rewrite_ms": 0.05,
+        "rag_retrieval_ms": 1608.83,
+        "prompt_build_ms": 0.01,
+        "llm_inference_ms": 28377.9,
+        "dispatch_ms": 926.26
+      },
+      "tokens": {
+        "prompt_tokens": 1118,
+        "completion_tokens": 106,
+        "total_tokens": 1224,
+        "tokens_per_sec": 3.74
+      },
+      "rag": {
+        "chunks_found": 3,
+        "chunks": [
+          {
+            "text": "[Hyundai: 2020 Hyundai Santro Magna]\nStock_ID: APX-NP-01\nBrand: Hyundai\nModel: Santro\nVariant: Magna\nMake_Year: 2020\nEngine_CC: 1100cc\nLot_Number: Ba 02-028 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 38000\nPrice_NPR_Lakhs: 15.5 Lakhs\nCondition: Grade 4.5 Fresh\nTax_Status: 2081/82 Paid\nFeatures: AC, Power Steering, Front Power Windows, Central Locking, Single Doctor Owner",
+            "title": "2020 Hyundai Santro Magna",
+            "source": "cars_inventory.csv",
+            "distance": 0.3395,
+            "eff_dist": 0.3395111560821533,
+            "snippet": "[Hyundai: 2020 Hyundai Santro Magna]\nStock_ID: APX-NP-01\nBrand: Hyundai\nModel: Santro\nVariant: Magna\nMake_Year: 2020\nEngine_CC: 1100cc\nLot_Number: Ba 02-028 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 38000\nPrice_NPR_Lakhs: 15.5 La"
+          },
+          {
+            "text": "[Hyundai: 2021 Hyundai Santro Sportz]\nStock_ID: APX-NP-02\nBrand: Hyundai\nModel: Santro\nVariant: Sportz\nMake_Year: 2021\nEngine_CC: 1100cc\nLot_Number: Ba 02-031 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 26500\nPrice_NPR_Lakhs: 17.8 Lakhs\nCondition: Grade 5.0 Like New\nTax_Status: 2081/82 Paid\nFeatures: 7-inch Touchscreen, Apple CarPlay/Android Auto, Reverse Camera, Rear Defogger",
+            "title": "2021 Hyundai Santro Sportz",
+            "source": "cars_inventory.csv",
+            "distance": 0.3632,
+            "eff_dist": 0.36317551136016846,
+            "snippet": "[Hyundai: 2021 Hyundai Santro Sportz]\nStock_ID: APX-NP-02\nBrand: Hyundai\nModel: Santro\nVariant: Sportz\nMake_Year: 2021\nEngine_CC: 1100cc\nLot_Number: Ba 02-031 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 26500\nPrice_NPR_Lakhs: 17.8 "
+          },
+          {
+            "text": "[Nissan: 2022 Nissan Magnite XV Premium Turbo]\nStock_ID: APX-NP-08\nBrand: Nissan\nModel: Magnite\nVariant: XV Premium Turbo\nMake_Year: 2022\nEngine_CC: 1000cc Turbo\nLot_Number: Ba 02-033 Cha\nTransmission: CVT Automatic\nFuel_Type: Petrol Turbo\nMileage_KM: 16500\nPrice_NPR_Lakhs: 31.0 Lakhs\nCondition: Grade 5.0 Like New\nTax_Status: 2081/82 Paid\nFeatures: 360-Degree Bird Eye Camera, 7-inch TFT Cockpit, Ambient Lighting, Cruise Control",
+            "title": "2022 Nissan Magnite XV Premium Turbo",
+            "source": "cars_inventory.csv",
+            "distance": 0.462,
+            "eff_dist": 0.46197211742401123,
+            "snippet": "[Nissan: 2022 Nissan Magnite XV Premium Turbo]\nStock_ID: APX-NP-08\nBrand: Nissan\nModel: Magnite\nVariant: XV Premium Turbo\nMake_Year: 2022\nEngine_CC: 1000cc Turbo\nLot_Number: Ba 02-033 Cha\nTransmission: CVT Automatic\nFuel_Type: Petrol Turbo\nMileage_KM"
+          }
+        ]
+      },
+      "model": "llama3.2",
+      "standalone_query": null
+    }
+  },
+  {
+    "id": "whatsapp_1793696103701",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Hiii",
+    "subject": null,
+    "reply": "\ud83d\ude97 *Welcome to Apex Auto Recondition House!*\n\ud83d\udd12 _Privacy Notice: We store your dialogue history and vehicle preferences locally to personalize recommendations. You can type 'forget me' anytime to erase all your data._\n\nNamaste! Welcome to Apex Auto Recondition House Nepal (Tinkune, Kathmandu). How can I assist you today with our certified cars (Santro, i10, Magnite, Swift, Alto, Brezza, Creta), instant exchange (\u0938\u093e\u091f\u093e\u0938\u093e\u091f), Bluebook transfer, or bank EMI?",
+    "ts": "2026-11-03T14:40:03.701738",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 1.6,
+      "path_type": "fast_anchor",
+      "stages": {
+        "memory_ms": 0.04,
+        "routing_ms": 0.02
+      },
+      "tokens": {
+        "completion_tokens": 35,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "chunks": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793696162575",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Hii",
+    "subject": null,
+    "reply": "Namaste! Welcome to Apex Auto Recondition House Nepal (Tinkune, Kathmandu). How can I assist you today with our certified cars (Santro, i10, Magnite, Swift, Alto, Brezza, Creta), instant exchange (\u0938\u093e\u091f\u093e\u0938\u093e\u091f), Bluebook transfer, or bank EMI?",
+    "ts": "2026-11-03T14:41:02.575463",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 4.5,
+      "path_type": "fast_anchor",
+      "stages": {
+        "memory_ms": 2.67,
+        "routing_ms": 0.03
+      },
+      "tokens": {
+        "completion_tokens": 35,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "chunks": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "whatsapp_1793696178643",
+    "channel": "whatsapp",
+    "sender": "9779765341686",
+    "body": "Which cars are available ?",
+    "subject": null,
+    "reply": "We have the following cars in stock:\n\n* Hyundai Santro: 2020 Hyundai Santro Magna (1100cc, NPR 15.5 Lakhs)\n* Hyundai Santro: 2021 Hyundai Santro Sportz (1100cc, NPR 17.8 Lakhs)\n* Grand i10: 2022 Grand i10 Nios Sportz Dual Tone (1200cc, NPR 24.5 Lakhs)\n* Toyota Raize: 2022 Toyota Raize Z Turbo (1000cc Turbo, NPR 52.0 Lakhs)\n\nPlease note that availability and prices may change. Would you like to know more about any of these models or schedule a test drive?",
+    "ts": "2026-11-03T14:41:18.643880",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 28970.4,
+      "path_type": "rag_llm",
+      "stages": {
+        "memory_ms": 0.04,
+        "routing_ms": 0.03,
+        "rewrite_ms": 0.19,
+        "rag_retrieval_ms": 1602.14,
+        "prompt_build_ms": 0.05,
+        "llm_inference_ms": 25562.9,
+        "dispatch_ms": 1794.1
+      },
+      "tokens": {
+        "prompt_tokens": 1256,
+        "completion_tokens": 144,
+        "total_tokens": 1400,
+        "tokens_per_sec": 5.63
+      },
+      "rag": {
+        "chunks_found": 3,
+        "chunks": [
+          {
+            "text": "[Hyundai: 2021 Hyundai Santro Sportz]\nStock_ID: APX-NP-02\nBrand: Hyundai\nModel: Santro\nVariant: Sportz\nMake_Year: 2021\nEngine_CC: 1100cc\nLot_Number: Ba 02-031 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 26500\nPrice_NPR_Lakhs: 17.8 Lakhs\nCondition: Grade 5.0 Like New\nTax_Status: 2081/82 Paid\nFeatures: 7-inch Touchscreen, Apple CarPlay/Android Auto, Reverse Camera, Rear Defogger",
+            "title": "2021 Hyundai Santro Sportz",
+            "source": "cars_inventory.csv",
+            "distance": 0.3756,
+            "eff_dist": 0.3755750060081482,
+            "snippet": "[Hyundai: 2021 Hyundai Santro Sportz]\nStock_ID: APX-NP-02\nBrand: Hyundai\nModel: Santro\nVariant: Sportz\nMake_Year: 2021\nEngine_CC: 1100cc\nLot_Number: Ba 02-031 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 26500\nPrice_NPR_Lakhs: 17.8 "
+          },
+          {
+            "text": "[Hyundai: 2020 Hyundai Santro Magna]\nStock_ID: APX-NP-01\nBrand: Hyundai\nModel: Santro\nVariant: Magna\nMake_Year: 2020\nEngine_CC: 1100cc\nLot_Number: Ba 02-028 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 38000\nPrice_NPR_Lakhs: 15.5 Lakhs\nCondition: Grade 4.5 Fresh\nTax_Status: 2081/82 Paid\nFeatures: AC, Power Steering, Front Power Windows, Central Locking, Single Doctor Owner",
+            "title": "2020 Hyundai Santro Magna",
+            "source": "cars_inventory.csv",
+            "distance": 0.3776,
+            "eff_dist": 0.3776203393936157,
+            "snippet": "[Hyundai: 2020 Hyundai Santro Magna]\nStock_ID: APX-NP-01\nBrand: Hyundai\nModel: Santro\nVariant: Magna\nMake_Year: 2020\nEngine_CC: 1100cc\nLot_Number: Ba 02-028 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 38000\nPrice_NPR_Lakhs: 15.5 La"
+          },
+          {
+            "text": "[Toyota: 2022 Toyota Raize Z Turbo]\nStock_ID: APX-NP-22\nBrand: Toyota\nModel: Raize\nVariant: Z Turbo\nMake_Year: 2022\nEngine_CC: 1000cc Turbo\nLot_Number: Ba 02-033 Cha\nTransmission: CVT Automatic\nFuel_Type: Petrol\nMileage_KM: 19000\nPrice_NPR_Lakhs: 52.0 Lakhs\nCondition: Grade 5.0 Like New\nTax_Status: 2081/82 Paid\nFeatures: Imported CBU Japan, Adaptive Cruise Control, Heated Seats, 360-Degree Camera",
+            "title": "2022 Toyota Raize Z Turbo",
+            "source": "cars_inventory.csv",
+            "distance": 0.566,
+            "eff_dist": 0.5660418272018433,
+            "snippet": "[Toyota: 2022 Toyota Raize Z Turbo]\nStock_ID: APX-NP-22\nBrand: Toyota\nModel: Raize\nVariant: Z Turbo\nMake_Year: 2022\nEngine_CC: 1000cc Turbo\nLot_Number: Ba 02-033 Cha\nTransmission: CVT Automatic\nFuel_Type: Petrol\nMileage_KM: 19000\nPrice_NPR_Lakhs: 52."
+          }
+        ]
+      },
+      "model": "llama3.2",
+      "standalone_query": "Which cars are available (regarding: Santro)"
+    }
+  },
+  {
+    "id": "messenger_1793696346811",
+    "channel": "messenger",
+    "sender": "27102734322687593",
+    "body": "hiii",
+    "subject": null,
+    "reply": "Namaste! Welcome to Apex Auto Recondition House Nepal (Tinkune, Kathmandu). How can I assist you today with our certified cars (Santro, i10, Magnite, Swift, Alto, Brezza, Creta), instant exchange (\u0938\u093e\u091f\u093e\u0938\u093e\u091f), Bluebook transfer, or bank EMI?",
+    "ts": "2026-11-03T14:44:06.811086",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 4.4,
+      "path_type": "fast_anchor",
+      "stages": {
+        "memory_ms": 2.66,
+        "routing_ms": 0.03
+      },
+      "tokens": {
+        "completion_tokens": 35,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "chunks": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "messenger_1793696372704",
+    "channel": "messenger",
+    "sender": "27102734322687593",
+    "body": "can i exchange my car?",
+    "subject": null,
+    "reply": "Yes! We offer instant 20-minute spot valuation and exchange (\u0938\u093e\u091f\u093e\u0938\u093e\u091f) for any old motorcycle, scooter, or car (any brand/lot). The valuation is directly adjusted into your down payment, and we provide same-day vehicle delivery.",
+    "ts": "2026-11-03T14:44:32.704969",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 1.9,
+      "path_type": "fast_anchor",
+      "stages": {
+        "memory_ms": 0.05,
+        "routing_ms": 0.01
+      },
+      "tokens": {
+        "completion_tokens": 34,
+        "tokens_per_sec": 0.0
+      },
+      "rag": {
+        "chunks_found": 0,
+        "chunks": []
+      },
+      "model": "fast_anchor"
+    }
+  },
+  {
+    "id": "messenger_1793696517741",
+    "channel": "messenger",
+    "sender": "27102734322687593",
+    "body": "give me the location of your office",
+    "subject": null,
+    "reply": "We have two offices: \n\n1. Tinkune Office: Located at Tinkune, Kathmandu.\n2. Pokhara Office: Located at Nayabazar, Pokhara.",
+    "ts": "2026-11-03T14:46:57.741754",
+    "status": "replied",
+    "metrics": {
+      "total_ms": 23866.1,
+      "path_type": "rag_llm",
+      "stages": {
+        "memory_ms": 0.05,
+        "routing_ms": 0.04,
+        "rewrite_ms": 0.22,
+        "rag_retrieval_ms": 1617.91,
+        "prompt_build_ms": 0.06,
+        "llm_inference_ms": 20926.1,
+        "dispatch_ms": 1306.86
+      },
+      "tokens": {
+        "prompt_tokens": 1247,
+        "completion_tokens": 41,
+        "total_tokens": 1288,
+        "tokens_per_sec": 1.96
+      },
+      "rag": {
+        "chunks_found": 3,
+        "chunks": [
+          {
+            "text": "[Hyundai: 2020 Hyundai Santro Magna]\nStock_ID: APX-NP-01\nBrand: Hyundai\nModel: Santro\nVariant: Magna\nMake_Year: 2020\nEngine_CC: 1100cc\nLot_Number: Ba 02-028 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 38000\nPrice_NPR_Lakhs: 15.5 Lakhs\nCondition: Grade 4.5 Fresh\nTax_Status: 2081/82 Paid\nFeatures: AC, Power Steering, Front Power Windows, Central Locking, Single Doctor Owner",
+            "title": "2020 Hyundai Santro Magna",
+            "source": "cars_inventory.csv",
+            "distance": 0.5322,
+            "eff_dist": 0.532246470451355,
+            "snippet": "[Hyundai: 2020 Hyundai Santro Magna]\nStock_ID: APX-NP-01\nBrand: Hyundai\nModel: Santro\nVariant: Magna\nMake_Year: 2020\nEngine_CC: 1100cc\nLot_Number: Ba 02-028 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 38000\nPrice_NPR_Lakhs: 15.5 La"
+          },
+          {
+            "text": "[Hyundai: 2021 Hyundai Santro Sportz]\nStock_ID: APX-NP-02\nBrand: Hyundai\nModel: Santro\nVariant: Sportz\nMake_Year: 2021\nEngine_CC: 1100cc\nLot_Number: Ba 02-031 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 26500\nPrice_NPR_Lakhs: 17.8 Lakhs\nCondition: Grade 5.0 Like New\nTax_Status: 2081/82 Paid\nFeatures: 7-inch Touchscreen, Apple CarPlay/Android Auto, Reverse Camera, Rear Defogger",
+            "title": "2021 Hyundai Santro Sportz",
+            "source": "cars_inventory.csv",
+            "distance": 0.5837,
+            "eff_dist": 0.583673894405365,
+            "snippet": "[Hyundai: 2021 Hyundai Santro Sportz]\nStock_ID: APX-NP-02\nBrand: Hyundai\nModel: Santro\nVariant: Sportz\nMake_Year: 2021\nEngine_CC: 1100cc\nLot_Number: Ba 02-031 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 26500\nPrice_NPR_Lakhs: 17.8 "
+          },
+          {
+            "text": "[Hyundai: 2021 Hyundai Venue S Plus]\nStock_ID: APX-NP-05\nBrand: Hyundai\nModel: Venue\nVariant: S Plus\nMake_Year: 2021\nEngine_CC: 1200cc Petrol\nLot_Number: Ba 02-029 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 31000\nPrice_NPR_Lakhs: 32.5 Lakhs\nCondition: Grade 4.5 Certified\nTax_Status: 2081/82 Paid\nFeatures: Electric Sunroof, 8-inch Infotainment, Cruise Control, High Ground Clearance 190mm",
+            "title": "2021 Hyundai Venue S Plus",
+            "source": "cars_inventory.csv",
+            "distance": 0.6866,
+            "eff_dist": 0.686627984046936,
+            "snippet": "[Hyundai: 2021 Hyundai Venue S Plus]\nStock_ID: APX-NP-05\nBrand: Hyundai\nModel: Venue\nVariant: S Plus\nMake_Year: 2021\nEngine_CC: 1200cc Petrol\nLot_Number: Ba 02-029 Cha\nTransmission: 5-Speed Manual\nFuel_Type: Petrol\nMileage_KM: 31000\nPrice_NPR_Lakhs: "
+          }
+        ]
+      },
+      "model": "llama3.2",
+      "standalone_query": "give me the location of your office (regarding: Santro)"
+    }
   }
 ]
