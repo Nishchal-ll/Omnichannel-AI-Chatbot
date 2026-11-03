@@ -6,6 +6,8 @@ The system handles customer inquiries 24/7 across **Meta WhatsApp Cloud API (v21
 
 The entire system runs **100% locally** on a **Llama 3.2** model via Ollama—ensuring zero per-token cloud billing, absolute customer data privacy, and sub-5ms fast-exit routing for canonical showroom FAQs.
 
+https://github.com/Nishchal-ll/Omnichannel-AI-Chatbot/blob/main/chatbot.png
+
 ---
 
 ## 1. System Architecture
