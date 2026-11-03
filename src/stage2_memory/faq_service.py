@@ -53,7 +53,7 @@ SEED_FAQS = [
         0
     ),
     (
-        r"\b(how\s+many\s+trophies|total\s+trophies\s+won)\b",
+        r"\b(how\s+many\s+total\s+trophies|total\s+career\s+trophies|all\s+trophies\s+won|career\s+trophies)\b",
         "Lionel Messi has won over 45 official team trophies across his senior career with FC Barcelona, PSG, Inter Miami, and Argentina. [World Records and Career Statistics]",
         "2026-10-01",
         1

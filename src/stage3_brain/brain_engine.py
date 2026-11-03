@@ -25,19 +25,26 @@ class BrainEngine:
         timeout: int = 60,
     ):
         self.base_url = (base_url or os.getenv("LLM_URL", "http://localhost:11434")).rstrip("/")
-        self.model = model or os.getenv("LLM_MODEL", "gemma4:e2b")
+        self.model = model or os.getenv("LLM_MODEL", "llama3.2")
         self.max_tokens = int(os.getenv("LLM_MAX_TOKENS", str(max_tokens)))
         self.temperature = float(os.getenv("LLM_TEMPERATURE", str(temperature)))
         self.timeout = int(os.getenv("LLM_TIMEOUT", str(timeout)))
 
     def is_available(self) -> Tuple[bool, str]:
-        """Checks if Ollama server is up and model is present."""
+        """Checks if Ollama server is up and model is present, with automatic fallback."""
         try:
             r = requests.get(f"{self.base_url}/api/tags", timeout=5)
             if r.status_code == 200:
                 models = [m.get("name") for m in r.json().get("models", [])]
                 has_model = any(self.model in m or m.startswith(self.model.split(":")[0]) for m in models)
-                return True, f"Connected to Ollama (Model: {self.model})"
+                if has_model:
+                    return True, f"Connected to Ollama (Model: {self.model})"
+                # Fallback check
+                for fallback in ["llama3.2", "gemma4:e2b", "gemma4:e2b-it-qat"]:
+                    if any(fallback in m for m in models):
+                        self.model = fallback
+                        return True, f"Connected to Ollama (Fell back to: {self.model})"
+                return False, f"Model {self.model} not found in Ollama: {models}"
             return False, f"Ollama returned HTTP {r.status_code}"
         except Exception as e:
             return False, f"Could not connect to Ollama at {self.base_url}: {e}"

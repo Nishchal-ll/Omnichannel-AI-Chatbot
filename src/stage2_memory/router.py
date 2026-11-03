@@ -48,7 +48,8 @@ DOMAIN_KEYWORDS = [
     "argentina", "world cup", "ballon", "dor", "copa", "america", "goals", "assists",
     "trophy", "trophies", "stats", "statistics", "record", "records", "golden shoe",
     "newell", "rosario", "la masia", "antonela", "thiago", "mateo", "ciro", "mls",
-    "ligue", "la liga", "champions league", "ucl", "finalissima", "leagues cup"
+    "ligue", "la liga", "champions league", "ucl", "finalissima", "leagues cup",
+    "msn", "trio", "suárez", "suarez", "neymar"
 ]
 
 # 0ms Instant FAQ Canonical Anchors
@@ -168,7 +169,11 @@ class IntentRouter:
         # Replace 'he/him/it' with 'Lionel Messi'
         contextualized = re.sub(r"\b(he|him|it)\b", "Lionel Messi", contextualized, flags=re.IGNORECASE)
 
-        if "messi" not in contextualized.lower():
-            return f"{contextualized} (context: Lionel Messi)"
+        last_turn_text = " ".join(t.content for t in chat_history[-2:])
+        if re.search(r"\b(there|that\s+tournament|that\s+season|that\s+year)\b", contextualized, re.IGNORECASE):
+            contextualized += f" (in context of: {last_turn_text[:100]})"
+        elif "messi" not in contextualized.lower():
+            contextualized = f"{contextualized} (context: Lionel Messi)"
+
         return contextualized
 
