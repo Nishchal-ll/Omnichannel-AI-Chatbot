@@ -17,3 +17,4 @@
 - **Pricing**: Strictly in Nepali Rupees / Lakhs (never in foreign currencies or USD).
 - **Policies**: 20-min spot exchange (साटासाट), 24-hr Bluebook ownership transfer (नामसारी) at Yatayat Ekantakuna, 6-month engine/gearbox warranty.
 - **Customer Channels**: Inbound traffic originates from Meta WhatsApp Cloud API (v21.0) and Facebook Messenger. Web dashboard serves as the Executive Analytics Console.
+

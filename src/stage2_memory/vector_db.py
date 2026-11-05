@@ -187,3 +187,4 @@ class VectorDatabase:
 
 
 vector_db = VectorDatabase()
+

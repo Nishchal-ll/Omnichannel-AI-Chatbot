@@ -67,3 +67,4 @@ class OllamaEmbedder:
 
 
 ollama_embedder = OllamaEmbedder()
+
