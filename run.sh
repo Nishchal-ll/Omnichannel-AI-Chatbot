@@ -75,3 +75,4 @@ elif [ "$1" == "--query" ]; then
 else
     exec "$PYTHON_BIN" scripts/terminal_chat.py "$@"
 fi
+

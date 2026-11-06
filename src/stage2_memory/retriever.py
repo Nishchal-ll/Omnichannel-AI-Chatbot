@@ -38,6 +38,21 @@ class RAGRetriever:
         # Attempt to load precomputed vector index on startup
         self._ensure_loaded()
 
+    @property
+    def total_chunks(self) -> int:
+        """Returns total active chunks in offline vector database."""
+        return len(self.vector_db.chunks)
+
+    @property
+    def collection(self):
+        """Backward-compatibility shim for code calling retriever.collection.count()."""
+        class _CollectionProxy:
+            def __init__(self, n: int):
+                self._n = n
+            def count(self) -> int:
+                return self._n
+        return _CollectionProxy(len(self.vector_db.chunks))
+
     def _ensure_loaded(self):
         """Loads cached FAISS/NumPy index from disk if available."""
         if len(self.vector_db.chunks) == 0:

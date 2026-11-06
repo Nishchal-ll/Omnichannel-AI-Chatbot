@@ -220,9 +220,9 @@ class PipelineOrchestrator:
         standalone_query = IntentRouter.rewrite_query(clean_query, history)
         stage_timings["rewrite_ms"] = round((time.perf_counter() - t0) * 1000, 2)
 
-        # ── 5. ChromaDB Domain Knowledge RAG ─────────────────────────────────
+        # ── 5. Domain Knowledge Vector Retrieval ─────────────────────────────
         t0 = time.perf_counter()
-        kb_context, chunks = retriever.retrieve_with_metadata(standalone_query, top_k=3)
+        kb_context, chunks = retriever.retrieve_with_metadata(standalone_query, top_k=2)
         stage_timings["rag_retrieval_ms"] = round((time.perf_counter() - t0) * 1000, 2)
 
         # ── Semantic Out-of-Domain Retrieval Gate (Item 1) ───────────────────

@@ -230,7 +230,7 @@ async def get_reports_overview():
             "whatsapp_phone_id": bool(os.getenv("WHATSAPP_PHONE_ID")),
             "messenger_configured": bool(os.getenv("MESSENGER_PAGE_TOKEN") or os.getenv("MESSENGER_ACCESS_TOKEN")),
         },
-        "inventory_chunks": retriever.collection.count(),
+        "inventory_chunks": retriever.total_chunks,
         "model": orchestrator.brain.model,
     }
 
