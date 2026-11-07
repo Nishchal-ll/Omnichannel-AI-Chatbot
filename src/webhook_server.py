@@ -149,8 +149,8 @@ async def get_system_health():
             "details": ollama_msg,
         },
         "rag": {
-            "collection": retriever.collection_name,
-            "total_chunks": retriever.collection.count(),
+            "collection": getattr(retriever, "collection_name", "car_inventory_kb"),
+            "total_chunks": retriever.total_chunks,
         },
         "whatsapp": {
             "configured": bool(os.getenv("WHATSAPP_ACCESS_TOKEN")),

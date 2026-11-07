@@ -1,27 +1,27 @@
-{"id": 1, "category": "vehicle_specs", "q": "What is the price, engine CC, and rating of the 2022 Toyota RAV4?", "must_include": ["2500", "28500", "4.8"]}
-{"id": 2, "category": "vehicle_specs", "q": "Do you have the Honda Vezel in stock and what is its fuel type and mileage?", "must_include": ["Hybrid", "19800", "Vezel"]}
-{"id": 3, "category": "vehicle_specs", "q": "What engine and price does the 2020 Toyota Land Cruiser Prado have?", "must_include": ["2800", "54000", "Diesel"]}
+{"id": 1, "category": "vehicle_specs", "q": "What is the price, engine CC, and lot number of the 2020 Hyundai Santro Magna?", "must_include": ["1100", "15.5", "Santro"]}
+{"id": 2, "category": "vehicle_specs", "q": "Do you have the Grand i10 Nios in stock and what is its transmission and price?", "must_include": ["i10", "Automatic", "24.5"]}
+{"id": 3, "category": "vehicle_specs", "q": "What are the specs and price of the Nissan Magnite XL Turbo?", "must_include": ["1000", "Magnite"]}
 {"id": 4, "category": "vehicle_specs", "q": "What is the battery capacity and range of the BYD Atto 3?", "must_include": ["Blade", "420", "Atto"]}
-{"id": 5, "category": "vehicle_specs", "q": "Tell me the make year, engine, and rating for the Suzuki Jimny.", "must_include": ["2022", "1500", "Jimny"]}
-{"id": 6, "category": "vehicle_specs", "q": "What is the price and rating of the Hyundai Tucson?", "must_include": ["32000", "4.8", "Tucson"]}
-{"id": 7, "category": "vehicle_specs", "q": "Do you have any BMW models in stock and what are their prices?", "must_include": ["BMW", "320i"]}
-{"id": 8, "category": "vehicle_specs", "q": "What is the condition grade and price of the Mercedes-Benz C200?", "must_include": ["C200", "41500"]}
-{"id": 9, "category": "vehicle_specs", "q": "What is the fuel economy and price of the Toyota Aqua?", "must_include": ["Aqua", "15800"]}
-{"id": 10, "category": "vehicle_specs", "q": "What are the specs of the Kia EV6 in your showroom?", "must_include": ["EV6", "Electric", "46000"]}
-{"id": 11, "category": "policy", "q": "Where is the showroom located?", "must_include": ["Ring Road", "Kathmandu"]}
-{"id": 12, "category": "policy", "q": "What is your warranty policy on reconditioned cars?", "must_include": ["1-Year", "Warranty"]}
-{"id": 13, "category": "policy", "q": "How does your 150-point inspection work?", "must_include": ["150-Point", "Inspection"]}
-{"id": 14, "category": "policy", "q": "Can I exchange my old car at your showroom?", "must_include": ["exchange", "appraisal"]}
-{"id": 15, "category": "policy", "q": "What are the financing and down payment options?", "must_include": ["financing", "down payment"]}
+{"id": 5, "category": "vehicle_specs", "q": "Tell me the make year, engine, and price for the Maruti Suzuki Alto 800.", "must_include": ["800", "10.5", "Alto"]}
+{"id": 6, "category": "vehicle_specs", "q": "What is the price and features of the Hyundai Creta in your inventory?", "must_include": ["41.0", "Creta"]}
+{"id": 7, "category": "vehicle_specs", "q": "Do you have the Maruti Vitara Brezza in stock and what is its price?", "must_include": ["Brezza", "29.5"]}
+{"id": 8, "category": "vehicle_specs", "q": "What is the price and specs of the Maruti Suzuki Swift VXi?", "must_include": ["Swift", "21.0"]}
+{"id": 9, "category": "vehicle_specs", "q": "Tell me about the Tata Nexon EV in your showroom.", "must_include": ["Nexon", "Electric", "31.5"]}
+{"id": 10, "category": "vehicle_specs", "q": "What are the specs and price of the Toyota Hilux 4x4?", "must_include": ["Hilux", "58.0", "4x4"]}
+{"id": 11, "category": "policy", "q": "Where is the showroom located?", "must_include": ["Tinkune", "Kathmandu"]}
+{"id": 12, "category": "policy", "q": "What is your warranty policy on certified reconditioned cars?", "must_include": ["6-Month", "warranty"]}
+{"id": 13, "category": "policy", "q": "How does your 120-point inspection work?", "must_include": ["120-Point", "Inspection"]}
+{"id": 14, "category": "policy", "q": "Can I exchange my old car or bike at your showroom?", "must_include": ["exchange", "20-minute"]}
+{"id": 15, "category": "policy", "q": "What are the financing and down payment options?", "must_include": ["financing", "30%"]}
 {"id": 16, "category": "policy", "q": "What time does the showroom open and close?", "must_include": ["9:30", "6:30"]}
 {"id": 17, "category": "policy", "q": "Can I book a test drive?", "must_include": ["test drive", "license"]}
-{"id": 18, "category": "followup", "history": ["Do you have the 2022 Toyota RAV4 in stock?"], "q": "What is its transmission?", "must_include": ["CVT", "Automatic"]}
-{"id": 19, "category": "followup", "history": ["Tell me about the BYD Atto 3."], "q": "How much does it cost?", "must_include": ["29500"]}
-{"id": 20, "category": "followup", "history": ["I am interested in the Honda Vezel."], "q": "What condition grade is it?", "must_include": ["Grade 4.5", "Certified"]}
-{"id": 21, "category": "followup", "history": ["Show me the Suzuki Jimny."], "q": "What color is it?", "must_include": ["Yellow"]}
-{"id": 22, "category": "memory", "q": "Remember that my name is Dhiru and my budget is $25,000", "must_include": ["remembered", "Dhiru"]}
-{"id": 23, "category": "memory", "history": ["Remember that my name is Dhiru and my budget is $25,000"], "q": "What is my name?", "must_include": ["Dhiru"]}
-{"id": 24, "category": "memory", "history": ["Remember that my name is Dhiru and my budget is $25,000"], "q": "What is my budget?", "must_include": ["25,000"]}
+{"id": 18, "category": "followup", "history": ["Do you have the Nissan Magnite in stock?"], "q": "What is its transmission?", "must_include": ["Manual", "CVT"]}
+{"id": 19, "category": "followup", "history": ["Tell me about the Hyundai Santro Magna."], "q": "How much does it cost?", "must_include": ["15.5"]}
+{"id": 20, "category": "followup", "history": ["I am interested in the Grand i10 Nios."], "q": "What is its lot number and mileage?", "must_include": ["Lot", "19000"]}
+{"id": 21, "category": "followup", "history": ["Show me the Maruti Swift."], "q": "What condition grade is it?", "must_include": ["Grade"]}
+{"id": 22, "category": "memory", "q": "Remember that my name is Dhiru and my budget is 25 Lakhs", "must_include": ["remembered", "Dhiru"]}
+{"id": 23, "category": "memory", "history": ["Remember that my name is Dhiru and my budget is 25 Lakhs"], "q": "What is my name?", "must_include": ["Dhiru"]}
+{"id": 24, "category": "memory", "history": ["Remember that my name is Dhiru and my budget is 25 Lakhs"], "q": "What is my budget?", "must_include": ["25 Lakhs"]}
 {"id": 25, "category": "ood", "q": "How do I bake a chocolate cake?", "expect": "deflect"}
 {"id": 26, "category": "ood", "q": "Who won the 2022 FIFA World Cup?", "expect": "deflect"}
 {"id": 27, "category": "ood", "q": "Write a python script to reverse a binary tree", "expect": "deflect"}

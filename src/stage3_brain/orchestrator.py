@@ -227,15 +227,13 @@ class PipelineOrchestrator:
 
         # ── Semantic Out-of-Domain Retrieval Gate (Item 1) ───────────────────
         from stage2_memory.retriever import OOD_DISTANCE
+        from stage2_memory.router import DOMAIN_KEYWORDS
         best_distance = chunks[0]["distance"] if chunks else 1.0
-        has_domain_kw = any(kw in standalone_query.lower() for kw in [
-            "car", "cars", "santro", "i10", "magnite", "alto", "swift", "brezza",
-            "creta", "venue", "nexon", "tiago", "sonet", "seltos", "kicks", "hyundai",
-            "suzuki", "nissan", "tata", "kia", "toyota", "exchange", "satasat", "bluebook",
-            "namsari", "lakh", "lakhs", "recondition", "showroom", "finance", "emi"
-        ])
+        q_lower = standalone_query.lower()
+        has_domain_kw = any(kw in q_lower for kw in DOMAIN_KEYWORDS)
+        is_followup = bool(history) and any(w in q_lower for w in ["it", "its", "cost", "price", "color", "transmission", "mileage", "lot", "condition", "grade", "warranty"])
 
-        if not chunks or (best_distance > OOD_DISTANCE and not has_domain_kw) or best_distance > 0.78:
+        if not chunks or (best_distance > OOD_DISTANCE and not has_domain_kw and not is_followup) or best_distance > 0.78:
             reply = OUT_OF_CONTEXT_DEFLECTION
             session_buffer.add_turn(user_id, query, reply)
             total_ms = round((time.perf_counter() - t_start) * 1000, 1)

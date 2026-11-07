@@ -44,6 +44,11 @@ class RAGRetriever:
         return len(self.vector_db.chunks)
 
     @property
+    def collection_name(self) -> str:
+        """Returns active collection identifier."""
+        return "car_inventory_kb"
+
+    @property
     def collection(self):
         """Backward-compatibility shim for code calling retriever.collection.count()."""
         class _CollectionProxy:

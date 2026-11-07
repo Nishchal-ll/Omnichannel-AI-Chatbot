@@ -1,7 +1,7 @@
 """
 scripts/run_eval.py
 ───────────────────
-Automated Benchmark Evaluation Suite for Lionel Messi AI Assistant.
+Automated Benchmark Evaluation Suite for Apex Auto Recondition Nepal AI Engine.
 Reads eval.jsonl, executes test queries through PipelineOrchestrator,
 and calculates accuracy, latency breakdown, and OOD false-positive rates.
 """

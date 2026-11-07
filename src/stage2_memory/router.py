@@ -63,7 +63,7 @@ FAQ_ANCHORS = [
         "Apex Auto Recondition House Nepal is located at Tinkune Subidhanagar (near Ring Road Bridge), Kathmandu. Phone: 01-4491234 / +977-9801234567. We also have a Pokhara Branch at Nayabazar (Ph: 061-534567)."
     ),
     (
-        re.compile(r"\b(opening\s+hours|business\s+hours|working\s+hours|what\s+time\s+do\s+you\s+open)\b", re.IGNORECASE),
+        re.compile(r"\b(opening\s+hours|business\s+hours|working\s+hours|open\s+and\s+close|what\s+time\s+do\s+you\s+(open|close)|timing|hours)\b", re.IGNORECASE),
         "Our showroom is open Sunday to Friday from 9:30 AM to 6:30 PM, and Saturday from 10:00 AM to 5:00 PM for test drives and vehicle inspections."
     ),
     (

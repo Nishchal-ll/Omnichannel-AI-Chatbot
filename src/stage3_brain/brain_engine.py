@@ -66,7 +66,7 @@ class BrainEngine:
                 "num_ctx": int(os.getenv("LLM_NUM_CTX", "1024")),
                 "num_thread": int(os.getenv("LLM_NUM_THREAD", "8")),
                 "temperature": self.temperature,
-                "num_predict": min(self.max_tokens, 95),
+                "num_predict": min(self.max_tokens, 140),
                 "top_p": 0.9,
             },
         }
