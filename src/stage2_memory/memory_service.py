@@ -160,8 +160,8 @@ class MemoryService:
             loc = loc_match.group(1).strip().title()
             return f"User lives in {loc}", "location"
 
-        # 4. 'My budget is ...' / 'Looking for cars under ...'
-        budget_match = re.search(r"\b(?:my\s+budget\s+is|budget\s+of|looking\s+for\s+(?:a\s+)?car\s+under|budget\s+around)\s+([$0-9kK,.\s\-]+(?:dollars|lakhs|k)?)\b", clean, re.IGNORECASE)
+        # 4. 'My budget is ...' / 'Customer budget is ...' / 'Budget is ...'
+        budget_match = re.search(r"\b(?:my\s+budget\s+is|customer\s+budget\s+is|budget\s+is|budget\s+of|looking\s+for\s+(?:a\s+)?car\s+under|budget\s+around)\s+([$0-9kK,.\s\-]+(?:dollars|lakhs|lakh|k)?)\b", clean, re.IGNORECASE)
         if budget_match:
             b_val = budget_match.group(1).strip()
             return f"Customer budget is {b_val}", "budget"

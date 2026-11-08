@@ -50,6 +50,7 @@ DOMAIN_KEYWORDS = [
     "santro", "i10", "nios", "magnite", "alto", "wagonr", "swift", "baleno", "brezza",
     "creta", "venue", "tiago", "nexon", "sonet", "seltos", "kicks", "raize", "rush", "hilux", "atto",
     "engine", "cc", "motor", "mileage", "odometer", "km", "price", "cost", "lakh", "lakhs", "rupees", "rs",
+    "budget", "affordable", "cheapest", "option", "options", "recommend", "afford", "buy", "purchase",
     "transmission", "automatic", "manual", "amt", "cvt", "hybrid", "electric", "ev", "petrol", "diesel",
     "warranty", "exchange", "satasat", "trade-in", "trade", "swap", "finance", "financing", "emi", "loan",
     "down payment", "inspection", "certified", "test drive", "stock", "bluebook", "namsari", "yatayat",
@@ -125,7 +126,7 @@ class IntentRouter:
         """Detects if user is asking about their saved budget, preferred cars, or profile."""
         clean = query.lower().strip()
         patterns = [
-            r"\bwhat('?s|\s+is)\s+my\s+(budget|name|preference|choice|selection)\b",
+            r"\bwhat('?s|\s+is)\s+my\s+(budget|budge|name|preference|choice|selection)\b",
             r"\bwho\s+am\s+i\b",
             r"\bwhere\s+do\s+i\s+live\b",
             r"\bwhat\s+(car|cars|brand)\s+did\s+i\s+(say|choose|prefer|want)\b",

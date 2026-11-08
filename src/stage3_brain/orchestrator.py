@@ -87,10 +87,15 @@ class PipelineOrchestrator:
 
             if not memories:
                 reply = "I don't have any saved preferences or profile information for you yet. You can tell me your budget, preferred car brands, or your name!"
-            elif "budget" in clean_lower:
-                b_mems = [m for m in memories if m.category == "budget" or "budget is" in m.memory_text.lower()]
+            elif "budget" in clean_lower or "budge" in clean_lower:
+                b_mems = [m for m in memories if m.category == "budget" or "budget" in m.memory_text.lower()]
                 if b_mems:
-                    reply = f"According to your saved profile: {b_mems[-1].memory_text}."
+                    raw_b = b_mems[-1].memory_text
+                    b_num = re.search(r"(\d+(?:\.\d+)?)", raw_b)
+                    if b_num:
+                        reply = f"Your budget is {b_num.group(1)} Lakhs. I'll keep that in mind while showing you our available cars."
+                    else:
+                        reply = f"According to your saved profile: {raw_b}."
                 else:
                     items_str = "\n".join(f"• {m.memory_text}" for m in memories)
                     reply = f"I don't have a specific budget recorded yet, but here are your saved preferences:\n{items_str}"

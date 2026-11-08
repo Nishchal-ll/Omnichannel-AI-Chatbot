@@ -63,7 +63,7 @@ class BrainEngine:
             "stream": False,
             "think": False,
             "options": {
-                "num_ctx": int(os.getenv("LLM_NUM_CTX", "1024")),
+                "num_ctx": int(os.getenv("LLM_NUM_CTX", "1536")),
                 "num_thread": int(os.getenv("LLM_NUM_THREAD", "8")),
                 "temperature": self.temperature,
                 "num_predict": min(self.max_tokens, 140),

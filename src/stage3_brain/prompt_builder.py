@@ -8,6 +8,7 @@ messages array for Llama 3.2.
 
 from typing import List, Dict, Any, Optional
 from stage2_memory.models import ChatMessage, UserMemoryItem
+from stage2_memory.catalog_service import catalog_service
 
 OUT_OF_CONTEXT_DEFLECTION = (
     "I am the Customer Support Assistant for Apex Auto Recondition House Nepal (Tinkune, Kathmandu). "
@@ -16,9 +17,9 @@ OUT_OF_CONTEXT_DEFLECTION = (
 )
 
 CAR_DEALERSHIP_PERSONA_PROMPT = """You are the AI Assistant for Apex Auto Recondition House Nepal (Tinkune, Kathmandu).
-Answer strictly from the CONTEXT below. Quote vehicle prices in Nepali Rupees / Lakhs (e.g. NPR 15.5 Lakhs).
-Mention Model, Year, Engine CC, Lot Number, Mileage, and Price in Lakhs. Cite [Source 1], [Source 2] where relevant.
-Keep responses concise, polite, and within 2 to 3 sentences."""
+Answer strictly using the verified vehicle inventory catalog and showroom policies provided below.
+Always quote vehicle prices in Nepali Rupees / Lakhs (e.g. NPR 15.5 Lakhs or NPR 26.5 Lakhs).
+Keep responses friendly, professional, concise, and within 2 to 3 sentences."""
 
 FEW_SHOT_TURNS = [
     {
@@ -27,7 +28,15 @@ FEW_SHOT_TURNS = [
     },
     {
         "role": "assistant",
-        "content": "Namaste! Yes [Source 1], we have a 2020 Hyundai Santro Magna (1100cc, Lot 28, 38,000 km, 2081/82 tax paid) for NPR 15.5 Lakhs. It includes our 6-month engine warranty and free test drives at Tinkune!"
+        "content": "Namaste! Yes, we have a 2020 Hyundai Santro Magna (1100cc, Lot Ba 02-028 Cha, 38,000 km, 2081/82 tax paid) for NPR 15.5 Lakhs. It includes our 6-month engine warranty and free test drives at Tinkune!"
+    },
+    {
+        "role": "user",
+        "content": "Which cars fall under my budget of 16 Lakhs?"
+    },
+    {
+        "role": "assistant",
+        "content": "For a budget of NPR 16 Lakhs, our certified qualifying cars are the 2020 Hyundai Santro Magna (NPR 15.5 Lakhs), 2022 Maruti Suzuki Alto K10 VXi Plus (NPR 14.2 Lakhs), and 2019 Maruti Suzuki Alto 800 LXi (NPR 10.5 Lakhs)."
     }
 ]
 
@@ -54,20 +63,47 @@ class PromptBuilder:
         """
         system_content_parts = [CAR_DEALERSHIP_PERSONA_PROMPT]
 
-        # Inject Persistent Customer Memory MESH
-        if user_memories:
-            mem_lines = ["\n[CUSTOMER INTELLIGENCE & SAVED PREFERENCES (SQLite)]"]
-            for m in user_memories:
-                mem_lines.append(f"- ({m.category.upper()}): {m.memory_text}")
-            mem_lines.append("Use these customer preferences naturally (e.g. remember their budget, preferred model, or exchange vehicle).")
-            system_content_parts.append("\n".join(mem_lines))
+        # 1. Always Inject Complete Certified Inventory Catalog (~480 tokens)
+        catalog_table = catalog_service.get_catalog_prompt_text()
+        system_content_parts.append(
+            f"\n[APEX AUTO RECONDITION NEPAL — CERTIFIED VEHICLE STOCK CATALOG (25 Vehicles)]\n"
+            f"{catalog_table}\n"
+            "ANALYTICAL REASONING RULES:\n"
+            "- Mathematical Budget Rule: When evaluating customer budget, strictly compare car prices against it. ONLY recommend cars where Price <= Budget. Never claim a car from above budget is within budget.\n"
+            "- Tricky/Out-of-Budget Questions: If asked about a car that exceeds budget, state its exact price and how much it exceeds budget, then suggest the best qualifying option.\n"
+            "- Multi-Criteria Searches: You can answer any query (cheapest automatic, high ground clearance, family SUV) by consulting the catalog table."
+        )
 
-        # Inject Grounded Showroom Knowledge & Citations
+        # 2. Inject Retrieved Policy / Warranty Knowledge Chunks (if applicable)
         if knowledge_context.strip():
             system_content_parts.append(
-                f"\n[VERIFIED SHOWROOM INVENTORY & POLICY CONTEXT]\n{knowledge_context.strip()}\n"
-                "INSTRUCTION: Base your factual answers strictly on this context. Cite [Source 1], [Source 2] where relevant. If the context does not contain the answer, say so politely."
+                f"\n[DETAILED SHOWROOM POLICIES & GUIDELINES]\n{knowledge_context.strip()}\n"
             )
+
+        # 3. Inject Persistent Customer Memory Profile
+        customer_budget = None
+        if user_memories:
+            mem_lines = ["\n[CUSTOMER INTELLIGENCE & SAVED PROFILE (SQLite)]"]
+            for m in user_memories:
+                mem_lines.append(f"- ({m.category.upper()}): {m.memory_text}")
+                if m.category.lower() == "budget" or "budget" in m.memory_text.lower():
+                    customer_budget = m.memory_text
+            system_content_parts.append("\n".join(mem_lines))
+
+        # Check if current query mentions or overrides budget
+        import re
+        q_budget = re.search(r"(?:budget|under|below|within|upto|around|have)\s*(?:is|of|npr|rs\.?)?\s*(\d+(?:\.\d+)?)\s*(?:lakh|lakhs)?", user_query, re.IGNORECASE)
+        if q_budget:
+            customer_budget = q_budget.group(1)
+
+        # 4. Inject Mathematical Budget Audit at the VERY END for maximum attention/recency
+        if customer_budget:
+            budget_block = catalog_service.get_budget_context_block(customer_budget)
+            if budget_block:
+                system_content_parts.append(
+                    f"{budget_block}\n"
+                    f"CRITICAL INSTRUCTION: When answering inquiries about cars within the customer's budget, ONLY recommend cars from the 'STRICTLY WITHIN BUDGET' list. Never recommend cars from the 'ABOVE BUDGET' list as being within budget."
+                )
 
         system_msg = {"role": "system", "content": "\n\n".join(system_content_parts)}
 
