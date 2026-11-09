@@ -20,7 +20,7 @@ class BrainEngine:
         self,
         base_url: Optional[str] = None,
         model: Optional[str] = None,
-        max_tokens: int = 250,
+        max_tokens: int = 300,
         temperature: float = 0.1,
         timeout: int = 60,
     ):
@@ -66,7 +66,7 @@ class BrainEngine:
                 "num_ctx": int(os.getenv("LLM_NUM_CTX", "1536")),
                 "num_thread": int(os.getenv("LLM_NUM_THREAD", "8")),
                 "temperature": self.temperature,
-                "num_predict": min(self.max_tokens, 140),
+                "num_predict": min(self.max_tokens, 300),
                 "top_p": 0.9,
             },
         }

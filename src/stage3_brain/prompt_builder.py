@@ -19,7 +19,8 @@ OUT_OF_CONTEXT_DEFLECTION = (
 CAR_DEALERSHIP_PERSONA_PROMPT = """You are the AI Assistant for Apex Auto Recondition House Nepal (Tinkune, Kathmandu).
 Answer strictly using the verified vehicle inventory catalog and showroom policies provided below.
 Always quote vehicle prices in Nepali Rupees / Lakhs (e.g. NPR 15.5 Lakhs or NPR 26.5 Lakhs).
-Keep responses friendly, professional, concise, and within 2 to 3 sentences."""
+Keep responses friendly, professional, concise, and within 2 to 3 sentences.
+NEVER echo or output internal bracketed headings (such as [INTERNAL...], [MATHEMATICAL...]), system notes, or raw developer instructions. Speak directly, politely, and conversationally as a helpful dealership advisor."""
 
 FEW_SHOT_TURNS = [
     {
@@ -37,6 +38,14 @@ FEW_SHOT_TURNS = [
     {
         "role": "assistant",
         "content": "For a budget of NPR 16 Lakhs, our certified qualifying cars are the 2020 Hyundai Santro Magna (NPR 15.5 Lakhs), 2022 Maruti Suzuki Alto K10 VXi Plus (NPR 14.2 Lakhs), and 2019 Maruti Suzuki Alto 800 LXi (NPR 10.5 Lakhs)."
+    },
+    {
+        "role": "user",
+        "content": "I increased my budget, it's 20 Lakhs now"
+    },
+    {
+        "role": "assistant",
+        "content": "With your updated budget of NPR 20 Lakhs, additional options open up including the 2019 Hyundai Grand i10 Magna (NPR 19.5 Lakhs), 2021 Hyundai Santro Sportz (NPR 17.8 Lakhs), and 2020 Maruti Suzuki WagonR VXi (NPR 17.5 Lakhs), alongside our 2020 Santro Magna (NPR 15.5 Lakhs)."
     }
 ]
 
@@ -90,19 +99,19 @@ class PromptBuilder:
                     customer_budget = m.memory_text
             system_content_parts.append("\n".join(mem_lines))
 
-        # Check if current query mentions or overrides budget
+        # Check if current query mentions, updates, or overrides budget
         import re
-        q_budget = re.search(r"(?:budget|under|below|within|upto|around|have)\s*(?:is|of|npr|rs\.?)?\s*(\d+(?:\.\d+)?)\s*(?:lakh|lakhs)?", user_query, re.IGNORECASE)
+        q_budget = re.search(r"(?:budget|under|below|within|upto|around|have|increased|raised|changed|updated|now)\s*(?:(?:to|my\s+budget|its|it's|is|of|npr|rs\.?)\s*)*(\d+(?:\.\d+)?)\s*(?:lakh|lakhs)?", user_query, re.IGNORECASE)
         if q_budget:
             customer_budget = q_budget.group(1)
 
-        # 4. Inject Mathematical Budget Audit at the VERY END for maximum attention/recency
+        # 4. Inject Verified Budget Matches at the VERY END for maximum attention/recency
         if customer_budget:
             budget_block = catalog_service.get_budget_context_block(customer_budget)
             if budget_block:
                 system_content_parts.append(
                     f"{budget_block}\n"
-                    f"CRITICAL INSTRUCTION: When answering inquiries about cars within the customer's budget, ONLY recommend cars from the 'STRICTLY WITHIN BUDGET' list. Never recommend cars from the 'ABOVE BUDGET' list as being within budget."
+                    f"CRITICAL FORMATTING INSTRUCTION: Formulate your answer in conversational, polished sentences. State the customer's budget and recommend the qualifying vehicles with their prices in Lakhs. NEVER output internal tags or brackets."
                 )
 
         system_msg = {"role": "system", "content": "\n\n".join(system_content_parts)}

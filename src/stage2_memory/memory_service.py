@@ -69,6 +69,10 @@ class MemoryService:
 
         with self._lock:
             cursor = self._db.cursor()
+            # If category is budget, remove previous budget entry so the newest budget is active
+            if category == "budget":
+                cursor.execute("DELETE FROM user_memories WHERE user_id = ? AND category = 'budget'", (user_id,))
+
             # Enforce 20 facts cap per user (FIFO purge)
             cursor.execute("SELECT count(*) FROM user_memories WHERE user_id = ?", (user_id,))
             if cursor.fetchone()[0] >= 20:
@@ -160,8 +164,12 @@ class MemoryService:
             loc = loc_match.group(1).strip().title()
             return f"User lives in {loc}", "location"
 
-        # 4. 'My budget is ...' / 'Customer budget is ...' / 'Budget is ...'
-        budget_match = re.search(r"\b(?:my\s+budget\s+is|customer\s+budget\s+is|budget\s+is|budget\s+of|looking\s+for\s+(?:a\s+)?car\s+under|budget\s+around)\s+([$0-9kK,.\s\-]+(?:dollars|lakhs|lakh|k)?)\b", clean, re.IGNORECASE)
+        # 4. 'My budget is ...' / 'Customer budget is ...' / 'I increased my budget ...' / 'Budget is ...'
+        budget_match = re.search(
+            r"\b(?:(?:i\s+)?(?:have\s+)?(?:increased|raised|changed|updated|decreased)\s+(?:my\s+)?budget\s*(?:to|its|it's|is)?|my\s+budget\s+is|customer\s+budget\s+is|budget\s+is|budget\s+of|looking\s+for\s+(?:a\s+)?car\s+under|budget\s+around|new\s+budget\s+is)\s+([0-9kK,.\s\-]+(?:dollars|lakhs|lakh|k)?)\b",
+            clean,
+            re.IGNORECASE
+        )
         if budget_match:
             b_val = budget_match.group(1).strip()
             return f"Customer budget is {b_val}", "budget"

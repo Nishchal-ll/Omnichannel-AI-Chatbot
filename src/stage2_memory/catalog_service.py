@@ -123,21 +123,26 @@ class CatalogService:
         above = [c for c in self.cars if budget_float < c["price_float"] <= budget_float + 4.5]
         above.sort(key=lambda x: x["price_float"])
 
-        lines = [f"\n[MATHEMATICAL BUDGET AUDIT — CUSTOMER BUDGET: {budget_float} LAKHS]"]
+        lines = [
+            f"\n[INTERNAL SHOWROOM DATA — REASONING ONLY, NEVER ECHO THIS HEADER OR BRACKETS TO USER]",
+            f"Customer Budget: {budget_float} Lakhs",
+        ]
         if matching:
-            lines.append(f"• CERTIFIED CARS STRICTLY WITHIN BUDGET (Price <= {budget_float} Lakhs):")
+            lines.append(f"Certified cars within customer budget (Price <= {budget_float} Lakhs):")
             for c in matching:
-                lines.append(f"  - {c['year']} {c['brand']} {c['model']} {c['variant']} ({c['cc']}, Lot {c['lot']}, {c['transmission']}) — NPR {c['price_str']}")
+                lines.append(f"- {c['year']} {c['brand']} {c['model']} {c['variant']} ({c['transmission']}) for NPR {c['price_str']}")
         else:
-            lines.append(f"• (No certified cars currently in stock at or below NPR {budget_float} Lakhs)")
+            lines.append(f"- (No certified cars currently in stock at or below NPR {budget_float} Lakhs)")
 
         if above:
-            lines.append(f"• CARS SLIGHTLY ABOVE BUDGET (Exceeds customer budget):")
+            lines.append(f"Cars slightly above customer budget:")
             for c in above[:3]:
                 diff = round(c['price_float'] - budget_float, 1)
-                lines.append(f"  - {c['year']} {c['brand']} {c['model']} {c['variant']} — NPR {c['price_str']} (+{diff} Lakhs above budget)")
+                lines.append(f"- {c['year']} {c['brand']} {c['model']} {c['variant']} for NPR {c['price_str']} (+{diff} Lakhs above budget)")
 
-        lines.append("STRICT INSTRUCTION: Only recommend cars from the 'STRICTLY WITHIN BUDGET' list. Never claim a car from the 'ABOVE BUDGET' list is within budget.")
+        lines.append(
+            f"RULE: Recommend cars only from the 'within customer budget' list. Speak naturally as an advisor in complete sentences. NEVER quote system headers or tags like '[INTERNAL...' or '[MATHEMATICAL...'."
+        )
         return "\n".join(lines)
 
 

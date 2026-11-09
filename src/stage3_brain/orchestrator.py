@@ -8,6 +8,7 @@ Supports direct Web Chat and preserved WhatsApp channel dispatch.
 import time
 import os
 import sys
+import re
 from typing import Dict, Any, Optional
 
 from stage2_memory.session import session_buffer
@@ -58,7 +59,13 @@ class PipelineOrchestrator:
         if mem_directive:
             fact, category = mem_directive
             item = memory_service.add_memory(user_id, fact, category)
-            reply = f"✓ I have remembered that: {fact}."
+            if category == "budget":
+                b_clean = re.sub(r"Customer budget is\s*", "", fact, flags=re.IGNORECASE).strip()
+                if not "lakh" in b_clean.lower():
+                    b_clean = f"{b_clean} Lakhs"
+                reply = f"✓ Updated your budget to {b_clean}. I will show you available cars matching this budget."
+            else:
+                reply = f"✓ I have remembered that: {fact}."
             session_buffer.add_turn(user_id, query, reply)
             stage_timings["memory_ms"] = round((time.perf_counter() - t0) * 1000, 2)
             total_ms = round((time.perf_counter() - t_start) * 1000, 1)
@@ -81,7 +88,6 @@ class PipelineOrchestrator:
 
         # B. Recall: 'What do you remember about me?' / 'What is my name?' / 'Where do I live?'
         if IntentRouter.check_memory_recall(clean_query):
-            import re
             memories = memory_service.get_memories(user_id)
             clean_lower = clean_query.lower()
 

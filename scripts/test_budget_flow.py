@@ -30,8 +30,9 @@ def main():
         "what is my budge",
         "so which car falls under my budget",
         "what is its price?",
-        "is the Grand i10 in my budget?",
-        "can I buy Hyundai Creta with my budget?"
+        "i increased my budget its 20 lakhs",
+        "which cars fall under my budget now?",
+        "is the Grand i10 in my budget?"
     ]
 
     print("==================================================")
